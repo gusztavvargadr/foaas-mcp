@@ -1,0 +1,57 @@
+{
+  "name": "foaas-mcp",
+  "version": "0.1.0",
+  "description": "MCP server to expose FOAAS (Fuck Off As A Service) functionality to AI clients",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "foaas-mcp": "./dist/index.js"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "dev:http": "tsx watch src/index-http.ts",
+    "start": "node dist/index.js",
+    "start:http": "node dist/index-http.js",
+    "docker:build": "docker build -t foaas-mcp .",
+    "docker:run": "docker run -p 3000:3000 foaas-mcp",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gusztavvargadr/foaas-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "foaas",
+    "github-copilot",
+    "ai"
+  ],
+  "author": "gusztavvargadr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gusztavvargadr/foaas-mcp/issues"
+  },
+  "homepage": "https://github.com/gusztavvargadr/foaas-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.4",
+    "@types/node": "^24.9.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
