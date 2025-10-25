@@ -407,7 +407,38 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
   - [ ] Test actual task assignments
   - [ ] Document integration experience
 
-### 6.3 GitHub Actions CI ⏳
+### 6.3 End-to-End Testing with Demo Repository ⏳
+
+**Goal**: Create a realistic demo repository to validate full workflow with GitHub Copilot coding agent.
+
+- [ ] Create demo repository (`foaas-mcp-demo` or similar)
+- [ ] Set up repository structure:
+  - [ ] README with demo instructions
+  - [ ] Multiple test issues with different labels
+  - [ ] Sample code/content for PRs
+  - [ ] Configure MCP server in repository settings
+- [ ] Test scenarios:
+  - [ ] Configure Copilot to use GHCR image
+  - [ ] Create issues and test tool usage in issue comments
+  - [ ] Open PRs and use FOAAS tools in PR descriptions/comments
+  - [ ] Test with coding agent task assignments
+  - [ ] Verify all 18 tools work correctly
+  - [ ] Test group tools with randomization
+  - [ ] Test error handling and edge cases
+- [ ] Document demo repository setup:
+  - [ ] MCP configuration steps
+  - [ ] Example interactions
+  - [ ] Screenshots/recordings
+  - [ ] Common issues and solutions
+- [ ] Use demo repo for:
+  - [ ] README examples
+  - [ ] LinkedIn post demonstrations
+  - [ ] Documentation validation
+  - [ ] Future testing/validation
+
+**Output**: Public demo repository showcasing FOAAS MCP in action
+
+### 6.4 GitHub Actions CI ⏳
 
 - [ ] Create `.github/workflows/ci.yml`
 - [ ] Run tests on:
@@ -424,7 +455,7 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
   - [ ] Docker image scanning (Trivy)
 - [ ] Add CI status badge to README
 
-### 6.4 Repository Best Practices ⏳
+### 6.5 Repository Best Practices ⏳
 
 - [ ] Add CONTRIBUTING.md:
   - [ ] How to set up development environment
@@ -457,14 +488,17 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 - [ ] Proofread all documentation
 - [ ] Check all links work
 
+- [ ] Configure repository topics and description
+
 ### 6.6 Demo Content Creation ⏳ (from Phase 3.4)
 
 - [ ] Record VS Code demo (GIF or short video)
-- [ ] Record coding agent demo with GHCR image
+- [ ] Record coding agent demo with GHCR image (use E2E demo repo)
 - [ ] Capture interaction examples for documentation
-- [ ] Create usage guide with real scenarios
+- [ ] Create usage guide with real scenarios (use E2E demo repo)
 - [ ] Document "fun use cases" for LinkedIn post
 - [ ] Prepare before/after examples showing tool usage
+- [ ] Link to E2E demo repository in main README
 
 ---
 
