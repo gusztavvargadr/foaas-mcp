@@ -343,7 +343,7 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
   }
   ```
 - [x] Add instructions for repository administrators
-- [ ] Test configuration with coding agent (pending workflow execution)
+- [ ] Test with GitHub Copilot coding agent (pending workflow execution)
 - [x] Document validation steps
 
 **Reference**: [Extending GitHub Copilot coding agent with MCP](https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp)
