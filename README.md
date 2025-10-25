@@ -20,7 +20,46 @@ A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io)
 - Docker installed and running
 - VS Code with GitHub Copilot (recommended)
 
-### Setup
+### Using Pre-built Image from GitHub Container Registry
+
+**Recommended for most users** - Use the pre-built image:
+
+```bash
+# Pull the latest stable release
+docker pull ghcr.io/gusztavvargadr/foaas-mcp:latest
+
+# Or pull a specific version
+docker pull ghcr.io/gusztavvargadr/foaas-mcp:v1.0.0
+
+# Or pull a specific commit (for testing)
+docker pull ghcr.io/gusztavvargadr/foaas-mcp:sha-a1b2c3d
+```
+
+**Configure in VS Code** (`.vscode/mcp.json`):
+```json
+{
+  "mcpServers": {
+    "foaas": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "ghcr.io/gusztavvargadr/foaas-mcp:latest"
+      ]
+    }
+  }
+}
+```
+
+**Image Tagging Strategy**:
+- `latest` - Latest stable release (updated only on version tags)
+- `v1`, `v1.0`, `v1.0.0` - Semantic version tags
+- `sha-<commit>` - Specific commit hash (e.g., sha-a1b2c3d) for testing main branch builds
+
+### Building from Source
+
+For development or customization:
 
 1. **Clone and build**:
    ```bash
@@ -31,7 +70,7 @@ A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io)
    ```
 
 2. **Use with VS Code**:
-   - The `.vscode/mcp.json` is pre-configured to use Docker
+   - The `.vscode/mcp.json` is pre-configured to use local Docker build
    - Restart MCP server (via GitHub Copilot status bar → Restart MCP Servers)
    - Test in GitHub Copilot chat
    - Start using FOAAS tools!
@@ -171,6 +210,35 @@ Pre-configured in `.vscode/mcp.json`:
 - Logs visible in Output panel (Model Context Protocol)
 - Container removed after use (`--rm` flag)
 
+### GitHub Copilot Coding Agent
+
+Use FOAAS MCP in GitHub repositories with Copilot coding agent. Configure in your repository's MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "foaas": {
+      "type": "local",
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "ghcr.io/gusztavvargadr/foaas-mcp:latest"
+      ],
+      "tools": ["*"]
+    }
+  }
+}
+```
+
+**Usage Examples** (in Copilot chat):
+- "Express appreciation for the great work in the latest PR"
+- "Tell off the bug that's been haunting us"
+- "Decline this feature request with style"
+
+**Learn More**: [Extending GitHub Copilot coding agent with MCP](https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp)
+
 ### Local Development (Alternative)
 
 For rapid iteration only:
@@ -294,7 +362,3 @@ MIT License - See LICENSE file for details
 - [FOAAS](https://foaas.io/) - The original Fuck Off As A Service
 - [Model Context Protocol](https://modelcontextprotocol.io) - AI integration standard
 - [GitHub Copilot](https://github.com/features/copilot) - AI pair programmer
-
----
-
-⚠️ **Content Warning**: This project contains explicit language. Use responsibly and only in appropriate contexts.

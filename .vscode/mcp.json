@@ -7,7 +7,7 @@
 				"--rm",
 				"-i",
 				"--name",
-				"foaas-mcp-stdio",
+				"foaas-mcp-local",
 				"foaas-mcp"
 			],
 			"type": "stdio"

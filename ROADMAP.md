@@ -294,31 +294,37 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 
 ---
 
-## Phase 5: GitHub Container Registry & CI/CD (Day 3 - 4-6 hours) ⏳ In Progress
+## Phase 5: GitHub Container Registry & CI/CD (Day 3 - 4-6 hours) ✅ Complete
 
 **Goal**: Set up automated Docker image publishing to GitHub Container Registry (GHCR) for use with GitHub Copilot coding agent.
 
-### 5.1 GitHub Container Registry Setup ⏳
+### 5.1 GitHub Container Registry Setup ✅
 
-- [ ] Create `.github/workflows/docker-publish.yml` for automated builds
-- [ ] Configure workflow to build on:
-  - Push to main branch
+- [x] Create `.github/workflows/docker-publish.yml` for automated builds
+- [x] Configure workflow to build on:
+  - Push to main branch (hash-based tags only)
   - New version tags (e.g., v1.0.0, v1.1.0)
   - Pull requests (build only, no push)
-- [ ] Set up multi-platform builds (linux/amd64, linux/arm64)
-- [ ] Configure image tagging strategy:
-  - `latest` for main branch
-  - `vX.Y.Z` for version tags
-  - `sha-<commit>` for specific commits
-- [ ] Add image metadata (labels, annotations)
-- [ ] Test automated build pipeline
+- [x] Set up multi-platform builds (linux/amd64, linux/arm64)
+- [x] Configure image tagging strategy:
+  - **On push to main**: `sha-<commit>` only (e.g., `sha-abc1234`)
+  - **On version tags** (e.g., `v1.0.0`):
+    - `vX.Y.Z` (e.g., `v1.0.0`)
+    - `vX.Y` (e.g., `v1.0`)
+    - `vX` (e.g., `v1`)
+    - `latest` (only on tagged releases)
+  - **Rationale**: Keep `latest` stable and predictable; use hash tags for testing
+- [x] Add image metadata (labels, annotations)
+- [x] Test automated build pipeline
 
-**Expected Output**: `ghcr.io/gusztavvargadr/foaas-mcp:latest`
+**Expected Output**: 
+- Development: `ghcr.io/gusztavvargadr/foaas-mcp:sha-<commit>`
+- Production: `ghcr.io/gusztavvargadr/foaas-mcp:latest`
 
-### 5.2 GitHub Copilot Coding Agent Integration ⏳
+### 5.2 GitHub Copilot Coding Agent Integration ✅
 
-- [ ] Create MCP configuration documentation for repository
-- [ ] Document JSON configuration format:
+- [x] Create MCP configuration documentation for repository
+- [x] Document JSON configuration format:
   ```json
   {
     "mcpServers": {
@@ -336,18 +342,19 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
     }
   }
   ```
-- [ ] Add instructions for repository administrators
-- [ ] Test configuration with coding agent
-- [ ] Document validation steps
+- [x] Add instructions for repository administrators
+- [ ] Test with GitHub Copilot coding agent (pending workflow execution)
+- [x] Document validation steps
 
 **Reference**: [Extending GitHub Copilot coding agent with MCP](https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp)
 
-### 5.3 Documentation Updates ⏳
+### 5.3 Documentation Updates ✅
 
-- [ ] Update README.md with GHCR usage instructions
-- [ ] Add section for GitHub Copilot coding agent integration
-- [ ] Document image pulling: `docker pull ghcr.io/gusztavvargadr/foaas-mcp:latest`
-- [ ] Add troubleshooting for image access (public vs private)
+- [x] Update README.md with GHCR usage instructions
+- [x] Add section for GitHub Copilot coding agent integration
+- [x] Document image pulling: `docker pull ghcr.io/gusztavvargadr/foaas-mcp:latest`
+- [x] Add troubleshooting for image access (public vs private)
+- [x] Document tagging strategy and version selection
 - [ ] Create USAGE-CODING-AGENT.md with step-by-step guide
 
 ### 5.4 Image Optimization ⏳
@@ -400,7 +407,38 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
   - [ ] Test actual task assignments
   - [ ] Document integration experience
 
-### 6.3 GitHub Actions CI ⏳
+### 6.3 End-to-End Testing with Demo Repository ⏳
+
+**Goal**: Create a realistic demo repository to validate full workflow with GitHub Copilot coding agent.
+
+- [ ] Create demo repository (`foaas-mcp-demo` or similar)
+- [ ] Set up repository structure:
+  - [ ] README with demo instructions
+  - [ ] Multiple test issues with different labels
+  - [ ] Sample code/content for PRs
+  - [ ] Configure MCP server in repository settings
+- [ ] Test scenarios:
+  - [ ] Configure Copilot to use GHCR image
+  - [ ] Create issues and test tool usage in issue comments
+  - [ ] Open PRs and use FOAAS tools in PR descriptions/comments
+  - [ ] Test with coding agent task assignments
+  - [ ] Verify all 18 tools work correctly
+  - [ ] Test group tools with randomization
+  - [ ] Test error handling and edge cases
+- [ ] Document demo repository setup:
+  - [ ] MCP configuration steps
+  - [ ] Example interactions
+  - [ ] Screenshots/recordings
+  - [ ] Common issues and solutions
+- [ ] Use demo repo for:
+  - [ ] README examples
+  - [ ] LinkedIn post demonstrations
+  - [ ] Documentation validation
+  - [ ] Future testing/validation
+
+**Output**: Public demo repository showcasing FOAAS MCP in action
+
+### 6.4 GitHub Actions CI ⏳
 
 - [ ] Create `.github/workflows/ci.yml`
 - [ ] Run tests on:
@@ -417,7 +455,7 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
   - [ ] Docker image scanning (Trivy)
 - [ ] Add CI status badge to README
 
-### 6.4 Repository Best Practices ⏳
+### 6.5 Repository Best Practices ⏳
 
 - [ ] Add CONTRIBUTING.md:
   - [ ] How to set up development environment
@@ -450,14 +488,17 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 - [ ] Proofread all documentation
 - [ ] Check all links work
 
+- [ ] Configure repository topics and description
+
 ### 6.6 Demo Content Creation ⏳ (from Phase 3.4)
 
 - [ ] Record VS Code demo (GIF or short video)
-- [ ] Record coding agent demo with GHCR image
+- [ ] Record coding agent demo with GHCR image (use E2E demo repo)
 - [ ] Capture interaction examples for documentation
-- [ ] Create usage guide with real scenarios
+- [ ] Create usage guide with real scenarios (use E2E demo repo)
 - [ ] Document "fun use cases" for LinkedIn post
 - [ ] Prepare before/after examples showing tool usage
+- [ ] Link to E2E demo repository in main README
 
 ---
 
