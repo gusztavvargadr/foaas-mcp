@@ -55,7 +55,7 @@ docker pull ghcr.io/gusztavvargadr/foaas-mcp:sha-abc1234
 **Image Tagging Strategy**:
 - `latest` - Latest stable release (updated only on version tags)
 - `v1`, `v1.0`, `v1.0.0` - Semantic version tags
-- `sha-<commit>` - Specific commit (for testing main branch)
+- `sha-<commit>` - Specific commit hash (e.g., sha-abc1234) for testing main branch builds
 
 ### Building from Source
 
