@@ -8,8 +8,8 @@ export const tellOffTool = {
   name: 'tell_off',
   description: '⚠️ EXPLICIT CONTENT: Direct confrontation with a specific target. Randomly selects from: off (classic), gfy (military), chainsaw (Heathers), dalton (hero), or keep (extended dismissal).',
   inputSchema: z.object({
-    target: z.string().describe('Who/what to confront (e.g., "Bob", "the bug", "that feature")'),
-    from: z.string().describe('Who is doing the confronting'),
+    target: z.string().describe('REQUIRED: Who/what to tell off. Use context: issue author, PR creator, person making unwanted request, annoying bug, etc.'),
+    from: z.string().describe('REQUIRED: Who is doing the confronting. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
     operation: z.enum(['off', 'gfy', 'chainsaw', 'dalton', 'keep', 'random']).default('random')
       .describe('Which operation to use. Default: random selection')
   }),

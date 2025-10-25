@@ -8,10 +8,10 @@ export const expressAppreciationTool = {
   name: 'express_appreciation',
   description: '⚠️ EXPLICIT CONTENT: Express sarcastic or genuine appreciation. Randomly selects from available operations: thanks (sarcastic), awesome (enthusiastic), or legend (praise a person).',
   inputSchema: z.object({
-    target: z.string().optional().describe('Person/thing to appreciate (required only for "legend" operation)'),
-    from: z.string().describe('Who is expressing appreciation'),
+    from: z.string().describe('REQUIRED: Who is expressing appreciation. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
+    target: z.string().optional().describe('OPTIONAL: Person to appreciate (required for "legend" operation). Use context: issue author, PR creator, user being thanked, etc.'),
     operation: z.enum(['thanks', 'awesome', 'legend', 'random']).default('random')
-      .describe('Which operation to use. Default: random selection based on parameters')
+      .describe('OPTIONAL: Which operation to use. Default: random selection based on parameters')
   }),
   handler: async (args: { target?: string; from: string; operation?: AppreciationOperation }, client: FoaasClient): Promise<CallToolResult> => {
     let op = args.operation || 'random';

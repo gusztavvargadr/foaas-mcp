@@ -1,8 +1,15 @@
 {
 	"servers": {
-		"foaas-mcp-dev": {
-			"command": "node",
-			"args": ["dist/index.js"],
+		"foaas-mcp-local": {
+			"command": "docker",
+			"args": [
+				"run",
+				"--rm",
+				"-i",
+				"--name",
+				"foaas-mcp-stdio",
+				"foaas-mcp"
+			],
 			"type": "stdio"
 		}
 	},

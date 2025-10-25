@@ -8,7 +8,7 @@ export const declineRequestTool = {
   name: 'decline_request',
   description: '⚠️ EXPLICIT CONTENT: Decline a request or reject a modification. Randomly selects from: because (answer "why"), zero (express no interest), or bye (end conversation).',
   inputSchema: z.object({
-    from: z.string().describe('Who is declining the request'),
+    from: z.string().describe('REQUIRED: Who is declining. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
     operation: z.enum(['because', 'zero', 'bye', 'random']).default('random')
       .describe('Which operation to use. Default: random selection')
   }),

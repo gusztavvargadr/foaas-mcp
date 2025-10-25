@@ -6,8 +6,8 @@ export const legendTool = {
   name: 'foaas_legend',
   description: '⚠️ EXPLICIT CONTENT: Call someone a "fucking legend". Use for genuine praise of a person.',
   inputSchema: z.object({
-    name: z.string().describe('Person to call a legend (e.g., "Sarah", "the architect")'),
-    from: z.string().describe('Who is giving the praise')
+    name: z.string().describe('REQUIRED: Person to call a legend. Use context: issue author, PR creator, helpful contributor, etc.'),
+    from: z.string().describe('REQUIRED: Who is giving the praise. Use "Copilot" when called by AI, otherwise use the current user\'s name.')
   }),
   handler: async (args: { name: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
     const response = await client.legend(args.name, args.from);
