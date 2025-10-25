@@ -1,6 +1,11 @@
 # Build stage
 FROM node:20.19.5-bookworm-slim AS builder
 
+# Build arguments for metadata
+ARG VERSION=dev
+ARG COMMIT_SHA=unknown
+ARG BUILD_DATE=unknown
+
 WORKDIR /app
 
 # Copy package files
@@ -18,6 +23,23 @@ RUN npm run build
 
 # Production stage - Use Debian Bookworm Slim for better security updates
 FROM node:20.19.5-bookworm-slim
+
+# Re-declare build arguments for this stage
+ARG VERSION=dev
+ARG COMMIT_SHA=unknown
+ARG BUILD_DATE=unknown
+
+# Add OCI labels for container metadata
+LABEL org.opencontainers.image.title="FOAAS MCP Server"
+LABEL org.opencontainers.image.description="MCP server to expose FOAAS (Fuck Off As A Service) functionality to AI clients"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.revision="${COMMIT_SHA}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
+LABEL org.opencontainers.image.authors="gusztavvargadr"
+LABEL org.opencontainers.image.url="https://github.com/gusztavvargadr/foaas-mcp"
+LABEL org.opencontainers.image.source="https://github.com/gusztavvargadr/foaas-mcp"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.vendor="gusztavvargadr"
 
 # Install dumb-init for proper signal handling
 RUN apt-get update && \
