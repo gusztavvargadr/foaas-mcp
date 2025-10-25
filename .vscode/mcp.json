@@ -1,6 +1,6 @@
 {
 	"servers": {
-		"foaas-mcp-dev": {
+		"foaas-mcp-local": {
 			"command": "docker",
 			"args": [
 				"run",

@@ -24,34 +24,24 @@ This project uses **Docker as the primary runtime** for security reasons:
    - Restart the MCP server to pick up changes (GitHub Copilot status bar → restart)
    - The server runs in a container automatically
 
-3. **HTTP Server for Testing**:
-   ```bash
-   docker-compose up
-   ```
-
 ### Local Development (Only for Iteration)
 
 Only use local Node.js during rapid development:
 ```bash
-npm run dev      # stdio transport
-npm run dev:http # HTTP transport
+npm run dev      # stdio transport only
 ```
 
 **Always test with Docker before committing.**
 
 ## Architecture
 
-### Transport Modes
+### Transport Mode
 
-1. **stdio** (default): For VS Code MCP integration
-   - Used by: `.vscode/mcp.json`
-   - No network exposure
-   - Direct stdin/stdout communication
-
-2. **HTTP/SSE**: For remote MCP clients
-   - Used by: Docker Compose, HTTP server
-   - Port 3000 (configurable via PORT env var)
-   - SSE endpoint at `/sse`
+**stdio only**: For VS Code MCP integration
+- Used by: `.vscode/mcp.json`
+- No network exposure
+- Direct stdin/stdout communication
+- Maximum security (no HTTP server needed)
 
 ### Tool Categories
 
@@ -195,7 +185,6 @@ npm run docker:build
 
 - **VS Code MCP Logs**: View → Output → "Model Context Protocol"
 - **Container Logs**: `docker logs foaas-mcp-stdio` (if running)
-- **HTTP Server Logs**: `docker-compose logs -f`
 
 ## MCP Protocol Details
 
