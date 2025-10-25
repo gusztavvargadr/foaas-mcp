@@ -51,7 +51,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             # Latest tag only on version tags
-            type=raw,value=latest,enable={{ startsWith(github.ref, 'refs/tags/v') }}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
             # SHA-based tag for main branch commits
             type=sha,prefix=sha-,enable={{is_default_branch}}
           labels: |
