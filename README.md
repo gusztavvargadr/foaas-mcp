@@ -32,7 +32,7 @@ A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io)
 
 2. **Use with VS Code**:
    - The `.vscode/mcp.json` is pre-configured to use Docker
-   - Restart MCP server (GitHub Copilot status bar → restart MCP servers)
+   - Restart MCP server (via GitHub Copilot status bar → Restart MCP Servers)
    - Test in GitHub Copilot chat
    - Start using FOAAS tools!
 
