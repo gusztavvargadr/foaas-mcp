@@ -32,7 +32,7 @@ docker pull ghcr.io/gusztavvargadr/foaas-mcp:latest
 docker pull ghcr.io/gusztavvargadr/foaas-mcp:v1.0.0
 
 # Or pull a specific commit (for testing)
-docker pull ghcr.io/gusztavvargadr/foaas-mcp:sha-abc1234
+docker pull ghcr.io/gusztavvargadr/foaas-mcp:sha-a1b2c3d
 ```
 
 **Configure in VS Code** (`.vscode/mcp.json`):
@@ -55,7 +55,7 @@ docker pull ghcr.io/gusztavvargadr/foaas-mcp:sha-abc1234
 **Image Tagging Strategy**:
 - `latest` - Latest stable release (updated only on version tags)
 - `v1`, `v1.0`, `v1.0.0` - Semantic version tags
-- `sha-<commit>` - Specific commit hash (e.g., sha-abc1234) for testing main branch builds
+- `sha-<commit>` - Specific commit hash (e.g., sha-a1b2c3d) for testing main branch builds
 
 ### Building from Source
 

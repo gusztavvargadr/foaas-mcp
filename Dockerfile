@@ -32,9 +32,9 @@ ARG BUILD_DATE=unknown
 # Add OCI labels for container metadata
 LABEL org.opencontainers.image.title="FOAAS MCP Server"
 LABEL org.opencontainers.image.description="MCP server to expose FOAAS (Fuck Off As A Service) functionality to AI clients"
-LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.revision="${COMMIT_SHA}"
-LABEL org.opencontainers.image.created="${BUILD_DATE}"
+LABEL org.opencontainers.image.version=$VERSION
+LABEL org.opencontainers.image.revision=$COMMIT_SHA
+LABEL org.opencontainers.image.created=$BUILD_DATE
 LABEL org.opencontainers.image.authors="gusztavvargadr"
 LABEL org.opencontainers.image.url="https://github.com/gusztavvargadr/foaas-mcp"
 LABEL org.opencontainers.image.source="https://github.com/gusztavvargadr/foaas-mcp"
