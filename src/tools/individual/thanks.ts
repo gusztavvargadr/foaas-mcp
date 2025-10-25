@@ -6,7 +6,7 @@ export const thanksTool = {
   name: 'foaas_thanks',
   description: '⚠️ EXPLICIT CONTENT: Sarcastic "fuck you very much" response. Use for ironic gratitude or sarcastic thanks.',
   inputSchema: z.object({
-    from: z.string().describe('Who is saying thanks (e.g., "Developer", "The Team")')
+    from: z.string().describe('REQUIRED: Who is saying thanks. Use "Copilot" when called by AI, otherwise use the current user\'s name.')
   }),
   handler: async (args: { from: string }, client: FoaasClient): Promise<CallToolResult> => {
     const response = await client.thanks(args.from);

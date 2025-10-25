@@ -6,7 +6,7 @@ export const zeroTool = {
   name: 'foaas_zero',
   description: '⚠️ EXPLICIT CONTENT: "Zero, that\'s the number of fucks I give." Use to express complete disinterest.',
   inputSchema: z.object({
-    from: z.string().describe('Who gives zero fucks')
+    from: z.string().describe('REQUIRED: Who gives zero fucks. Use "Copilot" when called by AI, otherwise use the current user\'s name.')
   }),
   handler: async (args: { from: string }, client: FoaasClient): Promise<CallToolResult> => {
     const response = await client.zero(args.from);

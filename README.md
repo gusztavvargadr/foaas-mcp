@@ -32,8 +32,8 @@ A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io)
 
 2. **Use with VS Code**:
    - The `.vscode/mcp.json` is pre-configured to use Docker
-   - Reload VS Code window (Cmd/Ctrl + Shift + P → "Reload Window")
-   - Open GitHub Copilot chat
+   - Restart MCP server (GitHub Copilot status bar → restart MCP servers)
+   - Test in GitHub Copilot chat
    - Start using FOAAS tools!
 
 ### Example Usage
@@ -231,7 +231,7 @@ npm run docker:build
 4. **Test**:
    ```bash
    npm run docker:build
-   # Reload VS Code and test in Copilot
+   # Restart MCP server (GitHub Copilot status bar) and test in Copilot
    ```
 
 ### Updating Dependencies
@@ -262,7 +262,7 @@ echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | docker run --rm -i foaas
 
 ### Tools not appearing
 
-1. Reload VS Code window
+1. Restart MCP server (GitHub Copilot status bar → restart MCP servers)
 2. Verify `.vscode/mcp.json` exists
 3. Check Docker image built: `docker images | grep foaas-mcp`
 

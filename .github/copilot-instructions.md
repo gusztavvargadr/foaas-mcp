@@ -21,7 +21,7 @@ This project uses **Docker as the primary runtime** for security reasons:
 
 2. **Testing with VS Code MCP**: 
    - The `.vscode/mcp.json` is configured to use Docker via stdio
-   - Reload VS Code window to restart the MCP server
+   - Restart the MCP server to pick up changes (GitHub Copilot status bar → restart)
    - The server runs in a container automatically
 
 3. **HTTP Server for Testing**:
@@ -74,7 +74,7 @@ npm run dev:http # HTTP transport
      name: 'foaas_operation',
      description: '⚠️ EXPLICIT CONTENT: Brief description',
      inputSchema: z.object({
-       param: z.string().describe('Parameter description')
+       param: z.string().describe('REQUIRED: Parameter description. Use "Copilot" when called by AI, otherwise use the current user\'s name.')
      }),
      handler: async (args, client) => {
        const response = await client.operation(args.param);
@@ -99,10 +99,56 @@ npm run dev:http # HTTP transport
    }
    ```
 
+### Tool Schema Best Practices
+
+When defining tool input schemas, follow these patterns to help AI clients understand what parameters to provide:
+
+1. **Required Parameters**:
+   - Start description with `REQUIRED:` prefix
+   - Provide context-aware guidance for the AI
+   - Example: `'REQUIRED: Who is expressing appreciation. Use "Copilot" when called by AI, otherwise use the current user\'s name.'`
+
+2. **Optional Parameters**:
+   - Start description with `OPTIONAL:` prefix
+   - Explain when/why the parameter is needed
+   - Example: `'OPTIONAL: Person to appreciate (required for "legend" operation). Use context: issue author, PR creator, etc.'`
+
+3. **Context-Aware `from` Parameters**:
+   - Always suggest `"Copilot"` for AI callers
+   - Guide human users to use their own name
+   - Pattern: `'REQUIRED: Who is [action]. Use "Copilot" when called by AI, otherwise use the current user\'s name.'`
+
+4. **Context-Aware `name`/`target` Parameters**:
+   - Provide situational examples based on common use cases
+   - Help AI understand who the message should target
+   - Pattern: `'REQUIRED: Who/what to [action]. Use context: issue author, PR creator, person making request, annoying bug, etc.'`
+
+5. **Parameter Ordering**:
+   - Put most important required parameters first
+   - Put `from` parameter before `target`/`name` for consistency
+   - Put optional parameters last
+
+**Example - Good Schema**:
+```typescript
+inputSchema: z.object({
+  from: z.string().describe('REQUIRED: Who is giving praise. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
+  name: z.string().describe('REQUIRED: Person to praise. Use context: issue author, PR creator, helpful contributor, etc.'),
+  operation: z.enum(['thanks', 'awesome']).default('thanks').describe('OPTIONAL: Which operation. Default: thanks')
+})
+```
+
+**Example - Poor Schema**:
+```typescript
+inputSchema: z.object({
+  name: z.string().describe('Person'),
+  from: z.string().describe('Sender')
+})
+```
+
 ### Testing Changes
 
 1. Rebuild Docker image: `npm run docker:build`
-2. Reload VS Code to test with MCP
+2. Restart MCP server (GitHub Copilot status bar → restart MCP servers)
 3. Manually test tools via GitHub Copilot chat
 4. Check logs in VS Code Output panel (Model Context Protocol)
 
@@ -136,7 +182,7 @@ npm run dev:http # HTTP transport
 2. Create tool file in `src/tools/individual/newop.ts`
 3. Import and register in `src/server.ts`
 4. Rebuild: `npm run docker:build`
-5. Test in VS Code
+5. Restart MCP server and test
 
 ### Updating Dependencies
 
