@@ -73,13 +73,14 @@ jobs:
             echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Build Docker image (test only for PRs, build+push for main/tags)
+      - name: Build Docker image for testing (amd64 only)
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
-          push: false  # Don't push yet, test first
+          platforms: linux/amd64
+          push: false
+          load: true  # Load image into Docker for testing
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -88,8 +89,6 @@ jobs:
             VERSION=${{ steps.version.outputs.version }}
             COMMIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ steps.timestamp.outputs.date }}
-          # Load the amd64 image for testing (can't load multi-platform)
-          outputs: type=docker,platform=linux/amd64
 
       - name: Test MCP Server
         run: |
