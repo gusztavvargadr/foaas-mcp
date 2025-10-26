@@ -1,5 +1,19 @@
 # GitHub Copilot Instructions for FOAAS MCP
 
+## 🚨 CRITICAL: Code Review Guidelines (READ FIRST)
+
+**Before suggesting improvements in PR reviews:**
+
+1. ✅ **Check `docs/roadmap/backlog/`** - Is it already planned?
+2. ✅ **Check `docs/roadmap/next/`** - Is it in progress?
+3. ❌ **Don't suggest** improvements already documented in the roadmap
+
+**Example**: Don't flag "CI is too complex" - it's tracked in `build-script-externalization.md`
+
+**Why?** Keep reviews focused on current PR quality, not rehashing known future work.
+
+---
+
 ## Project Overview
 
 MCP server exposing FOAAS (Fuck Off As A Service) via Docker. Uses stdio transport for VS Code integration.
@@ -172,7 +186,7 @@ npm run docker:build && npm test
 
 ## Roadmap Workflow (CRITICAL)
 
-**ALWAYS consult the roadmap before starting any feature work:**
+**ALWAYS consult the roadmap before starting any feature work OR reviewing PRs:**
 
 1. **Before starting**:
    - ✅ Check `docs/roadmap/next/` for active work (avoid conflicts)
@@ -189,5 +203,8 @@ npm run docker:build && npm test
    - Add completion date and set status to "Completed"
    - **Update current state in other docs** (README, DEVELOPMENT, TOOLS, etc.)
    - Completed items are append-only (don't heavily edit them)
+
+4. **When reviewing PRs** ⚠️:
+   - See "Code Review Guidelines" above
 
 **Philosophy**: Incremental, append-only approach. Git history = journey, completed files = decisions, current docs = present state.

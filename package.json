@@ -19,9 +19,14 @@
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f",
-    "test": "./test-server.sh",
-    "test:local": "./test-server.sh foaas-mcp:local",
-    "test:registry": "./test-server.sh ghcr.io/gusztavvargadr/foaas-mcp:${REGISTRY_TAG:-latest}"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:docker": "./test-server.sh",
+    "test:docker:local": "./test-server.sh foaas-mcp:local",
+    "test:docker:registry": "./test-server.sh ghcr.io/gusztavvargadr/foaas-mcp:${REGISTRY_TAG:-latest}",
+    "test:all": "npm test && npm run test:docker"
   },
   "repository": {
     "type": "git",
@@ -48,7 +53,10 @@
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
+    "@vitest/coverage-v8": "^2.1.9",
+    "@vitest/ui": "^2.1.9",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.9"
   }
 }
