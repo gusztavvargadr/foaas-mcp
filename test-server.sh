@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Test script for FOAAS MCP Server
 # Run this after building to verify everything works
 
