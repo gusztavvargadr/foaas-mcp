@@ -10,6 +10,11 @@ on:
     branches:
       - main
 
+# Cancel in-progress runs for the same PR/branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -25,9 +30,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -54,6 +56,8 @@ jobs:
             type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
             # SHA-based tag for main branch commits
             type=sha,prefix=sha-,enable=${{ github.ref_name == 'main' }}
+            # PR tags for testing (format: pr-<number>, e.g., pr-5)
+            type=ref,event=pr
           labels: |
             org.opencontainers.image.title=FOAAS MCP Server
             org.opencontainers.image.description=MCP server to expose FOAAS (Fuck Off As A Service) functionality to AI clients
@@ -64,21 +68,81 @@ jobs:
         id: timestamp
         run: echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
-      - name: Build and push Docker image
+      - name: Extract version from ref
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Docker image for testing (amd64 only)
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          platforms: linux/amd64
+          push: false
+          load: true  # Load image into Docker for testing
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VERSION=${{ github.ref_name }}
+            VERSION=${{ steps.version.outputs.version }}
+            COMMIT_SHA=${{ github.sha }}
+            BUILD_DATE=${{ steps.timestamp.outputs.date }}
+
+      - name: Test MCP Server
+        run: |
+          echo "🧪 Testing FOAAS MCP Server..."
+          
+                    # List loaded images for debugging
+          echo "Available Docker images:"
+          docker images | grep -E "^ghcr.io/gusztavvargadr/foaas-mcp"
+          
+          # Get the first tag from the metadata
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          echo "Testing image: $IMAGE_TAG"
+          
+          # Verify image exists
+          if ! docker image inspect "$IMAGE_TAG" >/dev/null 2>&1; then
+            echo "❌ Error: Image $IMAGE_TAG not found"
+            echo "Available images:"
+            docker images
+            exit 1
+          fi
+          
+          # Make test script executable
+          chmod +x ./test-server.sh
+          
+          # Run the test script
+          ./test-server.sh "$IMAGE_TAG"
+          
+          echo "✅ All tests passed!"
+
+      - name: Set up QEMU for multi-arch build
+        if: github.event_name != 'pull_request'
+        uses: docker/setup-qemu-action@v3
+
+      - name: Push Docker image to registry
+        if: github.event_name != 'pull_request'
+        id: push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            VERSION=${{ steps.version.outputs.version }}
             COMMIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ steps.timestamp.outputs.date }}
 
       - name: Image digest
-        run: echo "Image pushed with digest ${{ steps.build.outputs.digest }}"
+        if: github.event_name != 'pull_request'
+        run: echo "Image pushed with digest ${{ steps.push.outputs.digest }}"

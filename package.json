@@ -12,7 +12,16 @@
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
-    "docker:build": "docker build -t foaas-mcp ."
+    "docker:build": "docker compose build",
+    "docker:build:local": "docker compose build",
+    "docker:build:ci": "docker build --build-arg VERSION=${VERSION:-dev} --build-arg COMMIT_SHA=${COMMIT_SHA:-unknown} --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') -t foaas-mcp:${VERSION:-dev} .",
+    "docker:run": "docker compose run --rm foaas-mcp",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "test": "./test-server.sh",
+    "test:local": "./test-server.sh foaas-mcp:local",
+    "test:registry": "./test-server.sh ghcr.io/gusztavvargadr/foaas-mcp:${REGISTRY_TAG:-latest}"
   },
   "repository": {
     "type": "git",

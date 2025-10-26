@@ -1,16 +1,17 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import { fromParam, praisePersonParam, formatFoaasResponse } from '../shared/schemas.js';
 
-type AppreciationOperation = 'thanks' | 'awesome' | 'legend' | 'random';
+type AppreciationOperation = 'thanks' | 'awesome' | 'legend' | 'dalton' | 'random';
 
 export const expressAppreciationTool = {
-  name: 'express_appreciation',
-  description: '⚠️ EXPLICIT CONTENT: Express sarcastic or genuine appreciation. Randomly selects from available operations: thanks (sarcastic), awesome (enthusiastic), or legend (praise a person).',
+  name: 'proper_appreciation',
+  description: '⚠️ EXPLICIT CONTENT: Express sarcastic or genuine appreciation. Randomly selects from available operations: thanks (sarcastic), awesome (enthusiastic), legend (praise), or dalton (problem-solving hero).',
   inputSchema: z.object({
-    from: z.string().describe('REQUIRED: Who is expressing appreciation. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
-    target: z.string().optional().describe('OPTIONAL: Person to appreciate (required for "legend" operation). Use context: issue author, PR creator, user being thanked, etc.'),
-    operation: z.enum(['thanks', 'awesome', 'legend', 'random']).default('random')
+    target: praisePersonParam.optional().describe('OPTIONAL: Person to appreciate (required for "legend" and "dalton" operations). Use context: issue author, PR creator, user being thanked, etc.'),
+    from: fromParam,
+    operation: z.enum(['thanks', 'awesome', 'legend', 'dalton', 'random']).default('random')
       .describe('OPTIONAL: Which operation to use. Default: random selection based on parameters')
   }),
   handler: async (args: { target?: string; from: string; operation?: AppreciationOperation }, client: FoaasClient): Promise<CallToolResult> => {
@@ -19,8 +20,8 @@ export const expressAppreciationTool = {
     // Handle randomization
     if (op === 'random') {
       if (args.target) {
-        // If target provided, can use legend
-        const options: AppreciationOperation[] = ['thanks', 'awesome', 'legend'];
+        // If target provided, can use legend or dalton
+        const options: AppreciationOperation[] = ['thanks', 'awesome', 'legend', 'dalton'];
         op = options[Math.floor(Math.random() * options.length)] as Exclude<AppreciationOperation, 'random'>;
       } else {
         // No target, only thanks or awesome
@@ -37,6 +38,12 @@ export const expressAppreciationTool = {
         }
         response = await client.legend(args.target, args.from);
         break;
+      case 'dalton':
+        if (!args.target) {
+          throw new Error('Target is required for "dalton" operation');
+        }
+        response = await client.dalton(args.target, args.from);
+        break;
       case 'awesome':
         response = await client.awesome(args.from);
         break;
@@ -46,11 +53,6 @@ export const expressAppreciationTool = {
         break;
     }
     
-    return {
-      content: [
-        { type: 'text', text: response.message },
-        { type: 'text', text: response.subtitle }
-      ]
-    };
+    return formatFoaasResponse(response.message, response.subtitle);
   }
 };

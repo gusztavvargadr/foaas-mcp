@@ -1,14 +1,22 @@
 {
 	"servers": {
+		"foaas-mcp-registry": {
+			"command": "docker",
+			"args": [
+				"run",
+				"--rm",
+				"-i",
+				"ghcr.io/gusztavvargadr/foaas-mcp:sha-0102988"
+			],
+			"type": "stdio"
+		},
 		"foaas-mcp-local": {
 			"command": "docker",
 			"args": [
 				"run",
 				"--rm",
 				"-i",
-				"--name",
-				"foaas-mcp-local",
-				"foaas-mcp"
+				"foaas-mcp:local"
 			],
 			"type": "stdio"
 		}
