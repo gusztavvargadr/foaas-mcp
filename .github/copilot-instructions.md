@@ -133,7 +133,6 @@ npm run docker:build && npm test
 - **Confrontations**: off, gfy, chainsaw, keep (direct dismissal)
 - **Frustration**: everyone, flying, asshole (universal frustration)
 - **Code Review & Quality**: logs, rtfm, think, thinking, shutup, look, ridiculous, understand, cool
-- `proper_frustration` - Random from frustration (no target)
 
 ## CI/CD Pipeline
 
