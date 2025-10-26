@@ -88,14 +88,7 @@ jobs:
           | **Branches** | ${BRANCHES_PCT}% |
           | **Functions** | ${FUNCTIONS_PCT}% |
           
-          <details>
-          <summary>📋 View test output</summary>
-          
-          \`\`\`
-          $(cat test-output.txt)
-          \`\`\`
-          
-          </details>
+# (Removed raw test output block for security)
           EOF
 
       - name: Set up Docker Buildx
