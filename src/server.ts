@@ -21,12 +21,15 @@ import { keepTool } from './tools/individual/keep.js';
 import { everyoneTool } from './tools/individual/everyone.js';
 import { flyingTool } from './tools/individual/flying.js';
 import { assholeTool } from './tools/individual/asshole.js';
-
-// Import group tools
-import { expressAppreciationTool } from './tools/groups/express-appreciation.js';
-import { declineRequestTool } from './tools/groups/decline-request.js';
-import { tellOffTool } from './tools/groups/tell-off.js';
-import { expressFrustrationTool } from './tools/groups/express-frustration.js';
+import { logsTool } from './tools/individual/logs.js';
+import { rtfmTool } from './tools/individual/rtfm.js';
+import { thinkTool } from './tools/individual/think.js';
+import { thinkingTool } from './tools/individual/thinking.js';
+import { shutupTool } from './tools/individual/shutup.js';
+import { lookTool } from './tools/individual/look.js';
+import { ridiculousTool } from './tools/individual/ridiculous.js';
+import { understandTool } from './tools/individual/understand.js';
+import { coolTool } from './tools/individual/cool.js';
 
 export function createMcpServer(): Server {
   const server = new Server(
@@ -44,34 +47,37 @@ export function createMcpServer(): Server {
   // Initialize FOAAS client
   const foaasClient = new FoaasClient();
 
-  // Register all individual tools
-  const individualTools = [
+  // Register all tools
+  const allTools = [
+    // Appreciation & Praise
     thanksTool,
     awesomeTool,
     legendTool,
+    daltonTool,
+    // Rejections & Dismissals
     becauseTool,
     zeroTool,
     byeTool,
+    // Direct Confrontations
     offTool,
     gfyTool,
     chainsawTool,
-    daltonTool,
     keepTool,
+    // General Frustration
     everyoneTool,
     flyingTool,
     assholeTool,
+    // Code Review & Quality
+    logsTool,
+    rtfmTool,
+    thinkTool,
+    thinkingTool,
+    shutupTool,
+    lookTool,
+    ridiculousTool,
+    understandTool,
+    coolTool,
   ];
-
-  // Register all group tools
-  const groupTools = [
-    expressAppreciationTool,
-    declineRequestTool,
-    tellOffTool,
-    expressFrustrationTool,
-  ];
-
-  // Combine all tools
-  const allTools = [...individualTools, ...groupTools];
 
   // Register list_tools handler
   server.setRequestHandler(ListToolsRequestSchema, async () => {

@@ -5,7 +5,7 @@ import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const daltonTool = {
   name: 'foaas_dalton',
-  description: 'Use when praising someone for solving difficult problems, fixing critical issues, being a hero, or handling tough situations brilliantly. Requires a target person. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use when praising someone for solving difficult problems, fixing critical issues, being a hero, or handling tough situations brilliantly. Requires a target person.',
   inputSchema: z.object({
     to: toParam,
     from: fromParam

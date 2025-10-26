@@ -10,7 +10,30 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 
 ---
 
-## 📋 Key Decisions & Findings
+## � Recent Updates
+
+### October 26, 2025 - Tool Redesign
+**Removed group tools, expanded to 23 individual tools**
+
+**Decision**: Remove `proper_*` group tools (appreciation, rejection, confrontation, frustration) that used randomization. Replace with scenario-based organization of individual tools.
+
+**Rationale**:
+- Group tools had inconsistent parameters (some required `to`, some didn't)
+- Random selection less useful than AI picking the perfect contextually-appropriate tool
+- Individual tools allow precise responses (e.g., `foaas_logs` for debugging vs. generic frustration)
+- Simpler architecture: 1 tool = 1 FOAAS operation
+- Better demo value: showcases MCP's smart tool selection vs. arbitrary randomness
+
+**Added 9 new tools for common dev scenarios**:
+- Debugging: `logs`, `rtfm`
+- Code review: `think`, `thinking`, `shutup`, `look`
+- Quality: `ridiculous`, `understand`, `cool`
+
+**Impact**: 23 total tools, scenario-based documentation (bug reports, code reviews, PRs, team communication)
+
+---
+
+## �📋 Key Decisions & Findings
 
 ### Architecture
 - **Transport**: ~~Streamable HTTP~~ → **stdio-only** for VS Code MCP (simplified for security)
@@ -19,16 +42,13 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 - **Distribution**: Docker image (HTTP/SSE removed, stdio sufficient for demonstration)
 
 ### Tool Design
-- **18 total tools** (exceeded original plan):
-  - **4 group tools** (intelligent wrappers with randomization, `proper_*` prefix):
-    1. `proper_appreciation` - Thanks/praise (4 operations)
-    2. `proper_rejection` - Rejections (3 operations)
-    3. `proper_confrontation` - Direct confrontations (4 operations)
-    4. `proper_frustration` - Universal frustration (3 operations)
-  - **14 individual tools** (direct operation mapping, `foaas_*` prefix):
-    - thanks, awesome, legend, dalton, because, zero, bye, off, gfy, chainsaw, keep, everyone, flying, asshole
-- **Total**: 14 FOAAS operations available both as groups AND individual tools for flexibility
-- **Naming**: `proper_*` prefix distinguishes non-standard group tools from `foaas_*` API operations
+- **23 individual tools** (expanded from original 14):
+  - **Core operations** (14): thanks, awesome, legend, dalton, because, zero, bye, off, gfy, chainsaw, keep, everyone, flying, asshole
+  - **Code Review & Quality** (9): logs, rtfm, think, thinking, shutup, look, ridiculous, understand, cool
+- **Design philosophy**: All tools use `foaas_*` prefix with direct 1:1 FOAAS API mapping
+- **Grouping**: Organized by development scenarios (bug reports, code reviews, PRs, team communication)
+- **Removed**: `proper_*` group tools (inconsistent parameters, added complexity)
+- **Rationale**: Individual tools allow AI to pick contextually perfect responses vs. random selection
 
 ### Testing Focus
 - ✅ GitHub Copilot in VS Code with customizations

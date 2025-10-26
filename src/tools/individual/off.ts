@@ -5,7 +5,7 @@ import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const offTool = {
   name: 'foaas_off',
-  description: 'Use for direct dismissal of someone, telling a person to go away, rejecting someone firmly, or expressing strong disapproval of an individual. Requires a target. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use for direct dismissal of someone, telling a person to go away, rejecting someone firmly, or expressing strong disapproval of an individual. Requires a target.',
   inputSchema: z.object({
     to: toParam,
     from: fromParam

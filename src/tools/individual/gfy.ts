@@ -5,7 +5,7 @@ import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const gfyTool = {
   name: 'foaas_gfy',
-  description: 'Use for military-style dismissal, telling someone off in a formal manner, dismissing with phonetic code, or adding professional flair to profanity. Requires a target. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use for military-style dismissal, telling someone off in a formal manner, dismissing with phonetic code, or adding professional flair to profanity. Requires a target.',
   inputSchema: z.object({
     to: toParam,
     from: fromParam

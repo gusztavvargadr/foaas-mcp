@@ -5,7 +5,7 @@ import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const keepTool = {
   name: 'foaas_keep',
-  description: 'Use for dealing with persistent annoyances, dismissing someone who keeps bothering you, extended rejection, or emphasizing that someone should stay away. Requires a target. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use for dealing with persistent annoyances, dismissing someone who keeps bothering you, extended rejection, or emphasizing that someone should stay away. Requires a target.',
   inputSchema: z.object({
     to: toParam,
     from: fromParam
