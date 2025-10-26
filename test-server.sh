@@ -4,6 +4,7 @@
 
 set -e
 
+# First argument: Docker image to test (default: foaas-mcp:local)
 IMAGE="${1:-foaas-mcp:local}"
 
 echo "🧪 Testing FOAAS MCP Server: $IMAGE"

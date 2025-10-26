@@ -5,8 +5,18 @@ import { z } from 'zod';
  */
 
 /**
- * The "from" parameter - who is sending/performing the action
- * Used in almost all FOAAS operations
+ * The "from" parameter - who is sending/performing the action.
+ * Used in almost all FOAAS operations.
+ *
+ * Usage:
+ *   - For AI callers: Use "Copilot" or "AI assistant" as the value.
+ *   - For human callers: Use the current user's name.
+ *
+ * Examples:
+ *   - AI: { from: "Copilot" }
+ *   - Human: { from: "Alice" }
+ *
+ * This ensures FOAAS messages are attributed correctly in both automated and manual contexts.
  */
 export const fromParam = z.string().describe(
   'REQUIRED: Who is performing this action. Use "AI assistant" when called by an AI agent, otherwise use the current user\'s name.'

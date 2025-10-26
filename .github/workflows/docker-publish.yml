@@ -98,7 +98,7 @@ jobs:
         run: |
           echo "🧪 Testing FOAAS MCP Server..."
           
-          # List loaded images for debugging
+                    # List loaded images for debugging
           echo "Available Docker images:"
           docker images | grep -E "^ghcr.io/gusztavvargadr/foaas-mcp"
           
