@@ -87,8 +87,6 @@ jobs:
           | **Statements** | ${STATEMENTS_PCT}% |
           | **Branches** | ${BRANCHES_PCT}% |
           | **Functions** | ${FUNCTIONS_PCT}% |
-          
-# (Removed raw test output block for security)
           EOF
 
       - name: Set up Docker Buildx
