@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 type FrustrationOperation = 'everyone' | 'flying' | 'asshole' | 'random';
 
@@ -8,7 +9,7 @@ export const expressFrustrationTool = {
   name: 'express_frustration',
   description: '⚠️ EXPLICIT CONTENT: Express universal frustration or broad dismissal. Randomly selects from: everyone (dismiss all), flying (don\'t care), or asshole (general insult).',
   inputSchema: z.object({
-    from: z.string().describe('REQUIRED: Who is expressing frustration. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
+    from: fromParam,
     operation: z.enum(['everyone', 'flying', 'asshole', 'random']).default('random')
       .describe('Which operation to use. Default: random selection')
   }),
@@ -36,11 +37,6 @@ export const expressFrustrationTool = {
         break;
     }
     
-    return {
-      content: [
-        { type: 'text', text: response.message },
-        { type: 'text', text: response.subtitle }
-      ]
-    };
+    return formatFoaasResponse(response.message, response.subtitle);
   }
 };

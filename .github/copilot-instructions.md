@@ -14,15 +14,25 @@ This is a Model Context Protocol (MCP) server that exposes FOAAS (Fuck Off As A 
 
 This project uses **Docker as the primary runtime** for security reasons:
 
-1. **Building**: Always rebuild the Docker image after code changes:
+1. **Building Locally**:
    ```bash
    npm run docker:build
    ```
+   This uses `docker-compose` to build a local image tagged as `foaas-mcp:local`.
 
 2. **Testing with VS Code MCP**: 
-   - The `.vscode/mcp.json` is configured to use Docker via stdio
+   - The `.vscode/mcp.json` defines two servers:
+     - `foaas-mcp-registry`: Published image from GHCR
+     - `foaas-mcp-local`: Your local build
    - Restart the MCP server to pick up changes (GitHub Copilot status bar → restart)
    - The server runs in a container automatically
+
+3. **CI/CD Builds**:
+   - GitHub Actions uses the same Dockerfile
+   - **Builds image first, tests it, then pushes only if tests pass**
+   - Build args (VERSION, COMMIT_SHA) are set dynamically
+   - Multi-platform builds for amd64 and arm64
+   - Test results visible in GitHub Actions logs
 
 ### Local Development (Only for Iteration)
 
@@ -56,24 +66,37 @@ npm run dev      # stdio transport only
 
 ## Code Guidelines
 
+### Shared Schemas and Utilities
+
+Common parameter definitions and utilities are centralized in `src/tools/shared/schemas.ts`:
+
+- **`fromParam`**: Standard "from" parameter used in all tools
+- **`targetPersonParam`**: Generic target/name parameter for person-directed operations
+- **`praisePersonParam`**: Specific parameter for praise-oriented operations
+- **`dismissPersonParam`**: Specific parameter for dismissal operations  
+- **`disbeliefPersonParam`**: Specific parameter for disbelief expressions
+- **`formatFoaasResponse()`**: Standard response formatter
+
+**Always use these shared definitions** instead of duplicating schemas.
+
 ### When Adding New Tools
 
 1. **Individual Tool Pattern**:
    ```typescript
+   import { z } from 'zod';
+   import type { FoaasClient } from '../../foaas/client.js';
+   import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+   import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
+
    export const newTool = {
      name: 'foaas_operation',
      description: '⚠️ EXPLICIT CONTENT: Brief description',
      inputSchema: z.object({
-       param: z.string().describe('REQUIRED: Parameter description. Use "Copilot" when called by AI, otherwise use the current user\'s name.')
+       from: fromParam  // Use shared schema
      }),
      handler: async (args, client) => {
-       const response = await client.operation(args.param);
-       return {
-         content: [
-           { type: 'text', text: response.message },
-           { type: 'text', text: response.subtitle }
-         ]
-       };
+       const response = await client.operation(args.from);
+       return formatFoaasResponse(response.message, response.subtitle);
      }
    };
    ```
@@ -93,20 +116,19 @@ npm run dev      # stdio transport only
 
 When defining tool input schemas, follow these patterns to help AI clients understand what parameters to provide:
 
-1. **Required Parameters**:
+1. **Use Shared Schemas First**:
+   - Check `src/tools/shared/schemas.ts` for existing parameter definitions
+   - Only create new schemas if the existing ones don't fit
+
+2. **Required Parameters**:
    - Start description with `REQUIRED:` prefix
    - Provide context-aware guidance for the AI
-   - Example: `'REQUIRED: Who is expressing appreciation. Use "Copilot" when called by AI, otherwise use the current user\'s name.'`
+   - Example: `'REQUIRED: Who is expressing appreciation. Use "AI assistant" when called by an AI agent, otherwise use the current user\'s name.'`
 
-2. **Optional Parameters**:
+3. **Optional Parameters**:
    - Start description with `OPTIONAL:` prefix
    - Explain when/why the parameter is needed
    - Example: `'OPTIONAL: Person to appreciate (required for "legend" operation). Use context: issue author, PR creator, etc.'`
-
-3. **Context-Aware `from` Parameters**:
-   - Always suggest `"Copilot"` for AI callers
-   - Guide human users to use their own name
-   - Pattern: `'REQUIRED: Who is [action]. Use "Copilot" when called by AI, otherwise use the current user\'s name.'`
 
 4. **Context-Aware `name`/`target` Parameters**:
    - Provide situational examples based on common use cases
@@ -115,19 +137,21 @@ When defining tool input schemas, follow these patterns to help AI clients under
 
 5. **Parameter Ordering**:
    - Put most important required parameters first
-   - Put `from` parameter before `target`/`name` for consistency
+   - Put `from` parameter before `target`/`name` for consistency (when both present)
    - Put optional parameters last
 
 **Example - Good Schema**:
 ```typescript
+import { fromParam, praisePersonParam, formatFoaasResponse } from '../shared/schemas.js';
+
 inputSchema: z.object({
-  from: z.string().describe('REQUIRED: Who is giving praise. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
-  name: z.string().describe('REQUIRED: Person to praise. Use context: issue author, PR creator, helpful contributor, etc.'),
+  name: praisePersonParam,
+  from: fromParam,
   operation: z.enum(['thanks', 'awesome']).default('thanks').describe('OPTIONAL: Which operation. Default: thanks')
 })
 ```
 
-**Example - Poor Schema**:
+**Example - Poor Schema** (Don't do this):
 ```typescript
 inputSchema: z.object({
   name: z.string().describe('Person'),
@@ -137,12 +161,46 @@ inputSchema: z.object({
 
 ### Testing Changes
 
-1. Rebuild Docker image: `npm run docker:build`
-2. Restart MCP server (GitHub Copilot status bar → restart MCP servers)
-3. Manually test tools via GitHub Copilot chat
-4. Check logs in VS Code Output panel (Model Context Protocol)
+**CRITICAL: Always test after every change!**
+
+**Quick Test (Recommended):**
+```bash
+npm test
+# or explicitly: npm run test:local
+```
+
+**Manual Tests:**
+1. **Build**: `npm run docker:build`
+2. **Test list_tools**: Verify all tools are registered
+   ```bash
+   echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | docker run --rm -i foaas-mcp:local
+   ```
+3. **Test a simple tool**: Verify shared schemas work
+   ```bash
+   echo '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"foaas_awesome","arguments":{"from":"AI assistant"}}}' | docker run --rm -i foaas-mcp:local
+   ```
+4. **Test a complex tool**: Verify person parameters work
+   ```bash
+   echo '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"foaas_legend","arguments":{"name":"the developer","from":"AI assistant"}}}' | docker run --rm -i foaas-mcp:local
+   ```
+5. **Restart MCP server** in VS Code (GitHub Copilot status bar → restart MCP servers)
+6. **Enable foaas-mcp-local** server
+7. **Manual test** via GitHub Copilot chat
+8. **Check logs** in VS Code Output panel (Model Context Protocol)
+
+**Expected Results:**
+- All 18 tools should be listed (14 individual, 4 group)
+- Tool calls should return proper FOAAS responses
+- No errors in server logs
+- "AI assistant" should appear in the subtitle of responses
 
 ## Docker Configuration
+
+### docker-compose.yml
+- Used for local development builds
+- Tags image as `foaas-mcp:local`
+- Single command to build: `npm run docker:build`
+- Simplified workflow compared to raw docker commands
 
 ### Dockerfile
 - Multi-stage build (builder + production)
@@ -151,6 +209,7 @@ inputSchema: z.object({
 - Production stage only includes compiled JS and prod dependencies
 - Runs as non-root user (nodejs)
 - Uses dumb-init for proper signal handling
+- Accepts build args for VERSION, COMMIT_SHA, BUILD_DATE
 
 ### docker-compose.yml
 - **REMOVED**: No longer needed, stdio-only transport
@@ -166,13 +225,41 @@ inputSchema: z.object({
 
 ## Common Tasks
 
+### Local Development Cycle
+
+```bash
+# 1. Make code changes
+# 2. Build local image
+npm run docker:build
+
+# 3. Test (mandatory!)
+npm test
+
+# 4. Restart MCP server in VS Code
+# 5. Test via Copilot (uses foaas-mcp-local server)
+```
+
 ### Adding a New FOAAS Operation
 
 1. Update `src/foaas/client.ts` with new method
-2. Create tool file in `src/tools/individual/newop.ts`
+2. Create tool file in `src/tools/individual/newop.ts` (use shared schemas!)
 3. Import and register in `src/server.ts`
-4. Rebuild: `npm run docker:build`
-5. Restart MCP server and test
+4. **Build**: `npm run docker:build`
+5. **Test the server** (see Testing Changes section above)
+6. **Restart MCP server** and test via VS Code
+
+**Always verify:**
+- Tool appears in list_tools output
+- Tool call returns correct response
+- Shared schemas (fromParam, etc.) are used
+- formatFoaasResponse() is used in handler
+
+### Switching Between Local and Registry Versions
+
+In VS Code MCP settings:
+- Enable `foaas-mcp-local` to test your changes
+- Enable `foaas-mcp-registry` to test published version
+- You can run both simultaneously to compare
 
 ### Updating Dependencies
 
@@ -184,7 +271,8 @@ npm run docker:build
 ### Debugging
 
 - **VS Code MCP Logs**: View → Output → "Model Context Protocol"
-- **Container Logs**: `docker logs foaas-mcp-stdio` (if running)
+- **Container Logs**: `npm run docker:logs`
+- **Build from scratch**: `docker compose build --no-cache`
 
 ## MCP Protocol Details
 
@@ -205,6 +293,24 @@ Focus on what changed and why:
 - "Add foaas_newop tool for XYZ operation"
 - "Update Docker config to use stdio by default"
 - "Fix client error handling for timeout"
+
+### CI/CD Pipeline
+
+**On Pull Requests:**
+1. Checkout code
+2. Build Docker image (amd64 only)
+3. Run automated tests
+4. Report results (no push)
+
+**On Main Branch / Tags:**
+1. Checkout code
+2. Build Docker image (amd64 for testing)
+3. Run automated tests
+4. **If tests pass**: Rebuild for multi-platform (amd64 + arm64)
+5. Push to GitHub Container Registry
+6. Tag with version/SHA
+
+**Failed builds are never published!**
 
 ## When Helping Users
 

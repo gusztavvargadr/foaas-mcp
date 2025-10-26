@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import { fromParam, targetPersonParam, formatFoaasResponse } from '../shared/schemas.js';
 
 type ConfrontationOperation = 'off' | 'gfy' | 'chainsaw' | 'dalton' | 'keep' | 'random';
 
@@ -8,8 +9,8 @@ export const tellOffTool = {
   name: 'tell_off',
   description: '⚠️ EXPLICIT CONTENT: Direct confrontation with a specific target. Randomly selects from: off (classic), gfy (military), chainsaw (Heathers), dalton (hero), or keep (extended dismissal).',
   inputSchema: z.object({
-    target: z.string().describe('REQUIRED: Who/what to tell off. Use context: issue author, PR creator, person making unwanted request, annoying bug, etc.'),
-    from: z.string().describe('REQUIRED: Who is doing the confronting. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
+    target: targetPersonParam,
+    from: fromParam,
     operation: z.enum(['off', 'gfy', 'chainsaw', 'dalton', 'keep', 'random']).default('random')
       .describe('Which operation to use. Default: random selection')
   }),
@@ -43,11 +44,6 @@ export const tellOffTool = {
         break;
     }
     
-    return {
-      content: [
-        { type: 'text', text: response.message },
-        { type: 'text', text: response.subtitle }
-      ]
-    };
+    return formatFoaasResponse(response.message, response.subtitle);
   }
 };

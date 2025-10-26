@@ -64,21 +64,66 @@ jobs:
         id: timestamp
         run: echo "date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
-      - name: Build and push Docker image
+      - name: Extract version from ref
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Docker image (test only for PRs, build+push for main/tags)
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' }}
+          push: false  # Don't push yet, test first
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VERSION=${{ github.ref_name }}
+            VERSION=${{ steps.version.outputs.version }}
+            COMMIT_SHA=${{ github.sha }}
+            BUILD_DATE=${{ steps.timestamp.outputs.date }}
+          # Load the amd64 image for testing (can't load multi-platform)
+          outputs: type=docker,platform=linux/amd64
+
+      - name: Test MCP Server
+        run: |
+          echo "🧪 Testing FOAAS MCP Server..."
+          
+          # Get the first tag from the metadata
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          echo "Testing image: $IMAGE_TAG"
+          
+          # Make test script executable
+          chmod +x ./test-server.sh
+          
+          # Run the test script
+          ./test-server.sh "$IMAGE_TAG"
+          
+          echo "✅ All tests passed!"
+
+      - name: Push Docker image to registry
+        if: github.event_name != 'pull_request'
+        id: push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            VERSION=${{ steps.version.outputs.version }}
             COMMIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ steps.timestamp.outputs.date }}
 
       - name: Image digest
-        run: echo "Image pushed with digest ${{ steps.build.outputs.digest }}"
+        if: github.event_name != 'pull_request'
+        run: echo "Image pushed with digest ${{ steps.push.outputs.digest }}"

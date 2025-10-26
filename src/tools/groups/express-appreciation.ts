@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 type AppreciationOperation = 'thanks' | 'awesome' | 'legend' | 'random';
 
@@ -8,7 +9,7 @@ export const expressAppreciationTool = {
   name: 'express_appreciation',
   description: '⚠️ EXPLICIT CONTENT: Express sarcastic or genuine appreciation. Randomly selects from available operations: thanks (sarcastic), awesome (enthusiastic), or legend (praise a person).',
   inputSchema: z.object({
-    from: z.string().describe('REQUIRED: Who is expressing appreciation. Use "Copilot" when called by AI, otherwise use the current user\'s name.'),
+    from: fromParam,
     target: z.string().optional().describe('OPTIONAL: Person to appreciate (required for "legend" operation). Use context: issue author, PR creator, user being thanked, etc.'),
     operation: z.enum(['thanks', 'awesome', 'legend', 'random']).default('random')
       .describe('OPTIONAL: Which operation to use. Default: random selection based on parameters')
@@ -46,11 +47,6 @@ export const expressAppreciationTool = {
         break;
     }
     
-    return {
-      content: [
-        { type: 'text', text: response.message },
-        { type: 'text', text: response.subtitle }
-      ]
-    };
+    return formatFoaasResponse(response.message, response.subtitle);
   }
 };

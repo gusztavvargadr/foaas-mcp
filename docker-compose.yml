@@ -1,0 +1,18 @@
+services:
+  foaas-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: local-dev
+        COMMIT_SHA: local
+        BUILD_DATE: ${BUILD_DATE:-unknown}
+    image: foaas-mcp:local
+    container_name: foaas-mcp-local
+    # For stdio MCP server, we don't need exposed ports
+    # The container runs and waits for stdin/stdout communication
+    stdin_open: true
+    tty: false
+    environment:
+      - NODE_ENV=production
+    restart: "no"
