@@ -18,7 +18,7 @@ export const expressAppreciationTool = {
     if (args.to) {
       // If target provided, can use legend or dalton
       const options: AppreciationOperation[] = ['thanks', 'awesome', 'legend', 'dalton'];
-      op = options[Math.floor(Math.random() * options.length)]!;
+      op = options[Math.floor(Math.random() * options.length)];
     } else {
       // No target, only thanks or awesome
       op = Math.random() < 0.5 ? 'thanks' : 'awesome';
