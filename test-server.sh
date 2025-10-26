@@ -56,6 +56,7 @@ fi
 echo ""
 echo "🎉 All tests passed! Server is working correctly."
 echo ""
+# Only show next steps if running in an interactive terminal (not in CI)
 if [ -t 1 ]; then
     echo "Next steps:"
     echo "1. Restart MCP server in VS Code"
