@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const zeroTool = {
   name: 'foaas_zero',
-  description: '⚠️ EXPLICIT CONTENT: "Zero, that\'s the number of fucks I give." Use to express complete disinterest.',
+  description: 'Use when expressing complete disinterest, showing zero concern, indicating you don\'t care at all, or dismissing something as unimportant. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

@@ -10,9 +10,6 @@ async function main() {
   
   // Connect server to transport
   await mcpServer.connect(transport);
-
-  // Log to stderr (stdout is used for MCP protocol)
-  console.error('FOAAS MCP Server started via stdio');
 }
 
 main().catch((error) => {

@@ -1,17 +1,17 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { fromParam, dismissPersonParam, formatFoaasResponse } from '../shared/schemas.js';
+import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const keepTool = {
   name: 'foaas_keep',
-  description: '⚠️ EXPLICIT CONTENT: Epic extended "keep fucking off" dismissal. For persistent annoyances.',
+  description: 'Use for dealing with persistent annoyances, dismissing someone who keeps bothering you, extended rejection, or emphasizing that someone should stay away. Requires a target. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
-    name: dismissPersonParam,
+    to: toParam,
     from: fromParam
   }),
-  handler: async (args: { name: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
-    const response = await client.keep(args.name, args.from);
+  handler: async (args: { to: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
+    const response = await client.keep(args.to, args.from);
     return formatFoaasResponse(response.message, response.subtitle);
   }
 };

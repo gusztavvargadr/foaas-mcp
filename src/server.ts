@@ -29,8 +29,6 @@ import { tellOffTool } from './tools/groups/tell-off.js';
 import { expressFrustrationTool } from './tools/groups/express-frustration.js';
 
 export function createMcpServer(): Server {
-  console.error('[FOAAS-MCP] Creating MCP server...');
-  
   const server = new Server(
     {
       name: 'foaas-mcp',
@@ -42,8 +40,6 @@ export function createMcpServer(): Server {
       },
     }
   );
-
-  console.error('[FOAAS-MCP] Server created, initializing FOAAS client...');
   
   // Initialize FOAAS client
   const foaasClient = new FoaasClient();
@@ -77,17 +73,13 @@ export function createMcpServer(): Server {
   // Combine all tools
   const allTools = [...individualTools, ...groupTools];
 
-  console.error(`[FOAAS-MCP] Registered ${allTools.length} tools (${individualTools.length} individual, ${groupTools.length} group)`);
-
   // Register list_tools handler
   server.setRequestHandler(ListToolsRequestSchema, async () => {
-    console.error('[FOAAS-MCP] list_tools request received');
     const tools = allTools.map(tool => ({
       name: tool.name,
       description: tool.description,
       inputSchema: zodToJsonSchema(tool.inputSchema),
     }));
-    console.error(`[FOAAS-MCP] Returning ${tools.length} tool definitions`);
     return { tools };
   });
 
@@ -96,8 +88,7 @@ export function createMcpServer(): Server {
     const toolName = request.params.name;
     const args = request.params.arguments;
     
-    console.error(`[FOAAS-MCP] call_tool request: ${toolName}`);
-    console.error(`[FOAAS-MCP] Arguments received:`, JSON.stringify(args, null, 2));
+    console.error(`[FOAAS-MCP] Tool called: ${toolName}`);
     
     const tool = allTools.find(t => t.name === toolName);
 
@@ -105,24 +96,17 @@ export function createMcpServer(): Server {
       console.error(`[FOAAS-MCP] ERROR: Unknown tool: ${toolName}`);
       throw new Error(`Unknown tool: ${toolName}`);
     }
-
-    console.error(`[FOAAS-MCP] Tool found: ${toolName}, validating arguments...`);
     
     // Parse and validate arguments
     const validatedArgs = tool.inputSchema.parse(args ?? {});
-    
-    console.error(`[FOAAS-MCP] Arguments validated:`, JSON.stringify(validatedArgs, null, 2));
-    console.error(`[FOAAS-MCP] Calling tool handler...`);
 
     // Call the tool handler with the client
     const result = await tool.handler(validatedArgs as never, foaasClient);
     
-    console.error(`[FOAAS-MCP] Tool handler completed successfully`);
+    console.error(`[FOAAS-MCP] Tool completed: ${toolName}`);
     
     return result;
   });
-
-  console.error('[FOAAS-MCP] All handlers registered, server ready');
 
   return server;
 }

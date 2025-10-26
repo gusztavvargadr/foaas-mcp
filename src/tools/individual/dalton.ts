@@ -1,17 +1,17 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { fromParam, praisePersonParam, formatFoaasResponse } from '../shared/schemas.js';
+import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const daltonTool = {
   name: 'foaas_dalton',
-  description: '⚠️ EXPLICIT CONTENT: Calls someone a "fucking problem solving super-hero" (Road House reference).',
+  description: 'Use when praising someone for solving difficult problems, fixing critical issues, being a hero, or handling tough situations brilliantly. Requires a target person. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
-    name: praisePersonParam,
+    to: toParam,
     from: fromParam
   }),
-  handler: async (args: { name: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
-    const response = await client.dalton(args.name, args.from);
+  handler: async (args: { to: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
+    const response = await client.dalton(args.to, args.from);
     return formatFoaasResponse(response.message, response.subtitle);
   }
 };

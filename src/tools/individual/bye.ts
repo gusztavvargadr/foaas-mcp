@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const byeTool = {
   name: 'foaas_bye',
-  description: '⚠️ EXPLICIT CONTENT: "Fuckity bye-bye!" Use for emphatic goodbyes or ending conversations.',
+  description: 'Use for ending conversations emphatically, saying goodbye dismissively, terminating discussions, or leaving a situation dramatically. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

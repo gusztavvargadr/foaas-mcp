@@ -34,37 +34,39 @@ Intelligent wrappers that randomly select from multiple operations. **Not standa
 
 ### proper_appreciation
 **Operations**: thanks, awesome, legend, dalton  
-**Parameters**: `target` (optional), `from`, `operation` (optional)
+**Parameters**: `to` (optional), `from`
 
 Use when: Praise contributors, celebrate wins, express thanks
 
 ### proper_rejection  
 **Operations**: because, zero, bye  
-**Parameters**: `from`, `operation` (optional)
+**Parameters**: `from`
 
 Use when: Decline requests, reject suggestions, end conversations
 
 ### proper_confrontation
 **Operations**: off, gfy, chainsaw, keep  
-**Parameters**: `target` (required), `from`, `operation` (optional)
+**Parameters**: `to` (required), `from`
 
 Use when: Dismiss specific people/things, direct confrontation
 
 ### proper_frustration
 **Operations**: everyone, flying, asshole  
-**Parameters**: `from`, `operation` (optional)
+**Parameters**: `from`
 
 Use when: Express universal frustration, show complete apathy
 
 ## Parameter Patterns
 
-**Pattern A - Target-based:**
-- `proper_appreciation`: target optional (some ops don't need it)
-- `proper_confrontation`: target required (all ops need it)
+All tools use consistent **`from`/`to`** parameter naming:
 
-**Pattern B - No target:**
-- `proper_rejection`: general statements
-- `proper_frustration`: universal feelings
+- **`from`** (required): Who is performing the action (e.g., user name, person's name)
+- **`to`** (optional/required): Who/what receives the message
+  - Required for: `proper_confrontation`, individual tools like `foaas_off`, `foaas_legend`, etc.
+  - Optional for: `proper_appreciation` (depends on operation)
+  - Not used: `proper_rejection`, `proper_frustration`, simple tools like `foaas_thanks`
+
+This consistent naming makes it easier for AI agents to understand the message direction.
 
 ## Examples
 
@@ -73,8 +75,8 @@ Use when: Express universal frustration, show complete apathy
 {
   "name": "foaas_legend",
   "arguments": {
-    "name": "the developer",
-    "from": "AI assistant"
+    "to": "the developer",
+    "from": "Alice"
   }
 }
 ```
@@ -84,8 +86,8 @@ Use when: Express universal frustration, show complete apathy
 {
   "name": "proper_appreciation",
   "arguments": {
-    "target": "the developer",
-    "from": "AI assistant",
+    "to": "the developer",
+    "from": "Bob",
     "operation": "random"
   }
 }
@@ -96,7 +98,7 @@ Use when: Express universal frustration, show complete apathy
 {
   "name": "proper_frustration",
   "arguments": {
-    "from": "AI assistant",
+    "from": "Charlie",
     "operation": "random"
   }
 }
