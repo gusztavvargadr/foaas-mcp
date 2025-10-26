@@ -45,7 +45,9 @@ jobs:
 
       - name: Run unit tests
         id: test
-        run: npm test 2>&1 | tee test-output.txt
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test-output.txt
 
       - name: Run coverage report
         id: coverage
@@ -87,7 +89,7 @@ jobs:
           | **Functions** | ${FUNCTIONS_PCT}% |
           
           <details>
-          <summary>� View test output</summary>
+          <summary>📋 View test output</summary>
           
           \`\`\`
           $(tail -30 test-output.txt)
@@ -175,7 +177,7 @@ jobs:
             exit 1
           fi
           
-          # Get image size
+          # Get image size (docker inspect returns bytes, convert to MB)
           IMAGE_SIZE=$(docker image inspect "$IMAGE_TAG" --format='{{.Size}}' | awk '{printf "%.0f", $1/1024/1024}')
           echo "image_size=${IMAGE_SIZE}" >> $GITHUB_OUTPUT
           
