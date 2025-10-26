@@ -107,12 +107,6 @@ async newop(name: string, from: string): Promise<FoaasResponse> {
 ```
 ```
 
-**2. Add client method** (`src/foaas/client.ts`):
-```typescript
-async newop(name: string, from: string): Promise<FoaasResponse> {
-  return this.fetch(`/newop/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
-}
-```
 
 **3. Register in server** (`src/server.ts`):
 ```typescript
