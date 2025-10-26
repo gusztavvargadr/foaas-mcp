@@ -95,7 +95,7 @@ jobs:
           
           # List loaded images for debugging
           echo "Available Docker images:"
-          docker images | grep -E "foaas|ghcr.io"
+          docker images | grep -E "^ghcr.io/gusztavvargadr/foaas-mcp"
           
           # Get the first tag from the metadata
           IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
