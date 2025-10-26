@@ -8,37 +8,36 @@ import { z } from 'zod';
  * The "from" parameter - who is sending/performing the action.
  * Used in almost all FOAAS operations.
  *
- * Usage:
- *   - For AI callers: Use "Copilot" or "AI assistant" as the value.
- *   - For human callers: Use the current user's name.
- *
+ * This should be the name or identifier of the person making the request.
+ * 
  * Examples:
- *   - AI: { from: "Copilot" }
- *   - Human: { from: "Alice" }
- *
- * This ensures FOAAS messages are attributed correctly in both automated and manual contexts.
+ *   - { from: "Alice" }
+ *   - { from: "Bob" }
+ *   - { from: "the developer" }
  */
 export const fromParam = z.string().describe(
-  'REQUIRED: Who is performing this action. Use "AI assistant" when called by an AI agent, otherwise use the current user\'s name.'
+  'REQUIRED: Who is performing this action. Use the name of the person making the request.'
 );
 
 /**
- * Target/name parameter variations for person-directed operations
+ * The "to" parameter - who is receiving/targeted by the action.
+ * Used in operations that direct a message at someone/something.
+ *
+ * Usage:
+ *   - For praise: Person who deserves recognition (contributor, bug fixer, etc.)
+ *   - For dismissal: Person/thing to dismiss (requester, issue, bug, etc.)
+ *   - For confrontation: Person to tell off
+ *   - For disbelief: Person causing disbelief
+ *
+ * Examples:
+ *   - { to: "John" } - Direct at a person
+ *   - { to: "that bug" } - Direct at a thing
+ *   - { to: "PR author" } - Direct at a role
+ *
+ * This unified parameter makes the from/to relationship clear and consistent.
  */
-export const targetPersonParam = z.string().describe(
-  'REQUIRED: Who/what to target. Use context: issue author, PR creator, person making request, annoying bug, etc.'
-);
-
-export const praisePersonParam = z.string().describe(
-  'REQUIRED: Person to praise. Use context: issue author, PR creator, helpful contributor, person who fixed the bug, etc.'
-);
-
-export const dismissPersonParam = z.string().describe(
-  'REQUIRED: What/who to dismiss. Use context: persistent requester, annoying issue, person causing problems, etc.'
-);
-
-export const disbeliefPersonParam = z.string().describe(
-  'REQUIRED: Who to express disbelief at. Use context: person with unbelievable request, shocking issue author, etc.'
+export const toParam = z.string().describe(
+  'REQUIRED: Who/what to direct this at. Use context: person name, issue author, PR creator, bug, annoying request, etc.'
 );
 
 /**

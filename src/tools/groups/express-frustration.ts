@@ -3,24 +3,18 @@ import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
-type FrustrationOperation = 'everyone' | 'flying' | 'asshole' | 'random';
+type FrustrationOperation = 'everyone' | 'flying' | 'asshole';
 
 export const expressFrustrationTool = {
   name: 'proper_frustration',
-  description: '⚠️ EXPLICIT CONTENT: Express universal frustration or broad dismissal. Randomly selects from: everyone (dismiss all), flying (don\'t care), or asshole (general insult).',
+  description: 'Use when expressing frustration, showing you don\'t care, dismissing everything, venting anger, or making a general complaint. No specific target needed. ⚠️ EXPLICIT CONTENT - Randomly selects from: everyone (dismiss all), flying (don\'t care), or asshole (general insult).',
   inputSchema: z.object({
-    from: fromParam,
-    operation: z.enum(['everyone', 'flying', 'asshole', 'random']).default('random')
-      .describe('OPTIONAL: Which operation to use. Default: random selection')
+    from: fromParam
   }),
-  handler: async (args: { from: string; operation?: FrustrationOperation }, client: FoaasClient): Promise<CallToolResult> => {
-    let op = args.operation || 'random';
-    
-    // Handle randomization
-    if (op === 'random') {
-      const options: FrustrationOperation[] = ['everyone', 'flying', 'asshole'];
-      op = options[Math.floor(Math.random() * options.length)] as Exclude<FrustrationOperation, 'random'>;
-    }
+  handler: async (args: { from: string }, client: FoaasClient): Promise<CallToolResult> => {
+    // Pick a random operation
+    const options: FrustrationOperation[] = ['everyone', 'flying', 'asshole'];
+    const op = options[Math.floor(Math.random() * options.length)];
     
     // Call appropriate operation
     let response;

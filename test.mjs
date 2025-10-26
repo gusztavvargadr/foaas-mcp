@@ -47,7 +47,7 @@ async function main() {
   console.log('Test 3: Group Tool with Random Selection');
   try {
     const result = await expressAppreciationTool.handler(
-      { from: 'TestBot', operation: 'random' },
+      { from: 'TestBot' },
       client
     );
     console.log('✅ Group tool (random) working');
@@ -61,7 +61,7 @@ async function main() {
   console.log('Test 4: Group Tool with Target Parameter');
   try {
     const result = await expressAppreciationTool.handler(
-      { target: 'Alice', from: 'TestBot', operation: 'random' },
+      { to: 'Alice', from: 'TestBot' },
       client
     );
     console.log('✅ Group tool (with target) working');

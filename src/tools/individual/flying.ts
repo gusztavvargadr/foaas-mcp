@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const flyingTool = {
   name: 'foaas_flying',
-  description: '⚠️ EXPLICIT CONTENT: "I don\'t give a flying fuck." Maximum level of not caring.',
+  description: 'Use for expressing maximum indifference, showing extreme lack of concern, emphasizing you really don\'t care, or dismissing something as completely irrelevant. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

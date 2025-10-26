@@ -49,11 +49,11 @@ npm test               # Run automated tests
 
 ### Shared Schemas
 Always use from `src/tools/shared/schemas.ts`:
-- `fromParam` - Standard "from" parameter
-- `targetPersonParam` - Generic target
-- `praisePersonParam` - For appreciation
-- `dismissPersonParam` - For confrontation
+- `fromParam` - Standard "from" parameter (who sends)
+- `toParam` - Standard "to" parameter (who receives)
 - `formatFoaasResponse()` - Response formatter
+
+**Consistent from/to naming**: All tools use `from` and `to` parameters for clear message direction. This makes it easier for AI agents to understand who is sending and who is receiving the message.
 
 ### Adding Tools
 

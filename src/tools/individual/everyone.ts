@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const everyoneTool = {
   name: 'foaas_everyone',
-  description: '⚠️ EXPLICIT CONTENT: "Everyone can go and fuck off." Universal dismissal of all parties.',
+  description: 'Use for dismissing everyone at once, expressing frustration with all parties, universal rejection, or showing you\'re done with everything and everyone. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

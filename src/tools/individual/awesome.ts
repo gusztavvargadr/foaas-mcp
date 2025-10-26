@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const awesomeTool = {
   name: 'foaas_awesome',
-  description: '⚠️ EXPLICIT CONTENT: "This is fucking awesome" response. Use for enthusiastic praise or celebrating wins.',
+  description: 'Use for enthusiastic celebration, expressing excitement, praising success, or showing genuine enthusiasm about something great. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

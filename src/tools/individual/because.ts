@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const becauseTool = {
   name: 'foaas_because',
-  description: '⚠️ EXPLICIT CONTENT: "Why? Because fuck you, that\'s why." Use to reject questions or decline requests emphatically.',
+  description: 'Use when answering "why" questions dismissively, refusing to explain, rejecting requests emphatically, or shutting down interrogations. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

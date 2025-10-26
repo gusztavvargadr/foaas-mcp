@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const thanksTool = {
   name: 'foaas_thanks',
-  description: '⚠️ EXPLICIT CONTENT: Sarcastic "fuck you very much" response. Use for ironic gratitude or sarcastic thanks.',
+  description: 'Use for sarcastic thanks, ironic gratitude, expressing annoyance while thanking, or responding to unwanted help. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),

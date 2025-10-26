@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const assholeTool = {
   name: 'foaas_asshole',
-  description: '⚠️ EXPLICIT CONTENT: "Fuck you, asshole." General purpose insult or self-deprecation.',
+  description: 'Use for general insults, self-deprecation, expressing anger broadly, or making a non-specific negative statement. No target needed. ⚠️ EXPLICIT CONTENT.',
   inputSchema: z.object({
     from: fromParam
   }),
