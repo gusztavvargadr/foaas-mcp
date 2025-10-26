@@ -55,7 +55,7 @@ All tools provide direct 1:1 mapping to FOAAS operations with `foaas_` prefix:
 
 - **[Development Guide](docs/DEVELOPMENT.md)** - Architecture, workflow, adding tools
 - **[Tools Reference](docs/TOOLS.md)** - Detailed tool documentation
-- **[Roadmap](docs/ROADMAP.md)** - Project progress and decisions
+- **[Roadmap](docs/roadmap/)** - Development roadmap and feature tracking
 
 ## Example Usage
 
@@ -93,7 +93,7 @@ See [docs/TOOLS.md](docs/TOOLS.md) for complete scenario guide and tool referenc
 
 - [TOOLS.md](docs/TOOLS.md) - Complete tool reference with scenarios
 - [DEVELOPMENT.md](docs/DEVELOPMENT.md) - Developer guide
-- [ROADMAP.md](docs/ROADMAP.md) - Project progress and decisions
+- [Roadmap](docs/roadmap/) - Development roadmap and feature tracking
 
 ## Security
 

@@ -161,7 +161,33 @@ npm run docker:build && npm test
 - `README.md` - User-facing quick start (installation, usage, examples)
 - `docs/DEVELOPMENT.md` - Developer guide (architecture, workflows, debugging)
 - `docs/TOOLS.md` - Tool reference (detailed tool documentation)
-- `docs/ROADMAP.md` - Project progress and decisions (living document)
+- `docs/roadmap/` - Development roadmap (append-only, incremental tracking)
+  - `docs/roadmap/README.md` - Roadmap overview and workflow
+  - `docs/roadmap/next/` - Active work (2-5 items max)
+  - `docs/roadmap/backlog/` - Future ideas to be considered
+  - `docs/roadmap/completed/` - Historical reference (append-only)
 - `.github/copilot-instructions.md` - This file (AI coding assistant guide)
 
 **Rule**: Keep docs minimal, no duplication. Each doc has a specific audience and purpose.
+
+## Roadmap Workflow (CRITICAL)
+
+**ALWAYS consult the roadmap before starting any feature work:**
+
+1. **Before starting**:
+   - ✅ Check `docs/roadmap/next/` for active work (avoid conflicts)
+   - ✅ Check `docs/roadmap/backlog/` for existing ideas (avoid duplicates)
+   - ✅ Create new file in `backlog/` if it's a genuinely new idea
+
+2. **When starting work**:
+   - Move file from `backlog/` → `next/`
+   - Add start date and set status to "In Progress"
+   - Keep `next/` focused (2-5 items maximum)
+
+3. **When finishing work**:
+   - Move file from `next/` → `completed/`
+   - Add completion date and set status to "Completed"
+   - **Update current state in other docs** (README, DEVELOPMENT, TOOLS, etc.)
+   - Completed items are append-only (don't heavily edit them)
+
+**Philosophy**: Incremental, append-only approach. Git history = journey, completed files = decisions, current docs = present state.
