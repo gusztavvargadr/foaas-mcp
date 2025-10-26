@@ -94,9 +94,21 @@ jobs:
         run: |
           echo "🧪 Testing FOAAS MCP Server..."
           
+          # List loaded images for debugging
+          echo "Available Docker images:"
+          docker images | grep -E "foaas|ghcr.io"
+          
           # Get the first tag from the metadata
           IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
           echo "Testing image: $IMAGE_TAG"
+          
+          # Verify image exists
+          if ! docker image inspect "$IMAGE_TAG" >/dev/null 2>&1; then
+            echo "❌ Error: Image $IMAGE_TAG not found"
+            echo "Available images:"
+            docker images
+            exit 1
+          fi
           
           # Make test script executable
           chmod +x ./test-server.sh
