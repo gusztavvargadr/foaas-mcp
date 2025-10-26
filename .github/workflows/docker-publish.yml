@@ -26,9 +26,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -119,6 +116,10 @@ jobs:
           ./test-server.sh "$IMAGE_TAG"
           
           echo "✅ All tests passed!"
+
+      - name: Set up QEMU for multi-arch build
+        if: github.event_name != 'pull_request'
+        uses: docker/setup-qemu-action@v3
 
       - name: Push Docker image to registry
         if: github.event_name != 'pull_request'
