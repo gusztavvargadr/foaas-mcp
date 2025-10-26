@@ -87,8 +87,7 @@ This consistent naming makes it easier for AI agents to understand the message d
   "name": "proper_appreciation",
   "arguments": {
     "to": "the developer",
-    "from": "Bob",
-    "operation": "random"
+    "from": "Bob"
   }
 }
 ```
@@ -98,8 +97,7 @@ This consistent naming makes it easier for AI agents to understand the message d
 {
   "name": "proper_frustration",
   "arguments": {
-    "from": "Charlie",
-    "operation": "random"
+    "from": "Charlie"
   }
 }
 ```

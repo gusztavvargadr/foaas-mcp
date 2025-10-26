@@ -14,7 +14,7 @@ export const expressAppreciationTool = {
   }),
   handler: async (args: { to?: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
     // Pick a random operation
-    let op: AppreciationOperation;
+    let op: AppreciationOperation | undefined;
     if (args.to) {
       // If target provided, can use legend or dalton
       const options: AppreciationOperation[] = ['thanks', 'awesome', 'legend', 'dalton'];
