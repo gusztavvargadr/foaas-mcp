@@ -54,6 +54,8 @@ jobs:
             type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
             # SHA-based tag for main branch commits
             type=sha,prefix=sha-,enable=${{ github.ref_name == 'main' }}
+            # PR tags for testing (e.g., pr-5)
+            type=ref,event=pr
           labels: |
             org.opencontainers.image.title=FOAAS MCP Server
             org.opencontainers.image.description=MCP server to expose FOAAS (Fuck Off As A Service) functionality to AI clients
