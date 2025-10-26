@@ -34,8 +34,7 @@ fi
 echo ""
 echo "🎯 Test 3: Calling foaas_legend..."
 JSON_LEGEND='{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"foaas_legend","arguments":{"name":"the developer","from":"AI assistant"}}}'
-GREP_PATTERN='"the developer, you'\''re a fucking legend."'
-RESULT=$(echo "$JSON_LEGEND" | docker run --rm -i "$IMAGE" 2>/dev/null | grep -o "$GREP_PATTERN" | wc -l)
+RESULT=$(echo "$JSON_LEGEND" | docker run --rm -i "$IMAGE" 2>/dev/null | jq -r '.result.content[].text' | grep -i "fucking legend" | wc -l)
 if [ "$RESULT" -eq 1 ]; then
     echo "✅ Complex tool call successful"
 else
