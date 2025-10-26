@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const byeTool = {
   name: 'foaas_bye',
-  description: 'Use for ending conversations emphatically, saying goodbye dismissively, terminating discussions, or leaving a situation dramatically. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use for ending conversations emphatically, saying goodbye dismissively, terminating discussions, or leaving a situation dramatically.',
   inputSchema: z.object({
     from: fromParam
   }),

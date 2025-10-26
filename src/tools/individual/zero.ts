@@ -5,7 +5,7 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const zeroTool = {
   name: 'foaas_zero',
-  description: 'Use when expressing complete disinterest, showing zero concern, indicating you don\'t care at all, or dismissing something as unimportant. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use when expressing complete disinterest, showing zero concern, indicating you don\'t care at all, or dismissing something as unimportant.',
   inputSchema: z.object({
     from: fromParam
   }),

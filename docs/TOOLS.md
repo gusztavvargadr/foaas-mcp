@@ -1,103 +1,262 @@
 # Tool Reference
 
-FOAAS MCP provides 18 tools in two categories:
+⚠️ **Content Warning**: All tools contain explicit language by design.
 
-## Individual Tools (14) - `foaas_*` prefix
+FOAAS MCP provides **23 individual tools** that map directly to FOAAS API operations. Each tool provides a unique response - descriptions focus on when to use them, keeping the actual responses as surprises.
 
-Direct 1:1 mapping to FOAAS API operations.
+## Development Scenario Guide
 
-### Appreciation (4)
-- `foaas_thanks` - Sarcastic "fuck you very much"
-- `foaas_awesome` - Enthusiastic "this is fucking awesome"
-- `foaas_legend` - "You're a fucking legend"
-- `foaas_dalton` - "Problem solving super-hero" (Road House)
+Tools organized by common development situations:
 
-### Rejections (3)
-- `foaas_because` - "Why? Because fuck you, that's why"
-- `foaas_zero` - "Zero, that's the number of fucks I give"
-- `foaas_bye` - "Fuckity bye-bye"
+### Scenario 1: Bug Reports & Debugging
 
-### Confrontations (4)
-- `foaas_off` - Classic "Fuck off"
-- `foaas_gfy` - Military "Golf Foxtrot Yankee"
-- `foaas_chainsaw` - "Fuck me gently with a chainsaw" (Heathers)
-- `foaas_keep` - "Keep fucking off until you reach the horizon"
+**"Works on my machine" / Runtime errors**
+- `foaas_logs` - When the solution is clearly in the logs
 
-### Frustration (3)
-- `foaas_everyone` - "Everyone can fuck off"
-- `foaas_flying` - "I don't give a flying fuck"
-- `foaas_asshole` - General purpose "Fuck you, asshole"
+**"How do I use X?" / Questions in docs**
+- `foaas_rtfm` - When documentation exists but wasn't read
 
-## Group Tools (4) - `proper_*` prefix
+**General confusion**
+- `foaas_zero` - Express complete disinterest
+- `foaas_everyone` - Universal dismissal
+- `foaas_flying` - Maximum level of not caring
 
-Intelligent wrappers that randomly select from multiple operations. **Not standard FOAAS** - these are custom tools.
+---
 
-### proper_appreciation
-**Operations**: thanks, awesome, legend, dalton  
-**Parameters**: `to` (optional), `from`
+### Scenario 2: Code Reviews
 
-Use when: Praise contributors, celebrate wins, express thanks
+**Questionable code / Bad decisions**
+- `foaas_think` - Question someone's thought process
+- `foaas_thinking` - Alternative phrasing for questioning decisions
 
-### proper_rejection  
-**Operations**: because, zero, bye  
-**Parameters**: `from`
+**Pointing out issues**
+- `foaas_look` - Request someone examine something specific
 
-Use when: Decline requests, reject suggestions, end conversations
+**Nitpicking / Endless debates**
+- `foaas_shutup` - Stop bikeshedding and trivial arguments
 
-### proper_confrontation
-**Operations**: off, gfy, chainsaw, keep  
-**Parameters**: `to` (required), `from`
+**Great contributions**
+- `foaas_legend` - Genuine praise for someone
+- `foaas_dalton` - Call someone a problem-solving hero
 
-Use when: Dismiss specific people/things, direct confrontation
+---
 
-### proper_frustration
-**Operations**: everyone, flying, asshole  
-**Parameters**: `from`
+### Scenario 3: Pull Requests & Issues
 
-Use when: Express universal frustration, show complete apathy
+**Spam / Duplicates**
+- `foaas_off` - Classic dismissal
+- `foaas_bye` - End the conversation
+- `foaas_thanks` - Sarcastic gratitude
 
-## Parameter Patterns
+**Absurd requests / Scope creep**
+- `foaas_ridiculous` - For unrealistic requirements
+- `foaas_chainsaw` - Dramatic reaction to absurdity
 
-All tools use consistent **`from`/`to`** parameter naming:
+**Unclear requirements**
+- `foaas_understand` - Express genuine confusion
 
-- **`from`** (required): Who is performing the action (e.g., user name, person's name)
-- **`to`** (optional/required): Who/what receives the message
-  - Required for: `proper_confrontation`, individual tools like `foaas_off`, `foaas_legend`, etc.
-  - Optional for: `proper_appreciation` (depends on operation)
-  - Not used: `proper_rejection`, `proper_frustration`, simple tools like `foaas_thanks`
+**Sarcastic approval**
+- `foaas_cool` - Dismiss excuses with peak sarcasm
+- `foaas_awesome` - Enthusiastic (but maybe ironic) celebration
 
-This consistent naming makes it easier for AI agents to understand the message direction.
+---
 
-## Examples
+### Scenario 4: Team Communication
 
-### Individual tool:
+**General frustration**
+- `foaas_everyone` - Dismiss all parties
+- `foaas_flying` - Express not caring
+- `foaas_asshole` - General purpose frustration
+
+**Rejecting requests**
+- `foaas_because` - Answer "why not?" emphatically
+- `foaas_zero` - Show complete disinterest
+
+**Direct confrontation**
+- `foaas_gfy` - Military-style professional profanity
+- `foaas_keep` - Extended dismissal for persistent issues
+
+**Team praise**
+- `foaas_legend` - Call someone a legend
+- `foaas_dalton` - Acknowledge problem-solving skills
+
+---
+
+## Complete Tool List
+
+### Appreciation & Praise (4 tools)
+
+| Tool | Target? | When to Use |
+|------|---------|-------------|
+| `foaas_thanks` | No | Sarcastic thanks, ironic gratitude |
+| `foaas_awesome` | No | Enthusiastic praise or celebrating wins |
+| `foaas_legend` | Yes | Genuine praise for a specific person |
+| `foaas_dalton` | Yes | Acknowledge someone's problem-solving |
+
+### Rejections & Dismissals (3 tools)
+
+| Tool | Target? | When to Use |
+|------|---------|-------------|
+| `foaas_because` | No | Answer "why not?" emphatically |
+| `foaas_zero` | No | Express complete disinterest |
+| `foaas_bye` | No | End conversations or discussions |
+
+### Direct Confrontations (4 tools)
+
+| Tool | Target? | When to Use |
+|------|---------|-------------|
+| `foaas_off` | Yes | Classic, direct dismissal |
+| `foaas_gfy` | Yes | Military-style professional dismissal |
+| `foaas_chainsaw` | Yes | Dramatic reaction, sarcastic disbelief |
+| `foaas_keep` | Yes | Extended dismissal for persistent issues |
+
+### General Frustration (3 tools)
+
+| Tool | Target? | When to Use |
+|------|---------|-------------|
+| `foaas_everyone` | No | Universal dismissal of all parties |
+| `foaas_flying` | No | Maximum level of not caring |
+| `foaas_asshole` | No | General purpose insult or frustration |
+
+### Code Review & Quality (9 tools)
+
+| Tool | Target? | When to Use |
+|------|---------|-------------|
+| `foaas_logs` | No | Debugging issues, runtime errors |
+| `foaas_rtfm` | No | Questions answered in documentation |
+| `foaas_think` | Yes | Question someone's decision-making |
+| `foaas_thinking` | Yes | Alternative phrasing for questioning |
+| `foaas_shutup` | Yes | Stop bikeshedding or trivial debates |
+| `foaas_look` | Yes | Request code review or point out issues |
+| `foaas_ridiculous` | No | Absurd requirements or deadlines |
+| `foaas_understand` | Yes | Express confusion about unclear work |
+| `foaas_cool` | No | Sarcastic approval, dismiss excuses |
+
+---
+
+## Parameter Reference
+
+All tools require a `from` parameter (who is sending the message).
+
+Tools marked "Target? Yes" also require a `to` parameter (who/what is being addressed).
+
+**Examples:**
+```json
+{
+  "from": "GitHub Copilot"
+}
+```
+
+```json
+{
+  "to": "issue-author",
+  "from": "maintainer-bot"
+}
+```
+
+---
+
+## Usage Examples
+
+### GitHub PR Comments
+
+**Scenario**: Acknowledge great bug fix
 ```json
 {
   "name": "foaas_legend",
   "arguments": {
-    "to": "the developer",
-    "from": "Alice"
+    "to": "contributor-username",
+    "from": "maintainer-bot"
   }
 }
 ```
 
-### Group tool with target:
+**Scenario**: Respond to trivial whitespace PR
 ```json
 {
-  "name": "proper_appreciation",
+  "name": "foaas_cool",
   "arguments": {
-    "to": "the developer",
-    "from": "Bob"
+    "from": "code-reviewer"
   }
 }
 ```
 
-### Group tool without target:
+**Scenario**: Request changes on confusing code
 ```json
 {
-  "name": "proper_frustration",
+  "name": "foaas_understand",
   "arguments": {
-    "from": "Charlie"
+    "to": "pr-author",
+    "from": "reviewer"
   }
 }
 ```
+
+### Issue Management
+
+**Scenario**: Close duplicate issue
+```json
+{
+  "name": "foaas_bye",
+  "arguments": {
+    "from": "issue-triager"
+  }
+}
+```
+
+**Scenario**: Respond to "doesn't work" with no logs
+```json
+{
+  "name": "foaas_logs",
+  "arguments": {
+    "from": "support-team"
+  }
+}
+```
+
+**Scenario**: React to impossible deadline request
+```json
+{
+  "name": "foaas_ridiculous",
+  "arguments": {
+    "from": "project-manager"
+  }
+}
+```
+
+### Code Review
+
+**Scenario**: Stop bikeshedding on variable names
+```json
+{
+  "name": "foaas_shutup",
+  "arguments": {
+    "to": "nitpicker",
+    "from": "senior-dev"
+  }
+}
+```
+
+**Scenario**: Question a terrible architectural decision
+```json
+{
+  "name": "foaas_think",
+  "arguments": {
+    "to": "architect",
+    "from": "team-lead"
+  }
+}
+```
+
+---
+
+## Tips for AI Agents
+
+When selecting a tool, consider:
+
+1. **Does it need a target?** - If addressing a specific person/thing, use tools that accept `to` parameter
+2. **What's the tone?** - Sarcastic vs. genuine, dismissive vs. confrontational
+3. **What's the context?** - Bug report, PR, issue, team discussion
+4. **What's the goal?** - Praise, reject, confront, express frustration
+
+The scenario guide above maps common situations to appropriate tools, but feel free to be creative and match the perfect tool to the context.

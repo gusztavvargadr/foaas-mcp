@@ -1,15 +1,5 @@
 {
 	"servers": {
-		"foaas-mcp-registry": {
-			"command": "docker",
-			"args": [
-				"run",
-				"--rm",
-				"-i",
-				"ghcr.io/gusztavvargadr/foaas-mcp:latest"
-			],
-			"type": "stdio"
-		},
 		"foaas-mcp-local": {
 			"command": "docker",
 			"args": [
@@ -19,7 +9,17 @@
 				"foaas-mcp:local"
 			],
 			"type": "stdio"
-		}
+		},
+		"foaas-mcp-production": {
+			"command": "docker",
+			"args": [
+				"run",
+				"--rm",
+				"-i",
+				"ghcr.io/gusztavvargadr/foaas-mcp:latest"
+			],
+			"type": "stdio"
+		},
 	},
 	"inputs": []
 }

@@ -83,4 +83,41 @@ export class FoaasClient {
   async asshole(from: string): Promise<FoaasResponse> {
     return this.fetch(`/asshole/${encodeURIComponent(from)}`);
   }
+
+  // Code Review & Quality
+  async logs(from: string): Promise<FoaasResponse> {
+    return this.fetch(`/logs/${encodeURIComponent(from)}`);
+  }
+
+  async rtfm(from: string): Promise<FoaasResponse> {
+    return this.fetch(`/rtfm/${encodeURIComponent(from)}`);
+  }
+
+  async think(name: string, from: string): Promise<FoaasResponse> {
+    return this.fetch(`/think/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
+  }
+
+  async thinking(name: string, from: string): Promise<FoaasResponse> {
+    return this.fetch(`/thinking/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
+  }
+
+  async shutup(name: string, from: string): Promise<FoaasResponse> {
+    return this.fetch(`/shutup/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
+  }
+
+  async look(name: string, from: string): Promise<FoaasResponse> {
+    return this.fetch(`/look/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
+  }
+
+  async ridiculous(from: string): Promise<FoaasResponse> {
+    return this.fetch(`/ridiculous/${encodeURIComponent(from)}`);
+  }
+
+  async understand(name: string, from: string): Promise<FoaasResponse> {
+    return this.fetch(`/understand/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
+  }
+
+  async cool(from: string): Promise<FoaasResponse> {
+    return this.fetch(`/cool/${encodeURIComponent(from)}`);
+  }
 }

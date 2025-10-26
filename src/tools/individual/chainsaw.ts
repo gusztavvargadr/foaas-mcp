@@ -5,7 +5,7 @@ import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const chainsawTool = {
   name: 'foaas_chainsaw',
-  description: 'Use for expressing sarcastic disbelief, showing exaggerated shock at someone, reacting to absurdity, or using pop culture references. Requires a target. ⚠️ EXPLICIT CONTENT.',
+  description: 'Use for expressing sarcastic disbelief, showing exaggerated shock at someone, reacting to absurdity, or using pop culture references. Requires a target.',
   inputSchema: z.object({
     to: toParam,
     from: fromParam
