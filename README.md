@@ -2,363 +2,98 @@
 
 ⚠️ **EXPLICIT CONTENT WARNING** ⚠️
 
-A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io) server that provides access to [FOAAS](https://foaas.io/) (Fuck Off As A Service). All responses contain explicit language and sarcasm by design.
+A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io) server exposing [FOAAS](https://foaas.io/) (Fuck Off As A Service) operations.
 
 ## Features
 
-- 🐳 **Docker-First**: Runs in isolated containers for security
-- 🔧 **18 MCP Tools**: 14 individual operations + 4 intelligent group tools
-- 🎲 **Smart Randomization**: Group tools intelligently select appropriate responses
-- 📊 **Structured Responses**: Separate message and attribution for flexible use
-- 🔒 **Security Focused**: Non-root user, minimal Debian image, stdio-only transport
-- 🚀 **TypeScript**: Fully typed with strict mode
+- 🐳 Docker-first (Debian 12, Node.js 20.19.5, non-root)
+- 🔧 18 MCP tools (14 individual `foaas_*`, 4 group `proper_*`)
+- 🎲 Smart randomization in group tools
+- 🔒 stdio-only transport (no network exposure)
 
 ## Quick Start
 
-### Prerequisites
-
-- Docker installed and running
-- VS Code with GitHub Copilot (recommended)
-
-### Using Pre-built Image from GitHub Container Registry
-
-**Recommended for most users** - Use the pre-built image:
+### Using Pre-built Image
 
 ```bash
-# Pull the latest stable release
 docker pull ghcr.io/gusztavvargadr/foaas-mcp:latest
-
-# Or pull a specific version
-docker pull ghcr.io/gusztavvargadr/foaas-mcp:v1.0.0
-
-# Or pull a specific commit (for testing)
-docker pull ghcr.io/gusztavvargadr/foaas-mcp:sha-a1b2c3d
 ```
 
-**Configure in VS Code** (`.vscode/mcp.json`):
+**VS Code Configuration** (`.vscode/mcp.json`):
 ```json
 {
   "mcpServers": {
     "foaas": {
       "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "ghcr.io/gusztavvargadr/foaas-mcp:latest"
-      ]
+      "args": ["run", "--rm", "-i", "ghcr.io/gusztavvargadr/foaas-mcp:latest"]
     }
   }
 }
 ```
 
-**Image Tagging Strategy**:
-- `latest` - Latest stable release (updated only on version tags)
-- `v1`, `v1.0`, `v1.0.0` - Semantic version tags
-- `sha-<commit>` - Specific commit hash (e.g., sha-a1b2c3d) for testing main branch builds
-
 ### Building from Source
 
-For development or customization:
-
-1. **Clone and build**:
-   ```bash
-   git clone https://github.com/gusztavvargadr/foaas-mcp.git
-   cd foaas-mcp
-   npm install  # Only needed for local development
-   npm run docker:build
-   ```
-
-2. **Use with VS Code**:
-   - The `.vscode/mcp.json` is pre-configured to use local Docker build
-   - Restart MCP server (via GitHub Copilot status bar → Restart MCP Servers)
-   - Test in GitHub Copilot chat
-   - Start using FOAAS tools!
-
-### Example Usage
-
-In GitHub Copilot chat:
+```bash
+git clone https://github.com/gusztavvargadr/foaas-mcp.git
+cd foaas-mcp
+npm run docker:build
 ```
-Tell the author of the latest issue to GFY
-Express appreciation for the great work
-Decline the feature request politely
-```
+
+Restart MCP server in VS Code (GitHub Copilot status bar → Restart MCP Servers).
 
 ## Available Tools
 
 ### Individual Tools (14)
+Direct FOAAS API operations with `foaas_` prefix:
 
-Direct 1:1 mapping to FOAAS operations:
-
-**Appreciation** (sarcastic):
-- `foaas_thanks` - Sarcastic "fuck you very much"
-- `foaas_awesome` - Enthusiastic "this is fucking awesome"
-- `foaas_legend` - Call someone a "fucking legend"
-
-**Dismissals**:
-- `foaas_because` - Answer "why" with "because fuck you"
-- `foaas_zero` - "Zero fucks given"
-- `foaas_bye` - "Fuckity bye-bye"
-
-**Confrontations**:
-- `foaas_off` - Classic "Fuck off"
-- `foaas_gfy` - Military style "Golf Foxtrot Yankee"
-- `foaas_chainsaw` - Heathers reference
-- `foaas_dalton` - Road House hero praise
-- `foaas_keep` - Extended "keep fucking off" dismissal
-
-**Broad Dismissals**:
-- `foaas_everyone` - "Everyone can fuck off"
-- `foaas_flying` - "I don't give a flying fuck"
-- `foaas_asshole` - General purpose insult
+**Appreciation:** thanks, awesome, legend, dalton  
+**Rejections:** because, zero, bye  
+**Confrontations:** off, gfy, chainsaw, keep  
+**Frustration:** everyone, flying, asshole
 
 ### Group Tools (4)
+Intelligent wrappers with `proper_` prefix (not standard FOAAS):
 
-Intelligent tools with randomization:
+- `proper_appreciation` - Random appreciation (target optional)
+- `proper_rejection` - Random rejection (no target)
+- `proper_confrontation` - Random confrontation (target required)
+- `proper_frustration` - Random frustration (no target)
 
-- `express_appreciation` - Randomly: thanks/awesome/legend
-- `decline_request` - Randomly: because/zero/bye
-- `tell_off` - Randomly: off/gfy/chainsaw/dalton/keep
-- `express_frustration` - Randomly: everyone/flying/asshole
+## Documentation
 
-## Architecture
+- **[Development Guide](docs/DEVELOPMENT.md)** - Architecture, workflow, adding tools
+- **[Tools Reference](docs/TOOLS.md)** - Detailed tool documentation
+- **[Roadmap](docs/ROADMAP.md)** - Project progress and decisions
 
-### Project Structure
+## Example Usage
 
+In GitHub Copilot chat:
 ```
-foaas-mcp/
-├── src/
-│   ├── foaas/
-│   │   ├── client.ts       # FOAAS API client
-│   │   └── types.ts        # TypeScript interfaces
-│   ├── tools/
-│   │   ├── individual/     # 14 individual tools
-│   │   └── groups/         # 4 group tools
-│   ├── server.ts           # MCP server setup
-│   └── index.ts            # Entry point (stdio)
-├── .vscode/
-│   └── mcp.json            # VS Code MCP configuration
-├── Dockerfile              # Multi-stage secure build
-└── package.json
+Express appreciation for the contributor
+Tell off that annoying bug
+Decline this feature request
 ```
 
-### Technology Stack
+## Image Tags
 
-- **MCP SDK**: @modelcontextprotocol/sdk v1.20.2
-- **Transport**: stdio (stdin/stdout)
-- **Language**: TypeScript 5.9.3 (ES2022)
-- **Validation**: Zod v3.25.76
-- **Runtime**: Node.js 20.19.5 on Debian 12 (Bookworm Slim)
-- **Container**: Docker with non-root user, dumb-init
+- `latest` - Latest stable release
+- `v1.0.0` - Semantic versions
+- `sha-<commit>` - Specific commits (testing)
 
-## Security Features
+## Security
 
-### Docker Isolation
-
-1. **Process Isolation**: Runs in isolated container
-2. **Non-root User**: Executes as `nodejs` user (UID 1001)
-3. **Minimal Base**: Debian 12 Bookworm Slim (security-focused, regular updates)
-4. **Pinned Version**: Node.js 20.19.5 (specific version)
-5. **No Network Exposure**: stdio transport only
-6. **Multi-stage Build**: Smaller final image, no build tools
-7. **Signal Handling**: dumb-init for proper process management
-
-### Why Docker by Default?
-
-- ✅ **No Local Dependencies**: Don't need Node.js installed
-- ✅ **Consistent Environment**: Same runtime everywhere
-- ✅ **Automatic Cleanup**: VS Code manages container lifecycle
-- ✅ **Attack Surface Minimization**: Isolated, minimal container
-- ✅ **Security Updates**: Debian Bookworm gets regular security patches
-- ✅ **Can't Break Host**: Contained failures
-
-### Why Debian Bookworm Slim over Alpine?
-
-- ✅ **Regular Security Updates**: Debian has excellent security team and update cadence
-- ✅ **Better glibc Support**: Full glibc instead of musl, better Node.js compatibility
-- ✅ **Fewer CVEs**: Debian stable has fewer reported vulnerabilities
-- ✅ **Production Ready**: Widely used in enterprise environments
-
-## Configuration
-
-### VS Code (Recommended)
-
-Pre-configured in `.vscode/mcp.json`:
-
-```json
-{
-  "servers": {
-    "foaas-mcp-dev": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "--name",
-        "foaas-mcp-stdio",
-        "foaas-mcp"
-      ],
-      "type": "stdio"
-    }
-  }
-}
-```
-
-**Features**:
-- VS Code starts/stops container automatically
-- No port conflicts or network exposure
-- Logs visible in Output panel (Model Context Protocol)
-- Container removed after use (`--rm` flag)
-
-### GitHub Copilot Coding Agent
-
-Use FOAAS MCP in GitHub repositories with Copilot coding agent. Configure in your repository's MCP settings:
-
-```json
-{
-  "mcpServers": {
-    "foaas": {
-      "type": "local",
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "ghcr.io/gusztavvargadr/foaas-mcp:latest"
-      ],
-      "tools": ["*"]
-    }
-  }
-}
-```
-
-**Usage Examples** (in Copilot chat):
-- "Express appreciation for the great work in the latest PR"
-- "Tell off the bug that's been haunting us"
-- "Decline this feature request with style"
-
-**Learn More**: [Extending GitHub Copilot coding agent with MCP](https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp)
-
-### Local Development (Alternative)
-
-For rapid iteration only:
-
-```bash
-# Build TypeScript
-npm run build
-
-# Run locally (no Docker)
-npm run dev
-```
-
-**⚠️ Remember**: Always rebuild Docker before committing:
-```bash
-npm run docker:build
-```
-
-## Development
-
-### Adding a New Tool
-
-1. **Create tool file** in `src/tools/individual/`:
-   ```typescript
-   import { z } from 'zod';
-   import type { FoaasClient } from '../../foaas/client.js';
-   
-   export const newTool = {
-     name: 'foaas_operation',
-     description: '⚠️ EXPLICIT CONTENT: Description',
-     inputSchema: z.object({
-       from: z.string().describe('Who is sending')
-     }),
-     handler: async (args, client) => {
-       const response = await client.operation(args.from);
-       return {
-         content: [
-           { type: 'text', text: response.message },
-           { type: 'text', text: response.subtitle }
-         ]
-       };
-     }
-   };
-   ```
-
-2. **Add FOAAS client method** in `src/foaas/client.ts`:
-   ```typescript
-   async operation(from: string): Promise<FoaasResponse> {
-     return this.request(`/operation/${from}`);
-   }
-   ```
-
-3. **Register in `src/server.ts`**:
-   ```typescript
-   import { newTool } from './tools/individual/new.js';
-   // Add to individualTools array
-   ```
-
-4. **Test**:
-   ```bash
-   npm run docker:build
-   # Restart MCP server (GitHub Copilot status bar) and test in Copilot
-   ```
-
-### Updating Dependencies
-
-```bash
-npm update
-npm run docker:build
-```
-
-### Debugging
-
-**VS Code Logs**:
-- View → Output → "Model Context Protocol"
-- Shows server startup and tool calls
-
-**Container Test**:
-```bash
-echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | docker run --rm -i foaas-mcp
-```
-
-## Troubleshooting
-
-### Container not starting
-
-1. Check Docker is running: `docker ps`
-2. Rebuild image: `npm run docker:build`
-3. Check VS Code Output panel
-
-### Tools not appearing
-
-1. Restart MCP server (GitHub Copilot status bar → restart MCP servers)
-2. Verify `.vscode/mcp.json` exists
-3. Check Docker image built: `docker images | grep foaas-mcp`
-
-### Permission errors
-
-Docker runs as non-root user by default. If issues:
-```bash
-docker run --rm -i --user root foaas-mcp
-```
-
-## GitHub Copilot Instructions
-
-This repository includes `.github/copilot-instructions.md` to help GitHub Copilot understand the Docker-first workflow, tool patterns, and security considerations when assisting with development.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make changes (always test with Docker)
-4. Rebuild Docker image
-5. Submit a pull request
+- Process isolation via Docker
+- Non-root user (nodejs UID 1001)
+- Minimal Debian 12 Bookworm Slim base
+- stdio-only transport (no network)
+- Regular security updates
 
 ## License
 
 MIT License - See LICENSE file for details
 
-## Acknowledgments
+## Links
 
-- [FOAAS](https://foaas.io/) - The original Fuck Off As A Service
-- [Model Context Protocol](https://modelcontextprotocol.io) - AI integration standard
-- [GitHub Copilot](https://github.com/features/copilot) - AI pair programmer
+- [FOAAS](https://foaas.io/) - Original API
+- [Model Context Protocol](https://modelcontextprotocol.io) - MCP specification
+- [GitHub Copilot](https://github.com/features/copilot) - AI integration

@@ -20,14 +20,15 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 
 ### Tool Design
 - **18 total tools** (exceeded original plan):
-  - **4 group tools** (intelligent wrappers with randomization):
-    1. `express_appreciation` - Thanks/praise (3 operations)
-    2. `decline_request` - Rejections (3 operations)
-    3. `tell_off` - Direct confrontations (5 operations)
-    4. `express_frustration` - Universal dismissals (3 operations)
-  - **14 individual tools** (direct operation mapping):
-    - thanks, awesome, legend, because, zero, bye, off, gfy, chainsaw, dalton, keep, everyone, flying, asshole
+  - **4 group tools** (intelligent wrappers with randomization, `proper_*` prefix):
+    1. `proper_appreciation` - Thanks/praise (4 operations)
+    2. `proper_rejection` - Rejections (3 operations)
+    3. `proper_confrontation` - Direct confrontations (4 operations)
+    4. `proper_frustration` - Universal frustration (3 operations)
+  - **14 individual tools** (direct operation mapping, `foaas_*` prefix):
+    - thanks, awesome, legend, dalton, because, zero, bye, off, gfy, chainsaw, keep, everyone, flying, asshole
 - **Total**: 14 FOAAS operations available both as groups AND individual tools for flexibility
+- **Naming**: `proper_*` prefix distinguishes non-standard group tools from `foaas_*` API operations
 
 ### Testing Focus
 - ✅ GitHub Copilot in VS Code with customizations
@@ -59,11 +60,11 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 - ✅ API is simple and consistent: `{ "message": "...", "subtitle": "- ..." }`
 - ✅ No rate limiting observed (client-side throttling recommended)
 - ✅ Operations naturally group into 4 categories:
-  1. **Appreciation & Praise** (3 ops): thanks, awesome, legend
-  2. **Dismissals & Rejections** (3 ops): because, zero, bye
-  3. **Direct Confrontations** (5 ops): off, gfy, chainsaw, dalton, keep
-  4. **Broad Dismissals** (3 ops): everyone, flying, asshole
-- ✅ Category-based tool design recommended (4 tools vs 15 individual tools)
+  1. **Appreciation & Praise** (4 ops): thanks, awesome, legend, dalton
+  2. **Rejections** (3 ops): because, zero, bye
+  3. **Direct Confrontations** (4 ops): off, gfy, chainsaw, keep
+  4. **Frustration** (3 ops): everyone, flying, asshole
+- ✅ Category-based tool design implemented (4 group tools + 14 individual tools)
 
 ---
 
@@ -101,8 +102,8 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 - [x] Initialize basic Node.js/TypeScript project
 - [x] Install `@modelcontextprotocol/sdk` and dependencies
 - [x] Create MCP server with **18 tools** (exceeded plan):
-  - 4 group tools: `express_appreciation`, `decline_request`, `tell_off`, `express_frustration`
-  - 14 individual tools: direct 1:1 mapping to FOAAS operations
+  - 4 group tools (`proper_*`): appreciation, rejection, confrontation, frustration
+  - 14 individual tools (`foaas_*`): direct 1:1 mapping to FOAAS operations
 - [x] Implement FOAAS HTTP client with all operations
 - [x] ~~Set up Streamable HTTP transport~~ → Set up stdio transport (security decision)
 - [x] Create production-grade Dockerfile (Debian Bookworm, non-root, dumb-init)
@@ -212,12 +213,12 @@ Target timeline: **2-3 days** for public release on GitHub and LinkedIn.
 ### 2.2 MCP Tools Implementation ✅
 
 - [x] Implement **18 tools** (exceeded plan):
-  - **4 group tools** with intelligent randomization:
-    - `express_appreciation` - Randomly selects: thanks, awesome, or legend
-    - `decline_request` - Randomly selects: because, zero, or bye
-    - `tell_off` - Randomly selects: off, gfy, chainsaw, dalton, or keep
-    - `express_frustration` - Randomly selects: everyone, flying, or asshole
-  - **14 individual tools** for direct operation access
+  - **4 group tools** with intelligent randomization (`proper_*` prefix):
+    - `proper_appreciation` - Randomly: thanks, awesome, legend, dalton
+    - `proper_rejection` - Randomly: because, zero, bye
+    - `proper_confrontation` - Randomly: off, gfy, chainsaw, keep
+    - `proper_frustration` - Randomly: everyone, flying, asshole
+  - **14 individual tools** (`foaas_*` prefix) for direct operation access
 - [x] Input validation using Zod schemas
 - [x] Proper MCP tool responses with `⚠️ EXPLICIT CONTENT` warnings
 - [x] AI-friendly descriptions for each tool

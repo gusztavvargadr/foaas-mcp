@@ -6,12 +6,12 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 type FrustrationOperation = 'everyone' | 'flying' | 'asshole' | 'random';
 
 export const expressFrustrationTool = {
-  name: 'express_frustration',
+  name: 'proper_frustration',
   description: '⚠️ EXPLICIT CONTENT: Express universal frustration or broad dismissal. Randomly selects from: everyone (dismiss all), flying (don\'t care), or asshole (general insult).',
   inputSchema: z.object({
     from: fromParam,
     operation: z.enum(['everyone', 'flying', 'asshole', 'random']).default('random')
-      .describe('Which operation to use. Default: random selection')
+      .describe('OPTIONAL: Which operation to use. Default: random selection')
   }),
   handler: async (args: { from: string; operation?: FrustrationOperation }, client: FoaasClient): Promise<CallToolResult> => {
     let op = args.operation || 'random';

@@ -37,7 +37,11 @@ export class FoaasClient {
     return this.fetch(`/legend/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
   }
 
-  // Dismissals & Rejections
+  async dalton(name: string, from: string): Promise<FoaasResponse> {
+    return this.fetch(`/dalton/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
+  }
+
+  // Rejections
   async because(from: string): Promise<FoaasResponse> {
     return this.fetch(`/because/${encodeURIComponent(from)}`);
   }
@@ -63,15 +67,11 @@ export class FoaasClient {
     return this.fetch(`/chainsaw/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
   }
 
-  async dalton(name: string, from: string): Promise<FoaasResponse> {
-    return this.fetch(`/dalton/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
-  }
-
   async keep(name: string, from: string): Promise<FoaasResponse> {
     return this.fetch(`/keep/${encodeURIComponent(name)}/${encodeURIComponent(from)}`);
   }
 
-  // Broad Dismissals
+  // Frustration
   async everyone(from: string): Promise<FoaasResponse> {
     return this.fetch(`/everyone/${encodeURIComponent(from)}`);
   }

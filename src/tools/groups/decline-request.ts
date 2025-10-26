@@ -6,12 +6,12 @@ import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
 type DeclineOperation = 'because' | 'zero' | 'bye' | 'random';
 
 export const declineRequestTool = {
-  name: 'decline_request',
+  name: 'proper_rejection',
   description: '⚠️ EXPLICIT CONTENT: Decline a request or reject a modification. Randomly selects from: because (answer "why"), zero (express no interest), or bye (end conversation).',
   inputSchema: z.object({
     from: fromParam,
     operation: z.enum(['because', 'zero', 'bye', 'random']).default('random')
-      .describe('Which operation to use. Default: random selection')
+      .describe('OPTIONAL: Which operation to use. Default: random selection')
   }),
   handler: async (args: { from: string; operation?: DeclineOperation }, client: FoaasClient): Promise<CallToolResult> => {
     let op = args.operation || 'random';
