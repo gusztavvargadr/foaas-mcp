@@ -78,7 +78,6 @@ import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
 
 export const newopTool = {
