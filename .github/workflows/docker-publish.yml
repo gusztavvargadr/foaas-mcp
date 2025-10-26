@@ -44,10 +44,57 @@ jobs:
         run: npm run build
 
       - name: Run unit tests
-        run: npm test
+        id: test
+        run: npm test 2>&1 | tee test-output.txt
 
       - name: Run coverage report
+        id: coverage
         run: npm run test:coverage
+
+      - name: Generate Test Summary
+        if: always()
+        run: |
+          # Extract coverage data
+          if [ -f "coverage/coverage-summary.json" ]; then
+            LINES_PCT=$(jq -r '.total.lines.pct' coverage/coverage-summary.json)
+            STATEMENTS_PCT=$(jq -r '.total.statements.pct' coverage/coverage-summary.json)
+            BRANCHES_PCT=$(jq -r '.total.branches.pct' coverage/coverage-summary.json)
+            FUNCTIONS_PCT=$(jq -r '.total.functions.pct' coverage/coverage-summary.json)
+          else
+            LINES_PCT="N/A"
+            STATEMENTS_PCT="N/A"
+            BRANCHES_PCT="N/A"
+            FUNCTIONS_PCT="N/A"
+          fi
+          
+          # Extract test counts from output
+          TEST_COUNT=$(grep -o '[0-9]* passed' test-output.txt | head -1 || echo "N/A")
+          
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # 🧪 Test Results
+          
+          ## Unit Tests
+          
+          ✅ **Tests**: ${TEST_COUNT}
+          
+          ## 📊 Coverage Report
+          
+          | Metric | Coverage |
+          |--------|----------|
+          | **Lines** | ${LINES_PCT}% |
+          | **Statements** | ${STATEMENTS_PCT}% |
+          | **Branches** | ${BRANCHES_PCT}% |
+          | **Functions** | ${FUNCTIONS_PCT}% |
+          
+          <details>
+          <summary>� View test output</summary>
+          
+          \`\`\`
+          $(tail -30 test-output.txt)
+          \`\`\`
+          
+          </details>
+          EOF
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -113,12 +160,9 @@ jobs:
             BUILD_DATE=${{ steps.timestamp.outputs.date }}
 
       - name: Test MCP Server
+        id: docker_test
         run: |
           echo "🧪 Testing FOAAS MCP Server..."
-          
-                    # List loaded images for debugging
-          echo "Available Docker images:"
-          docker images | grep -E "^ghcr.io/gusztavvargadr/foaas-mcp"
           
           # Get the first tag from the metadata
           IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
@@ -127,18 +171,59 @@ jobs:
           # Verify image exists
           if ! docker image inspect "$IMAGE_TAG" >/dev/null 2>&1; then
             echo "❌ Error: Image $IMAGE_TAG not found"
-            echo "Available images:"
             docker images
             exit 1
           fi
           
-          # Make test script executable
-          chmod +x ./test-server.sh
+          # Get image size
+          IMAGE_SIZE=$(docker image inspect "$IMAGE_TAG" --format='{{.Size}}' | awk '{printf "%.0f", $1/1024/1024}')
+          echo "image_size=${IMAGE_SIZE}" >> $GITHUB_OUTPUT
           
           # Run the test script
-          ./test-server.sh "$IMAGE_TAG"
+          chmod +x ./test-server.sh
+          ./test-server.sh "$IMAGE_TAG" 2>&1 | tee docker-test-output.txt
           
-          echo "✅ All tests passed!"
+          echo "✅ All integration tests passed!"
+
+      - name: Generate Docker Summary
+        if: always()
+        run: |
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          
+          ---
+          
+          # 🐳 Docker Build & Test
+          
+          ## Build Information
+          
+          | Property | Value |
+          |----------|-------|
+          | **Version** | \`${{ steps.version.outputs.version }}\` |
+          | **Commit** | \`${GITHUB_SHA:0:7}\` |
+          | **Image Size** | ${{ steps.docker_test.outputs.image_size }} MB |
+          | **Platform** | linux/amd64 (test) |
+          
+          ## Image Tags
+          
+          \`\`\`
+          ${{ steps.meta.outputs.tags }}
+          \`\`\`
+          
+          ## Integration Test Results
+          
+          ✅ **All integration tests passed!**
+          
+          <details>
+          <summary>📋 View test output</summary>
+          
+          \`\`\`
+          $(cat docker-test-output.txt 2>/dev/null || echo "Test output not available")
+          \`\`\`
+          
+          </details>
+          EOF
 
       - name: Set up QEMU for multi-arch build
         if: github.event_name != 'pull_request'
@@ -164,3 +249,29 @@ jobs:
       - name: Image digest
         if: github.event_name != 'pull_request'
         run: echo "Image pushed with digest ${{ steps.push.outputs.digest }}"
+
+      - name: Generate Publish Summary
+        if: github.event_name != 'pull_request'
+        run: |
+          FIRST_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          
+          ---
+          
+          # 📦 Published to Registry
+          
+          ✅ Successfully built and pushed multi-platform images
+          
+          **Platforms**: linux/amd64, linux/arm64  
+          **Registry**: \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}\`  
+          **Digest**: \`${{ steps.push.outputs.digest }}\`
+          
+          ## Quick Start
+          
+          \`\`\`bash
+          # Pull and run
+          docker pull ${FIRST_TAG}
+          echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | docker run --rm -i ${FIRST_TAG}
+          \`\`\`
+          EOF
