@@ -92,7 +92,7 @@ jobs:
           <summary>📋 View test output</summary>
           
           \`\`\`
-          $(tail -30 test-output.txt)
+          $(cat test-output.txt)
           \`\`\`
           
           </details>

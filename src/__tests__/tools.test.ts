@@ -230,7 +230,9 @@ describe('Individual Tools', () => {
         subtitle: 'Test subtitle'
       };
 
-      const testTools = [
+      type ToolArgs = { from: string } | { to: string; from: string };
+
+      const testTools: Array<{ tool: any; args: ToolArgs; clientMethod: string }> = [
         { tool: thanksTool, args: { from: 'TestBot' }, clientMethod: 'thanks' },
         { tool: legendTool, args: { to: 'Alice', from: 'TestBot' }, clientMethod: 'legend' },
         { tool: offTool, args: { to: 'Bob', from: 'TestBot' }, clientMethod: 'off' }
@@ -241,7 +243,7 @@ describe('Individual Tools', () => {
           [clientMethod]: vi.fn().mockResolvedValue(mockResponse)
         } as unknown as FoaasClient;
 
-        const result = await tool.handler(args as any, mockClient);
+        const result = await tool.handler(args, mockClient);
 
         expect(result).toHaveProperty('content');
         expect(Array.isArray(result.content)).toBe(true);

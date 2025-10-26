@@ -205,9 +205,7 @@ npm run docker:build && npm test
    - Completed items are append-only (don't heavily edit them)
 
 4. **When reviewing PRs** ⚠️:
-   - ✅ Check `backlog/` and `next/` BEFORE suggesting improvements
-   - ❌ Don't flag issues already documented in roadmap
-   - 🎯 Focus on current PR quality, not future refactorings
+   - See detailed "Code Review Guidelines" section at the top of this file
 
 **Philosophy**: Incremental, append-only approach. Git history = journey, completed files = decisions, current docs = present state.
 
