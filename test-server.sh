@@ -22,7 +22,7 @@ fi
 # Test 2: Simple Tool Call
 echo ""
 echo "🎯 Test 2: Calling foaas_awesome..."
-RESULT=$(echo '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"foaas_awesome","arguments":{"from":"AI assistant"}}}' | docker run --rm -i "$IMAGE" 2>/dev/null | grep -o '"This is Fucking Awesome."' | wc -l)
+RESULT=$(echo '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"foaas_awesome","arguments":{"from":"AI assistant"}}}' | docker run --rm -i "$IMAGE" 2>/dev/null | jq -r '.result.content[].text' | grep -i "fucking awesome" | wc -l)
 if [ "$RESULT" -eq 1 ]; then
     echo "✅ Simple tool call successful"
 else
