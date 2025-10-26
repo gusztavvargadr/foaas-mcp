@@ -1,6 +1,7 @@
 # Unit Tests
 
-**Status**: Backlog
+**Status**: In Progress  
+**Started**: 2025-10-26
 
 ## Goal
 

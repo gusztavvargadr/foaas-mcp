@@ -5,3 +5,12 @@ dist/
 .env
 .env.local
 *.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Compiled vitest config
+vitest.config.js
+vitest.config.js.map
+vitest.config.d.ts
+vitest.config.d.ts.map
