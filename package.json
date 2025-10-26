@@ -21,7 +21,7 @@
     "docker:logs": "docker compose logs -f",
     "test": "./test-server.sh",
     "test:local": "./test-server.sh foaas-mcp:local",
-    "test:registry": "./test-server.sh ghcr.io/gusztavvargadr/foaas-mcp:sha-0102988"
+    "test:registry": "./test-server.sh ghcr.io/gusztavvargadr/foaas-mcp:${REGISTRY_TAG:-latest}"
   },
   "repository": {
     "type": "git",

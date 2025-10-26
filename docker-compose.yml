@@ -12,6 +12,7 @@ services:
     # For stdio MCP server, we don't need exposed ports
     # The container runs and waits for stdin/stdout communication
     stdin_open: true
+    # tty must be false for proper stdio communication with MCP
     tty: false
     environment:
       - NODE_ENV=production
