@@ -56,7 +56,9 @@ fi
 echo ""
 echo "🎉 All tests passed! Server is working correctly."
 echo ""
-echo "Next steps:"
-echo "1. Restart MCP server in VS Code"
-echo "2. Enable 'foaas-mcp-local' server"
-echo "3. Test via GitHub Copilot chat"
+if [ -t 1 ]; then
+    echo "Next steps:"
+    echo "1. Restart MCP server in VS Code"
+    echo "2. Enable 'foaas-mcp-local' server"
+    echo "3. Test via GitHub Copilot chat"
+fi
