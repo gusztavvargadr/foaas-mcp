@@ -6,7 +6,7 @@
 				"run",
 				"--rm",
 				"-i",
-				"ghcr.io/gusztavvargadr/foaas-mcp:sha-0102988"
+				"ghcr.io/gusztavvargadr/foaas-mcp:latest"
 			],
 			"type": "stdio"
 		},
