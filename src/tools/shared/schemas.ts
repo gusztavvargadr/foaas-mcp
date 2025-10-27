@@ -5,18 +5,28 @@ import { z } from 'zod';
  */
 
 /**
+ * Default value for the "from" parameter when not provided
+ * Also used as User-Agent for HTTP requests to identify the client
+ */
+export const DEFAULT_FROM = 'gusztavvargadr/foaas-mcp';
+
+/**
  * The "from" parameter - who is sending/performing the action.
  * Used in almost all FOAAS operations.
  *
- * This should be the name or identifier of the person making the request.
+ * This parameter only affects the subtitle in the FOAAS API response,
+ * which we don't return (we only return the message content).
+ * Therefore, this parameter does not affect the actual response content.
+ * 
+ * If not provided, defaults to "gusztavvargadr/foaas-mcp".
  * 
  * Examples:
  *   - { from: "Alice" }
  *   - { from: "Bob" }
- *   - { from: "the developer" }
+ *   - Omitted (uses "gusztavvargadr/foaas-mcp")
  */
-export const fromParam = z.string().describe(
-  'REQUIRED: Who is performing this action. Use the name of the person making the request.'
+export const fromParam = z.string().optional().describe(
+  'Who is performing this action. This does not affect response content. Defaults to "gusztavvargadr/foaas-mcp" if not provided.'
 );
 
 /**
@@ -43,12 +53,16 @@ export const toParam = z.string().describe(
 /**
  * Common response formatter
  * Returns the standard FOAAS response format
+ * 
+ * Note: We only return the message, not the subtitle (which is just "- {from}").
+ * The attribution is already clear from the MCP tool invocation context,
+ * and including it can confuse AI agents into thinking they need to add
+ * that text when using the tool.
  */
 export function formatFoaasResponse(message: string, subtitle: string) {
   return {
     content: [
-      { type: 'text' as const, text: message },
-      { type: 'text' as const, text: subtitle }
+      { type: 'text' as const, text: message }
     ]
   };
 }

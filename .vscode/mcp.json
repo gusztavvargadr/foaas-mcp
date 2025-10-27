@@ -16,7 +16,7 @@
 				"run",
 				"--rm",
 				"-i",
-				"ghcr.io/gusztavvargadr/foaas-mcp:latest"
+				"ghcr.io/gusztavvargadr/foaas-mcp:0.2.0"
 			],
 			"type": "stdio"
 		},

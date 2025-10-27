@@ -43,14 +43,15 @@ else
     exit 1
 fi
 
-# Test 4: Check "TestUser" in responses
+# Test 4: Verify response format (message only, no subtitle)
 echo ""
-echo "🔍 Test 4: Verifying 'TestUser' in responses..."
-RESULT=$(echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"foaas_thanks","arguments":{"from":"TestUser"}}}' | docker run --rm -i "$IMAGE" 2>/dev/null | grep -o '"- TestUser"' | wc -l)
+echo "🔍 Test 4: Verifying response format..."
+# Check that we get exactly 1 content item (message only, no subtitle)
+RESULT=$(echo '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"foaas_thanks","arguments":{"from":"TestUser"}}}' | docker run --rm -i "$IMAGE" 2>/dev/null | jq '.result.content | length')
 if [ "$RESULT" -eq 1 ]; then
-    echo "✅ Shared schemas working correctly"
+    echo "✅ Response format correct (message only)"
 else
-    echo "❌ Shared schemas not working"
+    echo "❌ Unexpected response format (expected 1 content item, got $RESULT)"
     exit 1
 fi
 

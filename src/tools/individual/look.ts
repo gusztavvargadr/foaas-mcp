@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { fromParam, toParam, formatFoaasResponse } from '../shared/schemas.js';
+import { fromParam, toParam, formatFoaasResponse, DEFAULT_FROM } from '../shared/schemas.js';
 
 export const lookTool = {
   name: 'foaas_look',
@@ -10,8 +10,8 @@ export const lookTool = {
     to: toParam,
     from: fromParam
   }),
-  handler: async (args: { to: string; from: string }, client: FoaasClient): Promise<CallToolResult> => {
-    const response = await client.look(args.to, args.from);
+  handler: async (args: { to: string; from?: string }, client: FoaasClient): Promise<CallToolResult> => {
+    const response = await client.look(args.to, args.from ?? DEFAULT_FROM);
     return formatFoaasResponse(response.message, response.subtitle);
   }
 };
