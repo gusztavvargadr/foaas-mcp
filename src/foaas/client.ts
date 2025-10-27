@@ -1,4 +1,5 @@
 import type { FoaasResponse } from './types.js';
+import { DEFAULT_FROM } from '../tools/shared/schemas.js';
 
 export class FoaasClient {
   private baseUrl = 'https://foaas.io';
@@ -9,7 +10,8 @@ export class FoaasClient {
     try {
       const response = await fetch(url, {
         headers: {
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'User-Agent': DEFAULT_FROM
         }
       });
 

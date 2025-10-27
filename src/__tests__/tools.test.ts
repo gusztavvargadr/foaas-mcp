@@ -93,8 +93,8 @@ describe('Individual Tools', () => {
           expect(() => tool.inputSchema.parse(validInput)).not.toThrow();
         });
 
-        it('should reject missing from parameter', () => {
-          expect(() => tool.inputSchema.parse({})).toThrow();
+        it('should allow missing from parameter (optional)', () => {
+          expect(() => tool.inputSchema.parse({})).not.toThrow();
         });
       });
     });
@@ -128,9 +128,9 @@ describe('Individual Tools', () => {
           expect(() => tool.inputSchema.parse(validInput)).not.toThrow();
         });
 
-        it('should reject missing from parameter', () => {
-          const invalidInput = { to: 'Alice' };
-          expect(() => tool.inputSchema.parse(invalidInput)).toThrow();
+        it('should allow missing from parameter (optional)', () => {
+          const validInput = { to: 'Alice' };
+          expect(() => tool.inputSchema.parse(validInput)).not.toThrow();
         });
 
         it('should reject missing to parameter', () => {
@@ -165,14 +165,10 @@ describe('Individual Tools', () => {
       const result = await thanksTool.handler({ from: 'TestBot' }, mockClient);
 
       expect(mockClient.thanks).toHaveBeenCalledWith('TestBot');
-      expect(result.content).toHaveLength(2);
+      expect(result.content).toHaveLength(1); // Only message, not subtitle
       expect(result.content[0]).toEqual({
         type: 'text',
         text: 'Fuck you very much'
-      });
-      expect(result.content[1]).toEqual({
-        type: 'text',
-        text: '- TestBot'
       });
     });
 
@@ -190,7 +186,7 @@ describe('Individual Tools', () => {
       );
 
       expect(mockClient.legend).toHaveBeenCalledWith('Alice', 'TestBot');
-      expect(result.content).toHaveLength(2);
+      expect(result.content).toHaveLength(1); // Only message, not subtitle
       expect(result.content[0]?.text).toContain('Alice');
     });
 
@@ -208,7 +204,7 @@ describe('Individual Tools', () => {
       );
 
       expect(mockClient.off).toHaveBeenCalledWith('Bob', 'TestBot');
-      expect(result.content).toHaveLength(2);
+      expect(result.content).toHaveLength(1); // Only message, not subtitle
       expect(result.content[0]?.text).toContain('Bob');
     });
 
@@ -247,14 +243,10 @@ describe('Individual Tools', () => {
 
         expect(result).toHaveProperty('content');
         expect(Array.isArray(result.content)).toBe(true);
-        expect(result.content).toHaveLength(2);
+        expect(result.content).toHaveLength(1); // Only message, not subtitle
         expect(result.content[0]).toEqual({
           type: 'text',
           text: 'Test message'
-        });
-        expect(result.content[1]).toEqual({
-          type: 'text',
-          text: 'Test subtitle'
         });
       }
     });

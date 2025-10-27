@@ -14,25 +14,62 @@ docs/roadmap/
 
 ## 🎯 Current Focus
 
-The `next/` directory is currently **empty** - we're focusing on roadmap restructuring and documentation improvements.
+The `next/` directory is currently **empty** - all active work completed!
 
 Check [next/](next/) for any active development work.
 
-## 📋 Up Next (Backlog)
+## � Recommended Next: MVP Launch (v0.3.0)
 
-High-priority items to consider:
+**Goal**: Take the project public and get real user feedback
 
-- [Social Media Announcement](backlog/social-media-announcement.md) - LinkedIn and community outreach
-- [Demo Content](backlog/demo-content.md) - Videos, GIFs, and visual materials
-- [Demo Repository](backlog/demo-repository.md) - Real-world usage examples
-- [Repository Best Practices](backlog/repository-best-practices.md) - Community standards
+Core product is production-ready (v0.2.0 with 100% test coverage). Next steps focus on **visibility and accessibility** without compromising quality:
 
-See [backlog/](backlog/) for the full list of future enhancements, including v2.0 ideas.
+### 📝 Tier 1: Launch Essentials (High Impact, Low Effort)
+**Estimated Time**: 3-5 hours total
+
+1. **[Repository Best Practices](backlog/repository-best-practices.md)** (~2-3 hours)
+   - Add CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md
+   - Create issue and PR templates
+   - Enable Dependabot and branch protection
+   - Makes project "real" and trustworthy for external users
+   - **Blocks**: Social media announcement (looks more professional)
+
+2. **[Social Media Announcement](backlog/social-media-announcement.md)** (~1-2 hours)
+   - LinkedIn post with demo content
+   - X/Twitter thread with highlights
+   - Gets eyes on the work, validates concept
+   - **Requires**: Repository best practices, make repo public
+
+### 🎨 Tier 2: Polish & Discovery (Medium Impact, Low-Medium Effort)
+**Estimated Time**: 7-10 hours total
+
+3. **[Demo Content Creation](backlog/demo-content.md)** (~3-4 hours)
+   - 2-3 GIFs of VS Code usage
+   - One 60-second demo video
+   - Screenshots for README enhancement
+   - Shows people HOW to use it (visual > text)
+   - **Synergy**: Feeds into social media announcement
+
+4. **[Demo Repository](backlog/demo-repository.md)** (~4-6 hours)
+   - Public repo with MCP configuration
+   - 5-10 sample issues with FOAAS responses
+   - Example PRs with review comments
+   - Lets people try without setup, validates real-world usage
+   - **Bonus**: Becomes regression test environment
+
+### 🎯 MVP Sprint: 2-3 Days to Public Launch
+
+**Day 1**: Repository prep + Demo content  
+**Day 2**: Demo repository + Polish  
+**Day 3**: Launch announcements + Engagement
+
+See [backlog/](backlog/) for additional future enhancements (can wait for v0.4.0+ based on user feedback).
 
 ## ✅ Completed Features
 
 Major milestones and features we've shipped:
 
+- [Unit Tests](completed/unit-tests.md) - October 27, 2025 (222 tests, 100% coverage)
 - [v0.1.0 Public Release](completed/v0.1.0-release.md) - October 26, 2025
 - [Tool Redesign](completed/tool-redesign.md) - 23 individual scenario-based tools
 - [GHCR & CI/CD](completed/ghcr-cicd.md) - Automated Docker publishing
@@ -111,13 +148,17 @@ Build a production-ready MCP server that:
 
 ## 📊 Current Status
 
-**Released**: v0.1.0 (October 26, 2025)
+**Latest Release**: v0.2.0 (October 27, 2025)
 - ✅ 23 FOAAS tools with scenario-based design
+- ✅ 222 unit tests with 100% code coverage
 - ✅ Docker-first deployment (Debian Bookworm Slim)
 - ✅ GHCR integration with automated CI/CD
 - ✅ VS Code and GitHub Copilot coding agent support
 - ✅ Zero npm vulnerabilities
 - ✅ Comprehensive documentation suite
+- ✅ Production-ready core functionality
+
+**Next Milestone**: v0.3.0 - Public Launch & Community Engagement
 
 ## 🔗 Related Documentation
 
@@ -128,4 +169,4 @@ Build a production-ready MCP server that:
 
 ---
 
-*Last Updated: October 26, 2025*
+*Last Updated: October 27, 2025*

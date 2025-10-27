@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { FoaasClient } from '../../foaas/client.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { fromParam, formatFoaasResponse } from '../shared/schemas.js';
+import { fromParam, formatFoaasResponse, DEFAULT_FROM } from '../shared/schemas.js';
 
 export const rtfmTool = {
   name: 'foaas_rtfm',
@@ -9,8 +9,8 @@ export const rtfmTool = {
   inputSchema: z.object({
     from: fromParam
   }),
-  handler: async (args: { from: string }, client: FoaasClient): Promise<CallToolResult> => {
-    const response = await client.rtfm(args.from);
+  handler: async (args: { from?: string }, client: FoaasClient): Promise<CallToolResult> => {
+    const response = await client.rtfm(args.from ?? DEFAULT_FROM);
     return formatFoaasResponse(response.message, response.subtitle);
   }
 };

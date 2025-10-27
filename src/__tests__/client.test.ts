@@ -26,7 +26,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/thanks/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toBe('Fuck you very much');
       expect(result.subtitle).toBe('- TestBot');
@@ -42,7 +42,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/awesome/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toBe('This is Fucking Awesome.');
     });
@@ -57,7 +57,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/legend/Alice/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Alice');
     });
@@ -72,7 +72,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/dalton/Alice/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Alice');
     });
@@ -89,7 +89,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/because/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Because');
     });
@@ -104,7 +104,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/zero/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Zero');
     });
@@ -119,7 +119,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/bye/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('bye');
     });
@@ -136,7 +136,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/off/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -151,7 +151,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/gfy/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -166,7 +166,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/chainsaw/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('chainsaw');
     });
@@ -181,7 +181,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/keep/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -198,7 +198,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/everyone/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Everyone');
     });
@@ -213,7 +213,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/flying/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('flying');
     });
@@ -228,7 +228,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/asshole/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('asshole');
     });
@@ -245,7 +245,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/logs/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('logs');
     });
@@ -260,7 +260,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/rtfm/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('manual');
     });
@@ -275,7 +275,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/think/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -290,7 +290,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/thinking/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -305,7 +305,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/shutup/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -320,7 +320,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/look/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -335,7 +335,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/ridiculous/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('ridiculous');
     });
@@ -350,7 +350,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/understand/Bob/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Bob');
     });
@@ -365,7 +365,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/cool/TestBot',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
       expect(result.message).toContain('Cool');
     });
@@ -382,7 +382,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/thanks/Test%20User%40123',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
     });
 
@@ -396,7 +396,7 @@ describe('FoaasClient', () => {
 
       expect(fetchMock).toHaveBeenCalledWith(
         'https://foaas.io/thanks/%E7%94%A8%E6%88%B7',
-        { headers: { Accept: 'application/json' } }
+        { headers: { Accept: 'application/json', 'User-Agent': 'gusztavvargadr/foaas-mcp' } }
       );
     });
   });
