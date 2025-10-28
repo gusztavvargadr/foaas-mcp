@@ -24,7 +24,6 @@ We recommend using **GitHub Security Advisories** (preferred method):
 2. Click "Report a vulnerability"
 3. Provide detailed information (see below)
 
-Alternatively, you can email security concerns to: **[Your security contact will be added when repo goes public]**
 
 ### What to Include
 
