@@ -1,0 +1,33 @@
+# CODEOWNERS for foaas-mcp
+# These owners will be requested for review on PRs
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @gusztavvargadr
+
+# Documentation
+/docs/ @gusztavvargadr
+*.md @gusztavvargadr
+
+# CI/CD and Infrastructure
+/.github/ @gusztavvargadr
+/Dockerfile @gusztavvargadr
+/docker-compose.yml @gusztavvargadr
+
+# Core source code
+/src/ @gusztavvargadr
+/src/server.ts @gusztavvargadr
+/src/foaas/ @gusztavvargadr
+
+# Tools
+/src/tools/ @gusztavvargadr
+/src/tools/shared/ @gusztavvargadr
+
+# Tests
+/src/__tests__/ @gusztavvargadr
+vitest.config.ts @gusztavvargadr
+test-server.sh @gusztavvargadr
+
+# Configuration
+package.json @gusztavvargadr
+tsconfig.json @gusztavvargadr
