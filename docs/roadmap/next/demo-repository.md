@@ -1,6 +1,8 @@
 # Demo Repository
 
-**Status**: Backlog
+**Status**: In Progress  
+**Started**: 2025-10-28  
+**Repository**: https://github.com/gusztavvargadr/foaas-mcp-demo
 
 ## Goal
 
@@ -35,6 +37,20 @@ Create a realistic demo repository showcasing FOAAS MCP integration with GitHub 
 - Video recordings of tool usage
 - Troubleshooting guide
 - Links back to main repository
+
+## Status Update
+
+**2025-10-28**: Demo repository created and populated
+- ✅ Repository created at https://github.com/gusztavvargadr/foaas-mcp-demo
+- ✅ 5 sample issues created (#1-#5)
+- ✅ 3 sample PRs created (#6-#8)
+- ✅ Code samples added in `src/`
+- ✅ Complete documentation and guides
+- ✅ Recording automation scripts
+- ✅ GIF optimization tools
+- ✅ LinkedIn post templates
+- ⏭️ Next: Record demo GIFs
+- ⏭️ Next: Create LinkedIn posts
 
 ## Use Cases
 
