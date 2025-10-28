@@ -1,0 +1,112 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please provide as much detail as possible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clear and concise description of the bug
+      placeholder: What went wrong?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Configure MCP with...
+        2. Run command...
+        3. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+      placeholder: I expected...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+      placeholder: Instead, I got...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: Which version are you using?
+      options:
+        - latest
+        - v0.2.0
+        - v0.1.0
+        - Built from source
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Where are you running this?
+      options:
+        - VS Code (local)
+        - GitHub Codespaces
+        - Docker Desktop (Mac)
+        - Docker Desktop (Windows)
+        - Docker Desktop (Linux)
+        - Docker Engine (Linux)
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Error Messages
+      description: Relevant logs or error messages (check MCP logs in VS Code Output panel)
+      render: shell
+      placeholder: |
+        Paste error output here...
+        
+        MCP logs location: View → Output → "Model Context Protocol"
+
+  - type: textarea
+    id: mcp-config
+    attributes:
+      label: MCP Configuration
+      description: Your .vscode/mcp.json configuration (remove any sensitive data)
+      render: json
+      placeholder: |
+        {
+          "mcpServers": {
+            "foaas": {
+              "command": "docker",
+              "args": ["run", "--rm", "-i", "ghcr.io/gusztavvargadr/foaas-mcp:latest"]
+            }
+          }
+        }
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information that might help us diagnose the issue
+      placeholder: Screenshots, related issues, workarounds you've tried, etc.

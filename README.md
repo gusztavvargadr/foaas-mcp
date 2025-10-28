@@ -1,5 +1,9 @@
 # FOAAS MCP Server
 
+[![Docker Build](https://github.com/gusztavvargadr/foaas-mcp/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gusztavvargadr/foaas-mcp/actions/workflows/docker-publish.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/gusztavvargadr/foaas-mcp/pkgs/container/foaas-mcp)
+
 ⚠️ **EXPLICIT CONTENT WARNING** ⚠️
 
 A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io) server exposing [FOAAS](https://foaas.io/) (Fuck Off As A Service) operations. Perfect for adding humorous (and explicit) responses to development workflows.
