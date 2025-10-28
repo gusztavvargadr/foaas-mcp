@@ -56,6 +56,7 @@ All tools provide direct 1:1 mapping to FOAAS operations with `foaas_` prefix:
 - **[Development Guide](docs/DEVELOPMENT.md)** - Architecture, workflow, adding tools
 - **[Tools Reference](docs/TOOLS.md)** - Detailed tool documentation
 - **[Roadmap](docs/roadmap/)** - Development roadmap and feature tracking
+- **[Demo Repository](https://github.com/gusztavvargadr/foaas-mcp-demo)** - Sample issues, PRs, and recording guides
 
 ## Example Usage
 
