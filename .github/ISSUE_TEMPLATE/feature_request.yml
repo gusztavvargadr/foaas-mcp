@@ -1,0 +1,95 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! 
+        
+        **Before submitting**: Please check the [roadmap](https://github.com/gusztavvargadr/foaas-mcp/tree/main/docs/roadmap) - your idea might already be planned!
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What pain point are you experiencing?
+      placeholder: |
+        I'm frustrated when...
+        It's difficult to...
+        I wish I could...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this feature work? Be as specific as possible.
+      placeholder: |
+        I'd like to be able to...
+        The feature could work by...
+        Example usage: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches or workarounds have you thought about?
+      placeholder: |
+        I considered...
+        Another option might be...
+        Currently I work around this by...
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What type of feature is this?
+      options:
+        - New FOAAS tool/operation
+        - Tool improvement
+        - Configuration option
+        - Documentation
+        - Developer experience
+        - Docker/deployment
+        - Testing/quality
+        - Performance
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority (Your Perspective)
+      description: How important is this feature to you?
+      options:
+        - Nice to have
+        - Would be useful
+        - Important
+        - Critical (blocking my usage)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to contribute this feature?
+      options:
+        - label: I'm willing to submit a PR for this feature
+          required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Screenshots, code examples, links to similar features, etc.
+      placeholder: |
+        Links to related projects...
+        Screenshots showing the idea...
+        Code examples...

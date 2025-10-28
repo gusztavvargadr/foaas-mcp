@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/gusztavvargadr/foaas-mcp/blob/main/README.md
+    about: Read the README and documentation
+  - name: 🗺️ Roadmap
+    url: https://github.com/gusztavvargadr/foaas-mcp/blob/main/docs/roadmap/README.md
+    about: Check planned features and development progress
+  - name: 🔧 Development Guide
+    url: https://github.com/gusztavvargadr/foaas-mcp/blob/main/docs/DEVELOPMENT.md
+    about: Architecture and development information
+  - name: 🛠️ Tools Reference
+    url: https://github.com/gusztavvargadr/foaas-mcp/blob/main/docs/TOOLS.md
+    about: Complete tool documentation and scenarios
