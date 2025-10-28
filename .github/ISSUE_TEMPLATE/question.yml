@@ -30,7 +30,9 @@ body:
       description: What is your question about?
       options:
         - Installation / Setup
-        - Configuration (VS Code, MCP, Docker)
+        - Configuration (VS Code)
+        - Configuration (MCP)
+        - Configuration (Docker)
         - Usage / Features
         - Tool selection and scenarios
         - Development / Contributing
