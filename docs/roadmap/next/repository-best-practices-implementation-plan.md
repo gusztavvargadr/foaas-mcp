@@ -100,8 +100,7 @@ Implement GitHub community standards and best practices to make the repository p
 
 ### How to Report
 
-1. **Email**: [your-email] (or use GitHub Security Advisories)
-2. **GitHub Security Advisory**: Preferred method
+1. **GitHub Security Advisory**: Preferred method
    - Go to: https://github.com/gusztavvargadr/foaas-mcp/security/advisories/new
    - Provide detailed information
 
