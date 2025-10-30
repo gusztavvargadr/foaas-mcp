@@ -267,8 +267,10 @@ for i in $(seq 0 $((PR_COUNT - 1))); do
     
     # Create branch with a dummy commit
     git checkout -b "$head" &> /dev/null || git checkout "$head" &> /dev/null
-    echo "# ${title}" >> "DEMO-${head}.md"
-    git add "DEMO-${head}.md"
+    # Sanitize filename (replace / with -)
+    safe_filename="DEMO-${head//\//-}.md"
+    echo "# ${title}" >> "$safe_filename"
+    git add "$safe_filename"
     git commit -m "Demo: ${title}" &> /dev/null
     git push -u origin "$head" &> /dev/null
     
