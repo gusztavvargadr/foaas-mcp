@@ -832,7 +832,7 @@ git commit -m "Add demo GIF"
 
 **Best for:** Keeping main repo lean, larger GIFs- [Model Context Protocol Docs](https://modelcontextprotocol.io/docs)
 
-- [FOAAS API](https://www.foaas.com/)
+- [FOAAS API](https://www.foaas.io/)
 
 ```bash- [LinkedIn Best Practices](https://www.linkedin.com/help/linkedin/answer/a522288)
 
