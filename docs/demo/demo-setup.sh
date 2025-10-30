@@ -5,6 +5,7 @@ set -euo pipefail
 # Creates a demo repository with sample issues and PRs for testing FOAAS MCP tools
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LABELS_JSON="${SCRIPT_DIR}/labels.json"
 ISSUES_JSON="${SCRIPT_DIR}/issues.json"
 PULLS_JSON="${SCRIPT_DIR}/pull-requests.json"
 
@@ -55,6 +56,7 @@ EXAMPLES:
   DEMO_REPO_NAME=test-repo DRY_RUN=true $0
 
 DATA FILES:
+  labels.json          - Label definitions (edit to customize)
   issues.json          - Issue templates (edit to customize)
   pull-requests.json   - PR templates (edit to customize)
 
@@ -94,6 +96,11 @@ done
 # Validate inputs
 if [[ ! "$REPO_VISIBILITY" =~ ^(public|private)$ ]]; then
   echo -e "${RED}Error: visibility must be 'public' or 'private'${NC}"
+  exit 1
+fi
+
+if [[ ! -f "$LABELS_JSON" ]]; then
+  echo -e "${RED}Error: $LABELS_JSON not found${NC}"
   exit 1
 fi
 
@@ -189,21 +196,14 @@ fi
 # Create labels
 echo
 echo -e "${GREEN}Creating labels...${NC}"
-LABELS=(
-  "bug:Critical issue that needs immediate attention:d73a4a"
-  "enhancement:New feature or request:a2eeef"
-  "documentation:Documentation improvements:0075ca"
-  "help wanted:Extra attention is needed:008672"
-  "question:Further information is requested:d876e3"
-  "wontfix:This will not be worked on:ffffff"
-  "duplicate:This issue already exists:cfd3d7"
-  "good first issue:Good for newcomers:7057ff"
-  "needs testing:Requires testing:fbca04"
-  "performance:Performance improvements:0e8a16"
-)
+LABEL_COUNT=$(jq length "$LABELS_JSON")
+echo -e "  Loading ${LABEL_COUNT} labels from ${LABELS_JSON}"
 
-for label in "${LABELS[@]}"; do
-  IFS=':' read -r name description color <<< "$label"
+for i in $(seq 0 $((LABEL_COUNT - 1))); do
+  name=$(jq -r ".[$i].name" "$LABELS_JSON")
+  description=$(jq -r ".[$i].description" "$LABELS_JSON")
+  color=$(jq -r ".[$i].color" "$LABELS_JSON")
+  
   execute "Create label '$name'" \
     gh label create "$name" \
       --repo "$REPO_FULL" \
@@ -229,11 +229,12 @@ for i in $(seq 0 $((ISSUE_COUNT - 1))); do
     echo -e "${YELLOW}[DRY RUN]${NC} Would create issue: $title"
   else
     echo -e "${BLUE}▶${NC} Creating issue: $title"
-    issue_number=$(gh issue create \
+    issue_url=$(gh issue create \
       --repo "$REPO_FULL" \
       --title "$title" \
       --body "$body" \
-      --label "$labels" | grep -oP '#\K\d+')
+      --label "$labels")
+    issue_number=$(echo "$issue_url" | grep -oP 'issues/\K\d+')
     CREATED_ISSUES+=("$issue_number")
     echo -e "${GREEN}  ✓${NC} Created #${issue_number}"
   fi
@@ -272,12 +273,13 @@ for i in $(seq 0 $((PR_COUNT - 1))); do
     git push -u origin "$head" &> /dev/null
     
     # Create PR
-    pr_number=$(gh pr create \
+    pr_url=$(gh pr create \
       --repo "$REPO_FULL" \
       --title "$title" \
       --body "$body" \
       --head "$head" \
-      --base main | grep -oP '#\K\d+')
+      --base main)
+    pr_number=$(echo "$pr_url" | grep -oP 'pull/\K\d+')
     CREATED_PRS+=("$pr_number")
     echo -e "${GREEN}  ✓${NC} Created #${pr_number}"
     

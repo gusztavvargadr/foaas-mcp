@@ -1,0 +1,67 @@
+[
+  {
+    "name": "bug",
+    "description": "Critical issue that needs immediate attention",
+    "color": "d73a4a"
+  },
+  {
+    "name": "enhancement",
+    "description": "New feature or request",
+    "color": "a2eeef"
+  },
+  {
+    "name": "documentation",
+    "description": "Documentation improvements",
+    "color": "0075ca"
+  },
+  {
+    "name": "help wanted",
+    "description": "Extra attention is needed",
+    "color": "008672"
+  },
+  {
+    "name": "question",
+    "description": "Further information is requested",
+    "color": "d876e3"
+  },
+  {
+    "name": "wontfix",
+    "description": "This will not be worked on",
+    "color": "ffffff"
+  },
+  {
+    "name": "duplicate",
+    "description": "This issue already exists",
+    "color": "cfd3d7"
+  },
+  {
+    "name": "good first issue",
+    "description": "Good for newcomers",
+    "color": "7057ff"
+  },
+  {
+    "name": "needs testing",
+    "description": "Requires testing",
+    "color": "fbca04"
+  },
+  {
+    "name": "performance",
+    "description": "Performance improvements",
+    "color": "0e8a16"
+  },
+  {
+    "name": "discussion",
+    "description": "Open discussion or RFC",
+    "color": "cc317c"
+  },
+  {
+    "name": "high-priority",
+    "description": "Needs urgent attention",
+    "color": "b60205"
+  },
+  {
+    "name": "security",
+    "description": "Security-related issue or vulnerability",
+    "color": "ee0701"
+  }
+]
