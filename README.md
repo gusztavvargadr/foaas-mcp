@@ -55,49 +55,121 @@ All tools provide direct 1:1 mapping to FOAAS operations with `foaas_` prefix:
 **General Frustration (3):** everyone, flying, asshole  
 **Code Review & Quality (9):** logs, rtfm, think, thinking, shutup, look, ridiculous, understand, cool
 
-## Documentation
+## Usage Scenarios
 
-- **[Development Guide](docs/DEVELOPMENT.md)** - Architecture, workflow, adding tools
-- **[Tools Reference](docs/TOOLS.md)** - Detailed tool documentation
-- **[Roadmap](docs/roadmap/)** - Development roadmap and feature tracking
+### Bug Reports & Debugging
+
+**"Works on my machine" / Runtime errors**
+- `foaas_logs` - When the solution is clearly in the logs
+
+**"How do I use X?" / Questions already in docs**
+- `foaas_rtfm` - When documentation exists but wasn't read
+
+**General confusion**
+- `foaas_zero` - Express complete disinterest
+- `foaas_everyone` - Universal dismissal
+- `foaas_flying` - Maximum level of not caring
+
+### Code Reviews
+
+**Questionable code / Bad decisions**
+- `foaas_think` - Question someone's thought process
+- `foaas_thinking` - Alternative phrasing for questioning decisions
+
+**Pointing out issues**
+- `foaas_look` - Request someone examine something specific
+
+**Nitpicking / Endless debates**
+- `foaas_shutup` - Stop bikeshedding and trivial arguments
+
+**Great contributions**
+- `foaas_legend` - Genuine praise for someone
+- `foaas_dalton` - Call someone a problem-solving hero
+
+### Pull Requests & Issues
+
+**Spam / Duplicates**
+- `foaas_off` - Classic dismissal
+- `foaas_bye` - End the conversation
+- `foaas_thanks` - Sarcastic gratitude
+
+**Absurd requests / Scope creep**
+- `foaas_ridiculous` - For unrealistic requirements
+- `foaas_chainsaw` - Dramatic reaction to absurdity
+
+**Unclear requirements**
+- `foaas_understand` - Express genuine confusion
+
+**Sarcastic approval**
+- `foaas_cool` - Dismiss excuses with peak sarcasm
+- `foaas_awesome` - Enthusiastic (but maybe ironic) celebration
+
+### Team Communication
+
+**General frustration**
+- `foaas_everyone` - Dismiss all parties
+- `foaas_flying` - Express not caring
+- `foaas_asshole` - General purpose frustration
+
+**Rejecting requests**
+- `foaas_because` - Answer "why not?" emphatically
+- `foaas_zero` - Show complete disinterest
+
+**Direct confrontation**
+- `foaas_gfy` - Military-style professional profanity
+- `foaas_keep` - Extended dismissal for persistent issues
+
+**Team praise**
+- `foaas_legend` - Call someone a legend
+- `foaas_dalton` - Acknowledge problem-solving skills
 
 ## Example Usage
 
-**Development Scenarios:**
+### GitHub Copilot Integration
+
+Ask Copilot to use FOAAS MCP tools in natural language:
 
 ```
-# Bug Reports
-"Someone reported 'it doesn't work' with no details" → foaas_logs
-"Question already answered in docs" → foaas_rtfm
-
-# Code Reviews
-"Acknowledge this great bug fix from @contributor" → foaas_legend
-"This code makes no sense" → foaas_understand
-"Stop arguing about variable names" → foaas_shutup
-
-# Pull Requests & Issues
-"Respond to this absurd feature request" → foaas_ridiculous
-"Close this duplicate issue" → foaas_bye
-"Sarcastic approval for whitespace PR" → foaas_cool
-
-# General Team Communication
-"Praise the teammate who fixed production" → foaas_dalton
-"React to this impossible deadline" → foaas_ridiculous
+"Respond to this bug report with no logs" → foaas_logs
+"Acknowledge @contributor's excellent fix" → foaas_legend
+"This feature request is unrealistic" → foaas_ridiculous
+"Stop bikeshedding on variable names" → foaas_shutup
 ```
 
-See [docs/TOOLS.md](docs/TOOLS.md) for complete scenario guide and tool reference.
+### Direct Tool Calls
+
+All tools require a `from` parameter. Tools with a target require `to`:
+
+```json
+{
+  "name": "foaas_legend",
+  "arguments": {
+    "to": "contributor",
+    "from": "maintainer"
+  }
+}
+```
+
+```json
+{
+  "name": "foaas_logs",
+  "arguments": {
+    "from": "support-bot"
+  }
+}
+```
+
+## Documentation
+
+- **[Contributing Guide](CONTRIBUTING.md)** - Setup, architecture, development workflow
+- **[Demo Materials](docs/demo/)** - LinkedIn GIFs, demo repository setup
+- **[Roadmap](docs/roadmap/)** - Development roadmap and feature tracking
 
 ## Image Tags
 
 - `latest` - Latest stable release
 - `v1.0.0` - Semantic versions
 - `sha-<commit>` - Specific commits (testing)
-
-## Documentation
-
-- [TOOLS.md](docs/TOOLS.md) - Complete tool reference with scenarios
-- [DEVELOPMENT.md](docs/DEVELOPMENT.md) - Developer guide
-- [Roadmap](docs/roadmap/) - Development roadmap and feature tracking
 
 ## Security
 

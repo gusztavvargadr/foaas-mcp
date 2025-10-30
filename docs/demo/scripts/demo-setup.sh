@@ -5,9 +5,9 @@ set -euo pipefail
 # Creates a demo repository with sample issues and PRs for testing FOAAS MCP tools
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LABELS_JSON="${SCRIPT_DIR}/labels.json"
-ISSUES_JSON="${SCRIPT_DIR}/issues.json"
-PULLS_JSON="${SCRIPT_DIR}/pull-requests.json"
+LABELS_JSON="${SCRIPT_DIR}/../data/labels.json"
+ISSUES_JSON="${SCRIPT_DIR}/../data/issues.json"
+PULLS_JSON="${SCRIPT_DIR}/../data/pull-requests.json"
 
 # Colors for output
 RED='\033[0;31m'
@@ -21,6 +21,7 @@ REPO_NAME="${DEMO_REPO_NAME:-foaas-mcp-demo}"
 REPO_OWNER="${DEMO_REPO_OWNER:-$(gh api user -q .login)}"
 REPO_VISIBILITY="${DEMO_REPO_VISIBILITY:-private}"
 DRY_RUN="${DRY_RUN:-false}"
+CLEAN="${CLEAN:-false}"
 
 # Usage information
 usage() {
@@ -33,6 +34,7 @@ OPTIONS:
   -n, --name NAME       Repository name (default: foaas-mcp-demo)
   -o, --owner OWNER     Repository owner (default: current user)
   -v, --visibility VIS  Repository visibility: public or private (default: private)
+  -c, --clean           Delete and recreate repository if it exists
   -d, --dry-run         Show what would be created without creating anything
   -h, --help            Show this help message
 
@@ -40,6 +42,7 @@ ENVIRONMENT VARIABLES:
   DEMO_REPO_NAME        Same as --name
   DEMO_REPO_OWNER       Same as --owner
   DEMO_REPO_VISIBILITY  Same as --visibility
+  CLEAN                 Same as --clean (set to "true")
   DRY_RUN              Same as --dry-run (set to "true")
 
 EXAMPLES:
@@ -51,6 +54,9 @@ EXAMPLES:
 
   # Preview what would be created
   $0 --dry-run
+
+  # Clean up and recreate existing demo repo
+  $0 --clean
 
   # Use environment variables
   DEMO_REPO_NAME=test-repo DRY_RUN=true $0
@@ -78,6 +84,10 @@ while [[ $# -gt 0 ]]; do
     -v|--visibility)
       REPO_VISIBILITY="$2"
       shift 2
+      ;;
+    -c|--clean)
+      CLEAN="true"
+      shift
       ;;
     -d|--dry-run)
       DRY_RUN="true"
@@ -144,6 +154,7 @@ echo
 echo -e "${YELLOW}Configuration:${NC}"
 echo -e "  Repository: ${GREEN}${REPO_FULL}${NC}"
 echo -e "  Visibility: ${GREEN}${REPO_VISIBILITY}${NC}"
+echo -e "  Clean:      ${GREEN}${CLEAN}${NC}"
 echo -e "  Dry Run:    ${GREEN}${DRY_RUN}${NC}"
 echo
 
@@ -169,14 +180,25 @@ execute() {
 # Check if repository exists
 echo -e "${BLUE}Checking if repository exists...${NC}"
 if gh repo view "$REPO_FULL" &> /dev/null; then
-  echo -e "${YELLOW}⚠ Repository $REPO_FULL already exists${NC}"
-  read -p "Do you want to use the existing repository? (y/n) " -n 1 -r
-  echo
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${RED}Aborted${NC}"
-    exit 1
+  if [[ "$CLEAN" == "true" ]]; then
+    echo -e "${YELLOW}⚠ Repository $REPO_FULL exists - deleting for clean setup${NC}"
+    if [[ "$DRY_RUN" == "true" ]]; then
+      echo -e "${YELLOW}[DRY RUN]${NC} Would delete repository"
+    else
+      gh repo delete "$REPO_FULL" --yes
+      echo -e "${GREEN}✓${NC} Repository deleted"
+    fi
+    REPO_EXISTS=false
+  else
+    echo -e "${YELLOW}⚠ Repository $REPO_FULL already exists${NC}"
+    read -p "Do you want to use the existing repository? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      echo -e "${RED}Aborted${NC}"
+      exit 1
+    fi
+    REPO_EXISTS=true
   fi
-  REPO_EXISTS=true
 else
   REPO_EXISTS=false
 fi
@@ -264,6 +286,11 @@ for i in $(seq 0 $((PR_COUNT - 1))); do
     fi
     
     cd "/tmp/${REPO_NAME}"
+    
+    # Reset to clean main branch state
+    git checkout main &> /dev/null
+    git pull origin main &> /dev/null
+    git clean -fd &> /dev/null
     
     # Create branch with a dummy commit
     git checkout -b "$head" &> /dev/null || git checkout "$head" &> /dev/null

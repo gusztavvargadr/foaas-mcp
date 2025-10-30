@@ -5,8 +5,8 @@ set -euo pipefail
 # Analyzes issues.json and pull-requests.json to show which FOAAS tools are covered
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ISSUES_JSON="${SCRIPT_DIR}/issues.json"
-PULLS_JSON="${SCRIPT_DIR}/pull-requests.json"
+ISSUES_JSON="${SCRIPT_DIR}/../data/issues.json"
+PULLS_JSON="${SCRIPT_DIR}/../data/pull-requests.json"
 
 # Colors
 RED='\033[0;31m'
