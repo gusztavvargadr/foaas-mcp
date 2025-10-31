@@ -8,6 +8,14 @@
 
 A secure, Docker-based [Model Context Protocol](https://modelcontextprotocol.io) server exposing [FOAAS](https://foaas.io/) (Fuck Off As A Service) operations. Perfect for adding humorous (and explicit) responses to development workflows.
 
+## Demo
+
+See FOAAS MCP in action responding to GitHub issues with GitHub Copilot:
+
+![FOAAS MCP Demo](./docs/demo/gif/foaas-mcp-demo.gif)
+
+**See it yourself**: [Demo repository](https://github.com/gusztavvargadr/foaas-mcp-demo) with sample issues and PRs, or [create your own demo repo](docs/demo/).
+
 ## Features
 
 - 🐳 Docker-first (Debian 12, Node.js 20.19.5, non-root)

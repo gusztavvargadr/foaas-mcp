@@ -5,9 +5,9 @@ set -euo pipefail
 # Creates a demo repository with sample issues and PRs for testing FOAAS MCP tools
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LABELS_JSON="${SCRIPT_DIR}/../data/labels.json"
-ISSUES_JSON="${SCRIPT_DIR}/../data/issues.json"
-PULLS_JSON="${SCRIPT_DIR}/../data/pull-requests.json"
+LABELS_JSON="${SCRIPT_DIR}/labels.json"
+ISSUES_JSON="${SCRIPT_DIR}/issues.json"
+PULLS_JSON="${SCRIPT_DIR}/pull-requests.json"
 
 # Colors for output
 RED='\033[0;31m'
