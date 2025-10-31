@@ -294,8 +294,17 @@ for i in $(seq 0 $((PR_COUNT - 1))); do
     
     # Create branch with a dummy commit
     git checkout -b "$head" &> /dev/null || git checkout "$head" &> /dev/null
-    # Sanitize filename (replace / with -)
-    safe_filename="DEMO-${head//\//-}.md"
+    # Sanitize filename for cross-platform compatibility:
+    # Replace /, \, :, *, ?, ", <, >, | with -
+    safe_filename="DEMO-${head//\//-}"
+    safe_filename="${safe_filename//\\/ -}"
+    safe_filename="${safe_filename//:/-}"
+    safe_filename="${safe_filename//\*/-}"
+    safe_filename="${safe_filename//\?/-}"
+    safe_filename="${safe_filename//\"/-}"
+    safe_filename="${safe_filename//</-}"
+    safe_filename="${safe_filename//>/-}"
+    safe_filename="${safe_filename//|/-}.md"
     echo "# ${title}" >> "$safe_filename"
     git add "$safe_filename"
     git commit -m "Demo: ${title}" &> /dev/null
