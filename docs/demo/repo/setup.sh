@@ -297,7 +297,7 @@ for i in $(seq 0 $((PR_COUNT - 1))); do
     # Sanitize filename for cross-platform compatibility:
     # Replace /, \, :, *, ?, ", <, >, | with -
     safe_filename="DEMO-${head//\//-}"
-    safe_filename="${safe_filename//\\/ -}"
+    safe_filename="${safe_filename//\\/-}"
     safe_filename="${safe_filename//:/-}"
     safe_filename="${safe_filename//\*/-}"
     safe_filename="${safe_filename//\?/-}"
