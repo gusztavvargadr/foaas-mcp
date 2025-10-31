@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/gusztavvargadr-foaas-mcp-badge.png)](https://mseep.ai/app/gusztavvargadr-foaas-mcp)
+
 # FOAAS MCP Server
 
 [![Docker Build](https://github.com/gusztavvargadr/foaas-mcp/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/gusztavvargadr/foaas-mcp/actions/workflows/docker-publish.yml)
