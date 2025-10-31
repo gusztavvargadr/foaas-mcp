@@ -147,7 +147,7 @@ docker run --rm -v "$OUTPUT_DIR:/data" ghcr.io/asciinema/agg \
 
 ### Adjust Terminal Width
 
-The demo uses 85-character width. To change, edit `docs/demo/gif/linkedin-workflow-demo.sh` line ~18:
+The demo uses 85-character width. To change, edit `docs/demo/gif/workflow.sh` line ~18:
 
 ```bash
 SEP="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
