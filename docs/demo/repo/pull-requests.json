@@ -1,0 +1,135 @@
+[
+  {
+    "title": "Fix memory leak in session handler",
+    "body": "## Summary\nFixes memory leak in user session handler\n\n## Changes\n- Added proper cleanup in `SessionManager.destroy()`\n- Removed dangling event listeners\n- Added unit tests for session lifecycle\n\n## Testing\n- ✅ All existing tests pass\n- ✅ New tests cover session cleanup\n- ✅ Memory profiling shows stable usage\n- ✅ Tested with 1000 concurrent sessions for 6 hours\n\n## Performance\n- Memory usage: 256MB → 320MB (stable)\n- No memory leaks detected in 6-hour stress test",
+    "head": "fix/session-memory-leak",
+    "suggested_tool": "foaas_legend or foaas_dalton",
+    "scenario": "Excellent PR fixing critical issue with tests"
+  },
+  {
+    "title": "Refactor database queries",
+    "body": "Made some changes to database code. Should work better now.",
+    "head": "refactor/db-queries",
+    "suggested_tool": "foaas_understand or foaas_look",
+    "scenario": "Vague PR description - unclear what changed"
+  },
+  {
+    "title": "Update README typo",
+    "body": "Fixed typo in README: \"teh\" → \"the\"",
+    "head": "docs/fix-typo",
+    "suggested_tool": "foaas_awesome or foaas_cool",
+    "scenario": "Simple documentation fix"
+  },
+  {
+    "title": "WIP: Complete rewrite of authentication system",
+    "body": "Rewriting everything to use a new auth library.\n\nStill working on it, lots of broken tests.\n\nThoughts?",
+    "head": "feature/auth-rewrite",
+    "suggested_tool": "foaas_think or foaas_thinking",
+    "scenario": "Work in progress PR not ready for review"
+  },
+  {
+    "title": "Quick fix",
+    "body": "Changed some stuff",
+    "head": "fix/quick-changes",
+    "suggested_tool": "foaas_understand or foaas_look",
+    "scenario": "No description whatsoever"
+  },
+  {
+    "title": "Add comprehensive API documentation",
+    "body": "## Summary\nAdds complete API documentation with examples, error codes, and authentication guides.\n\n## Changes\n- Created `/docs/api/` directory with OpenAPI specs\n- Added 50+ code examples in multiple languages\n- Documented all error codes and their meanings\n- Added authentication flow diagrams\n- Included rate limiting documentation\n\n## Documentation Structure\n```\ndocs/api/\n├── openapi.yaml\n├── authentication.md\n├── rate-limits.md\n├── error-codes.md\n└── examples/\n    ├── javascript/\n    ├── python/\n    └── curl/\n```\n\n## Preview\n- Deployed to staging: https://staging.example.com/docs\n- Interactive API explorer included\n\n## Checklist\n- ✅ All endpoints documented\n- ✅ Examples tested and verified\n- ✅ Diagrams created\n- ✅ Spell-checked and reviewed",
+    "head": "docs/api-documentation",
+    "suggested_tool": "foaas_legend or foaas_awesome",
+    "scenario": "Outstanding documentation work"
+  },
+  {
+    "title": "Fix rate limiter configuration",
+    "body": "## Summary\nFixes the API rate limiter misconfiguration reported in #14\n\n## Root Cause\nTime window was set to 60000ms (1 minute) instead of 1000ms (1 second).\n\n## Changes\n```diff\n- windowMs: 60000, // 1 minute\n- max: 30,\n+ windowMs: 1000, // 1 second\n+ max: 100,\n```\n\n## Testing\n- ✅ Load tested with k6 (10000 requests)\n- ✅ Verified in staging environment\n- ✅ Monitoring dashboards show correct behavior\n- ✅ Premium users can now perform bulk operations\n\n## Performance\n- Requests handled: 100 req/s per user ✅\n- No false positives in 1-hour test ✅\n- Redis performance: nominal\n\n## Closes\n- Fixes #14",
+    "head": "fix/rate-limiter",
+    "suggested_tool": "foaas_legend or foaas_dalton",
+    "scenario": "Perfect bug fix with testing and references"
+  },
+  {
+    "title": "Experiment with new UI framework",
+    "body": "Trying out a new UI framework to see if we like it.\n\nCompletely changes the entire frontend.\n\nWhat do people think?",
+    "head": "experiment/new-ui",
+    "suggested_tool": "foaas_ridiculous or foaas_thinking",
+    "scenario": "Major changes without discussion or approval"
+  },
+  {
+    "title": "Whitespace cleanup",
+    "body": "## Summary\nRemoved trailing whitespace across the entire codebase.\n\n## Changes\n- 247 files changed\n- 0 lines of actual code modified\n- Ran `prettier --write \"**/*.ts\"`\n\n## Why?\nConsistent code formatting improves readability.",
+    "head": "chore/whitespace",
+    "suggested_tool": "foaas_cool or foaas_thanks",
+    "scenario": "Trivial PR changing many files - sarcastic approval"
+  },
+  {
+    "title": "Add unit tests for core modules",
+    "body": "## Summary\nAdds comprehensive unit test coverage for authentication, authorization, and session management modules.\n\n## Coverage Improvements\n```\nauth/          12% → 95%\nauthorization/ 0%  → 89%\nsessions/      25% → 93%\n\nOverall:       45% → 87%\n```\n\n## Changes\n- 156 new test cases\n- Added mocking utilities for external services\n- Implemented test fixtures for common scenarios\n- Added integration tests for auth flow\n\n## Test Types\n- ✅ Unit tests (136)\n- ✅ Integration tests (20)\n- ✅ Edge cases covered\n- ✅ Error scenarios tested\n\n## CI\n- All tests pass ✅\n- Code coverage above 85% threshold ✅\n- No performance regressions ✅",
+    "head": "test/core-coverage",
+    "suggested_tool": "foaas_legend or foaas_awesome",
+    "scenario": "Excellent testing work - major quality improvement"
+  },
+  {
+    "title": "Update dependency versions",
+    "body": "Bumped some dependencies to latest versions.\n\nShould be fine.",
+    "head": "chore/deps-update",
+    "suggested_tool": "foaas_think or foaas_understand",
+    "scenario": "Dependency updates without testing details"
+  },
+  {
+    "title": "Implement dark mode",
+    "body": "Added dark mode toggle!\n\nLooks pretty cool I think.",
+    "head": "feature/dark-mode",
+    "suggested_tool": "foaas_awesome",
+    "scenario": "Nice feature addition"
+  },
+  {
+    "title": "Performance: Optimize database queries",
+    "body": "## Summary\nOptimizes N+1 query problems and adds database indexes for commonly accessed data.\n\n## Changes\n- Added eager loading for user relationships\n- Created composite indexes on frequently queried columns\n- Implemented query result caching (Redis)\n- Optimized JOIN operations\n\n## Performance Results\n```\nEndpoint            Before   After   Improvement\n/api/users          850ms    45ms    94.7%\n/api/posts          1200ms   120ms   90.0%\n/api/dashboard      2500ms   280ms   88.8%\n```\n\n## Database Impact\n- Index size increase: 50MB (acceptable)\n- Query execution time: -85% average\n- Cache hit rate: 92%\n\n## Testing\n- ✅ Load tested with production data\n- ✅ Verified with query profiler\n- ✅ Monitored for 24 hours in staging\n- ✅ No negative impacts observed",
+    "head": "perf/db-optimization",
+    "suggested_tool": "foaas_legend or foaas_dalton",
+    "scenario": "Outstanding performance work with metrics"
+  },
+  {
+    "title": "Temporary debug code",
+    "body": "Added some console.log statements to help debug issue.\n\nWill remove later.",
+    "head": "debug/temp-logs",
+    "suggested_tool": "foaas_off or foaas_shutup",
+    "scenario": "Debug code that shouldn't be in PR"
+  },
+  {
+    "title": "Massive refactor of everything",
+    "body": "Refactored the entire application.\n\n3000+ files changed.\n\nEverything should still work (I think).\n\nNo tests because I didn't have time.",
+    "head": "refactor/everything",
+    "suggested_tool": "foaas_everyone or foaas_ridiculous",
+    "scenario": "Scary massive changes without tests"
+  },
+  {
+    "title": "Remove all error handling",
+    "body": "Error handling was making the code too complex, so I removed it.\n\nErrors are just warnings anyway, right?\n\nAlso removed all try-catch blocks and validation.",
+    "head": "refactor/no-errors",
+    "suggested_tool": "foaas_chainsaw",
+    "scenario": "Absurd PR removing critical safety features"
+  },
+  {
+    "title": "Add my personal dotfiles to the repo",
+    "body": "Added my entire home directory configuration to the project.\n\nIncludes:\n- .bashrc with all my aliases\n- .vimrc with my custom key bindings\n- .tmux.conf\n- SSH keys and AWS credentials (in .env file)\n\nEveryone should use the same setup as me!",
+    "head": "feature/my-dotfiles",
+    "suggested_tool": "foaas_gfy or foaas_off",
+    "scenario": "Inappropriate PR adding personal files and secrets"
+  },
+  {
+    "title": "Change API without versioning or deprecation",
+    "body": "Changed the entire API structure.\n\nAll endpoints now use different URL patterns and request formats.\n\nExisting clients will break, but they should just update their code.",
+    "head": "breaking/api-changes",
+    "suggested_tool": "foaas_asshole",
+    "scenario": "Breaking changes without proper migration path"
+  },
+  {
+    "title": "Keep requesting changes on already approved PR",
+    "body": "Adding more review comments after PR was already approved by 3 reviewers.\n\n\"Actually, I think we should use tabs instead of spaces...\"\n\n\"Can we rename this variable to something more descriptive?\"\n\n\"Have you considered using a different design pattern?\"",
+    "head": "bikeshed/more-changes",
+    "suggested_tool": "foaas_keep or foaas_shutup",
+    "scenario": "Persistent nitpicking on approved PR"
+  }
+]

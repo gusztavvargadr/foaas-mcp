@@ -14,3 +14,6 @@ vitest.config.js
 vitest.config.js.map
 vitest.config.d.ts
 vitest.config.d.ts.map
+
+# Demo
+*.cast

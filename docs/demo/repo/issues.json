@@ -1,0 +1,142 @@
+[
+  {
+    "title": "Application crashes on startup",
+    "body": "The application crashes when I start it.\n\nIt just doesn't work.\n\nCan someone fix this?",
+    "labels": ["bug"],
+    "suggested_tool": "foaas_logs",
+    "scenario": "Lazy bug report with no details - needs logs"
+  },
+  {
+    "title": "Memory leak in user session handler",
+    "body": "## Description\nMemory usage continuously increases in production, eventually causing OOM errors.\n\n## Steps to Reproduce\n1. Start application with default configuration\n2. Create 100 user sessions via `/api/login`\n3. Monitor memory usage for 1 hour\n4. Observe memory increase from 256MB to 2GB\n\n## Expected Behavior\nMemory should stabilize around 300-400MB for 100 concurrent sessions.\n\n## Actual Behavior\nMemory grows linearly without bounds. After 4 hours, application crashes with OOM.\n\n## Environment\n- OS: Ubuntu 22.04\n- Node.js: v20.11.0\n- App version: 2.3.1\n- Memory limit: 2GB\n\n## Investigation\nHeap snapshot shows `UserSession` objects never getting garbage collected. Suspect event listener leak in `src/auth/session-manager.ts:45`.\n\n## Logs\n```\n[ERROR] Heap allocation failure - out of memory\n[TRACE] Active sessions: 100\n[TRACE] Heap size: 2048MB\n```\n\n## Proposed Solution\nAdd proper cleanup in session destruction handler.",
+    "labels": ["bug"],
+    "suggested_tool": "foaas_legend or foaas_dalton",
+    "scenario": "Well-documented bug report - deserves praise"
+  },
+  {
+    "title": "Add real-time collaboration, AI features, and blockchain",
+    "body": "For the next release, can you add:\n\n1. Real-time collaborative editing (like Google Docs)\n2. AI-powered suggestions\n3. Blockchain integration for data verification\n4. Mobile apps (iOS and Android)\n5. VR support\n6. Dark mode\n7. Multi-language support (50+ languages)\n8. Advanced analytics dashboard\n9. Integration with all major cloud providers\n10. Built-in security scanning\n\nShould be straightforward since it's just a few features. Can this be ready by next week?\n\nThanks!",
+    "labels": ["enhancement"],
+    "suggested_tool": "foaas_ridiculous",
+    "scenario": "Absurd feature request with unrealistic scope"
+  },
+  {
+    "title": "Button click doesn't do anything",
+    "body": "I clicked the submit button and nothing happened.\n\nIs this a bug?",
+    "labels": ["bug"],
+    "suggested_tool": "foaas_logs or foaas_rtfm",
+    "scenario": "Missing details - needs more information"
+  },
+  {
+    "title": "Make it faster",
+    "body": "The app is slow. Can you make it faster?\n\nIt takes too long to load.\n\nThanks!",
+    "labels": ["enhancement"],
+    "suggested_tool": "foaas_understand",
+    "scenario": "Vague performance request without specifics"
+  },
+  {
+    "title": "Quick question about the feature",
+    "body": "Thanks for the quick response earlier! Really appreciate the help.\n\n(This is meant to show sarcastic thanks response)",
+    "labels": ["question"],
+    "suggested_tool": "foaas_thanks",
+    "scenario": "Sarcastic thanks opportunity"
+  },
+  {
+    "title": "Add IE6 support",
+    "body": "We should support Internet Explorer 6.\n\nAll our users are still on IE6 and we can't upgrade. Please make the application work with IE6.\n\nAlso, can we get support for Windows XP?",
+    "labels": ["enhancement"],
+    "suggested_tool": "foaas_because or foaas_off",
+    "scenario": "Completely outdated technology request"
+  },
+  {
+    "title": "We should rewrite the entire application",
+    "body": "I think we need to reconsider the entire architecture.\n\nMaybe we should migrate to microservices? Or serverless? What about blockchain?\n\nWe could also containerize everything with Kubernetes. And add a service mesh.\n\nJust some thoughts for the next sprint.",
+    "labels": ["discussion"],
+    "suggested_tool": "foaas_shutup",
+    "scenario": "Bikeshedding and architecture astronaut"
+  },
+  {
+    "title": "Typo on login page",
+    "body": "The login page has a typo. It says \"Sing In\" instead of \"Sign In\".\n\nCan someone fix this? Thanks!",
+    "labels": ["bug", "good first issue"],
+    "suggested_tool": "foaas_awesome or foaas_cool",
+    "scenario": "Simple fix - good first issue"
+  },
+  {
+    "title": "Critical: API rate limiter blocking legitimate requests",
+    "body": "## Description\nThe API rate limiter is incorrectly configured, causing legitimate requests to be blocked during peak hours.\n\n## Steps to Reproduce\n1. Send 50 requests/second to `/api/users` endpoint\n2. Observe that requests start getting 429 errors at request #31\n3. Rate limit should allow 100 requests/second per user\n\n## Expected Behavior\nUsers should be able to make up to 100 requests/second as documented in API specs.\n\n## Actual Behavior\nRate limiter blocks requests after 30 requests/second, causing 429 Too Many Requests errors.\n\n## Environment\n- API version: v2.1.3\n- Redis: v7.0.5\n- Load: 5000 requests/minute peak\n\n## Impact\n- Premium users unable to perform bulk operations\n- API SLA breach (99.9% uptime target)\n- Customer complaints: 15 in last 24 hours\n\n## Root Cause Analysis\nRate limiter configured with incorrect time window (per minute instead of per second).\n\n## Proposed Fix\nUpdate `src/middleware/rate-limiter.ts` line 42:\n```typescript\n// Change from\nwindowMs: 60000, // 1 minute\nmax: 30,\n\n// To\nwindowMs: 1000, // 1 second  \nmax: 100,\n```\n\n## Testing\n- [x] Tested with load testing tool (k6)\n- [x] Verified in staging environment\n- [x] Confirmed with monitoring dashboards\n\n## Related\n- API documentation: `/docs/rate-limits.md`\n- Similar issue: #123 (authentication rate limits)",
+    "labels": ["bug", "high-priority"],
+    "suggested_tool": "foaas_legend or foaas_dalton",
+    "scenario": "Excellent bug report with complete details and proposed fix"
+  },
+  {
+    "title": "Upload error",
+    "body": "Error when trying to upload file.\n\nPlease fix.",
+    "labels": ["bug"],
+    "suggested_tool": "foaas_logs or foaas_look",
+    "scenario": "No error details provided"
+  },
+  {
+    "title": "Documentation doesn't match code",
+    "body": "The documentation says to use method X but the code does Y.\n\nWhich one is correct?",
+    "labels": ["documentation", "question"],
+    "suggested_tool": "foaas_rtfm or foaas_understand",
+    "scenario": "Documentation inconsistency question"
+  },
+  {
+    "title": "Cannot deploy to production",
+    "body": "Deployment failed. Error message:\n\n`Error: Something went wrong`\n\nWhat should I do?",
+    "labels": ["bug"],
+    "suggested_tool": "foaas_logs",
+    "scenario": "Unhelpful error message, needs actual logs"
+  },
+  {
+    "title": "Add feature X that competitors have",
+    "body": "Our competitor has feature X and we don't.\n\nWe're losing customers because of this.\n\nWe need this ASAP!",
+    "labels": ["enhancement"],
+    "suggested_tool": "foaas_because or foaas_zero",
+    "scenario": "Feature request based solely on competition"
+  },
+  {
+    "title": "Excellent work on the performance improvements!",
+    "body": "Just wanted to say the recent performance optimization work is incredible.\n\nLoad times dropped from 5s to 500ms. Users are very happy!\n\nGreat job to everyone involved!",
+    "labels": [],
+    "suggested_tool": "foaas_awesome or foaas_legend",
+    "scenario": "Positive feedback - deserves celebration"
+  },
+  {
+    "title": "Why isn't this working?",
+    "body": "I tried to use the API but it's not working.\n\nWhy?",
+    "labels": ["question"],
+    "suggested_tool": "foaas_because or foaas_rtfm",
+    "scenario": "Vague question with no context"
+  },
+  {
+    "title": "Security vulnerability: SQL injection in search",
+    "body": "## Severity: Critical\n\n### Description\nThe search endpoint is vulnerable to SQL injection attacks due to improper input sanitization.\n\n### Affected Endpoint\n`POST /api/search`\n\n### Proof of Concept\n```bash\ncurl -X POST https://api.example.com/search \\\n  -d \"query=' OR '1'='1\"\n```\n\n### Impact\n- Full database access possible\n- Potential data exfiltration\n- Could lead to data deletion\n\n### Remediation\nUse parameterized queries instead of string concatenation:\n\n```typescript\n// VULNERABLE\nconst query = `SELECT * FROM users WHERE name = '${userInput}'`;\n\n// SECURE\nconst query = 'SELECT * FROM users WHERE name = ?';\ndb.execute(query, [userInput]);\n```\n\n### Timeline\n- Discovered: 2025-10-30\n- Reported: 2025-10-30 (privately)\n- Fix needed: Within 24 hours\n\n### References\n- OWASP SQL Injection: https://owasp.org/www-community/attacks/SQL_Injection\n- CWE-89: SQL Injection",
+    "labels": ["security", "bug", "high-priority"],
+    "suggested_tool": "foaas_legend or foaas_dalton",
+    "scenario": "Responsible security disclosure - excellent report"
+  },
+  {
+    "title": "Can you add support for my specific use case?",
+    "body": "I need the application to work exactly like this:\n\n[Describes very niche, personal workflow that doesn't apply to 99.9% of users]\n\nCan you build this into the core product?",
+    "labels": ["enhancement"],
+    "suggested_tool": "foaas_off or foaas_bye",
+    "scenario": "Overly specific personal request"
+  },
+  {
+    "title": "Everything is broken!",
+    "body": "Nothing works anymore!\n\nI can't do anything!\n\nFIX IT NOW!",
+    "labels": ["bug"],
+    "suggested_tool": "foaas_everyone or foaas_flying",
+    "scenario": "Panic without specifics"
+  },
+  {
+    "title": "Minor: Update copyright year in footer",
+    "body": "The footer still says 2024 but it's now 2025.\n\nSimple one-line fix.",
+    "labels": ["documentation", "good first issue"],
+    "suggested_tool": "foaas_cool or foaas_awesome",
+    "scenario": "Trivial but valid fix"
+  }
+]

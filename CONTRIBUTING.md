@@ -6,12 +6,15 @@ Thank you for your interest in contributing to FOAAS MCP! This document provides
 
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
+- [Project Architecture](#project-architecture)
 - [Development Environment](#development-environment)
 - [How to Contribute](#how-to-contribute)
 - [Code Style Guidelines](#code-style-guidelines)
 - [Adding a New Tool](#adding-a-new-tool)
 - [Running Tests](#running-tests)
 - [Pull Request Process](#pull-request-process)
+- [CI/CD Pipeline](#cicd-pipeline)
+- [Debugging](#debugging)
 - [Questions or Problems?](#questions-or-problems)
 
 ## Code of Conduct
@@ -21,10 +24,36 @@ This project adheres to the [Contributor Covenant Code of Conduct](CODE_OF_CONDU
 ## Getting Started
 
 Before you begin:
-- Review the [README](README.md) for project overview
-- Check the [Development Guide](docs/DEVELOPMENT.md) for architecture details
+- Review the [README](README.md) for project overview and usage scenarios
 - Review the [Roadmap](docs/roadmap/) to see what's planned
 - Check [existing issues](https://github.com/gusztavvargadr/foaas-mcp/issues) to avoid duplicates
+
+## Project Architecture
+
+**Transport**: stdio only (no HTTP/network)  
+**Runtime**: Docker (Debian 12 Bookworm Slim + Node.js 20.19.5)  
+**Language**: TypeScript 5.9.3 (ES2022, strict mode)  
+**Tools**: 23 individual tools (all `foaas_*` prefix)
+
+### Architecture Decisions
+
+**Individual Tools Only**: Direct 1:1 mapping to FOAAS API operations
+- Each tool maps to exactly one FOAAS endpoint
+- AI can select the best contextual fit
+- Simpler architecture (no randomization logic)
+- Consistent parameters within each tool
+
+**stdio Transport**: Simpler and more secure than HTTP
+- No network exposure
+- Process isolation via Docker
+- Sufficient for VS Code integration
+- Standard MCP pattern
+
+**Docker-First**: Isolated, portable, reproducible
+- Non-root user (nodejs UID 1001)
+- dumb-init for proper signal handling
+- Minimal base (Debian 12 Bookworm Slim)
+- Multi-platform support (amd64 + arm64)
 
 ## Development Environment
 
@@ -151,8 +180,6 @@ interface ToolDefinition {
 
 ## Adding a New Tool
 
-See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for detailed instructions. Quick overview:
-
 ### 1. Create Tool File
 
 **Location**: `src/tools/individual/newtool.ts`
@@ -176,6 +203,16 @@ export const newtoolTool = {
   }
 };
 ```
+
+**Description Guidelines:**
+- Focus on use cases and scenarios
+- Keep responses as surprises - describe when to use, not what it says
+- Be specific about the situation (e.g., "lazy bug reports", "code review requests")
+
+**Shared Schemas**: Always use from `src/tools/shared/schemas.ts`:
+- `fromParam` - Who is sending/performing action (always required)
+- `toParam` - Who/what is receiving/targeted (for operations with targets)
+- `formatFoaasResponse()` - Standard response format
 
 ### 2. Add Client Method
 
@@ -218,8 +255,8 @@ describe('foaas_newtool', () => {
 
 ### 5. Update Documentation
 
-- Update `docs/TOOLS.md` with the new tool
-- Update README if it's a significant addition
+- Update README.md with the new tool if it's a significant addition
+- Update demo scenarios in `docs/demo/data/` if appropriate
 - Update roadmap if completing a roadmap item
 
 ### 6. Build and Test
@@ -309,6 +346,83 @@ Use the [pull request template](.github/pull_request_template.md) and include:
 - Changes will be included in the next release
 - You'll be credited in release notes! 🎉
 
+## CI/CD Pipeline
+
+### Pull Request Workflow
+
+**On Pull Requests:**
+1. Build Docker image (linux/amd64 only)
+2. Run automated tests (`./test-server.sh`)
+3. Report status
+4. ❌ **No registry push** - images stay local
+
+**Purpose**: Fast feedback, no unnecessary registry pollution
+
+### Main Branch & Release Workflow
+
+**On Main Branch Commits / Version Tags:**
+1. Build Docker image (linux/amd64 only)
+2. Run automated tests
+3. **If tests pass**: Rebuild multi-platform (linux/amd64 + linux/arm64)
+4. Push to GHCR with appropriate tags
+
+**Critical**: Failed tests = no registry push. This ensures broken images never reach users.
+
+### Tags Generated
+
+- **PRs**: `pr-<number>` (e.g., `pr-5`)
+- **Main commits**: `sha-<commit>` (e.g., `sha-a1b2c3d`)
+- **Version tags**: `v1.0.0`, `1.0.0`, `1.0`, `1`, `latest`
+
+### Registry
+
+All images pushed to: `ghcr.io/gusztavvargadr/foaas-mcp`
+
+## Debugging
+
+### MCP Logs in VS Code
+
+**View → Output → "Model Context Protocol"**
+
+Shows all MCP communication, tool calls, and errors.
+
+### Manual Container Testing
+
+**List available tools:**
+```bash
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | \
+  docker run --rm -i ghcr.io/gusztavvargadr/foaas-mcp:latest
+```
+
+**Test specific tool:**
+```bash
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"foaas_awesome","arguments":{"from":"Developer"}}}' | \
+  docker run --rm -i ghcr.io/gusztavvargadr/foaas-mcp:latest
+```
+
+**Test local image:**
+```bash
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | \
+  docker run --rm -i foaas-mcp:local
+```
+
+### Common Issues
+
+**"MCP server not responding"**
+- Check Docker is running
+- Verify image exists: `docker images | grep foaas-mcp`
+- Check MCP logs in VS Code Output panel
+
+**"Tool not found"**
+- Rebuild image: `npm run docker:build`
+- Restart MCP server in VS Code
+- Check tool is registered in `src/server.ts`
+
+**"Tests failing"**
+- Clean build: `npm run clean && npm run build`
+- Rebuild Docker: `npm run docker:build`
+- Check test output for specific failures
+
 ## Questions or Problems?
 
 - **General questions**: Open a [question issue](https://github.com/gusztavvargadr/foaas-mcp/issues/new?template=question.yml)
@@ -319,10 +433,11 @@ Use the [pull request template](.github/pull_request_template.md) and include:
 
 ## Additional Resources
 
-- [README](README.md) - Project overview
-- [Development Guide](docs/DEVELOPMENT.md) - Architecture and design
-- [Tools Reference](docs/TOOLS.md) - Tool documentation
-- [Roadmap](docs/roadmap/) - Development plans
+- [README](README.md) - Usage scenarios and quick start
+- [Demo Materials](docs/demo/) - Demo repository and LinkedIn GIF generation
+- [Roadmap](docs/roadmap/) - Development plans and feature tracking
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md)
 - [GitHub Copilot Instructions](.github/copilot-instructions.md) - AI assistant guidelines
 
 ## Recognition
