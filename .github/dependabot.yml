@@ -23,11 +23,10 @@ updates:
           - "vitest"
           - "tsx"
           - "typescript"
-      # Group production dependencies
+      # Group production dependencies (excluding zod for separate tracking)
       production-dependencies:
         patterns:
           - "@modelcontextprotocol/*"
-          - "zod"
           - "zod-to-json-schema"
 
   # Docker dependencies
