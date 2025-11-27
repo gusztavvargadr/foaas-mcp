@@ -48,7 +48,7 @@
   "homepage": "https://github.com/gusztavvargadr/foaas-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.23.0",
-    "zod": "^3.25.76",
+    "zod": "^4.1.13",
     "zod-to-json-schema": "^3.25.0"
   },
   "devDependencies": {
