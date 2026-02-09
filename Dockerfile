@@ -1,5 +1,5 @@
 # Build stage
-FROM node:25.4.0-bookworm-slim AS builder
+FROM node:25.6.0-bookworm-slim AS builder
 
 # Build arguments for metadata
 ARG VERSION=dev
@@ -22,7 +22,7 @@ COPY src ./src
 RUN npm run build
 
 # Production stage - Use Debian Bookworm Slim for better security updates
-FROM node:25.4.0-bookworm-slim
+FROM node:25.6.0-bookworm-slim
 
 # Re-declare build arguments for this stage
 ARG VERSION=dev
