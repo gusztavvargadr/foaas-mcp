@@ -52,11 +52,11 @@
     "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
-    "@types/node": "^26.1.0",
-    "@vitest/coverage-v8": "^4.1.9",
+    "@types/node": "^26.1.1",
+    "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.0.4",
-    "tsx": "^4.23.0",
-    "typescript": "^6.0.3",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
     "vitest": "^4.0.4"
   }
 }
